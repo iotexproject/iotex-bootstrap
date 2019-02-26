@@ -1,6 +1,4 @@
 network:
-  host: 0.0.0.0
-  port: 4689
   # If you have external IP, put it here and config the port you want to map from docker to host
   #externalHost:
   #externalPort: 4689
