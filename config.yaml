@@ -10,11 +10,11 @@ network:
 
 chain:
   genesisActionsPath: /etc/iotex/testnet_actions_override.yaml
-  chainDBPath: "/var/chain.db"
-  trieDBPath: "/var/trie.db"
+  chainDBPath: "/var/data/chain.db"
+  trieDBPath: "/var/data/trie.db"
   beaconChainAPI: "wss://kovan.infura.io/ws"
   beaconChainDB:
-    dbPath: "/var/poll.db"
+    dbPath: "/var/data/poll.db"
     numRetries: 100
   numCandidates: 24
   enableIndex: true
@@ -50,7 +50,7 @@ log:
     disableStacktrace: true
     outputPaths: ["stderr", "stdout"]
     errorOutputPaths: ["stderr"]
-  stderrRedirectFile: "/data/s.log"
+  stderrRedirectFile: "/var/data/s.log"
   stdLogRedirect: true
 
 api:
