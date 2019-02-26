@@ -7,3 +7,10 @@ Run the following command to start a node:
 ```
 
 Replace `/path/to/` with your actual paths. If you have an external IP address, please replace it with `host` in `config.yaml`.
+
+By default, an arbitrary key will be created every time you run the node. You could specify your key in `config.yaml` to
+always use the same keys throughout runs. You can generate keys by:
+
+```
+./ioctl account create
+```
