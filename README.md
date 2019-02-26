@@ -3,7 +3,7 @@
 Run the following command to start a node:
 
 ```
-docker run
+docker run \
     -p 14014:14014 \
     -p 8080:8080 \
     -p 7788:7788 \
