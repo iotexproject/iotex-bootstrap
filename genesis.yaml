@@ -1,0 +1,57 @@
+blockchain:
+  timestamp: 1546329600
+  blockGasLimit: 20000000
+  actionGasLimit: 5000000
+  blockInterval: 10s
+  numSubEpochs: 2
+  numDelegates: 24
+  numCandidateDelegates: 24
+  timeBasedRotation: false
+poll:
+  enableBeaconChainVoting: true
+  initBeaconChainHeight: 10439100
+  committeeConfig:
+    numOfRetries: 100
+    beaconChainHeightInterval: 100
+    beaconChainStartHeight: 10439100
+    registerContractAddress: 0xd546bb3fc2db18618b7c16f155800c9897688f3e
+    stakingContractAddress: 0x1c0e85f8804f1448073aac395453c9e52835d968
+    paginationSize: 11
+    voteThreshold: "100000000000000000000"
+    scoreThreshold: "2000000000000000000000000"
+    selfStakingThreshold: "1200000000000000000000000"
+    cacheSize: 1000
+rewarding:
+  initAdminAddr: io1d0mes4h35est9xpmk3222ceywtfunmv7t00r8v
+  initBalance: "1200000000000000000000000000"
+  blockReward: "36000000000000000000"
+  epochReward: "400000000000000000000000"
+  numDelegatesForEpochReward: 24
+account:
+  initBalances:
+    io1djxfexfvvpjn9mfc34l2yhhv20xvd3tdzn9drp: "100000000000000000000000000"
+    io195l8pxnlz9tsahnvuyupphcwhekyryhec555mv: "100000000000000000000000000"
+    io175whmu77v24mpe0m6z9yfd3xct6s353fyvylwz: "100000000000000000000000000"
+    io13pzulhavfpvl6xpcmwljn3vy8sxtcfww9ef27e: "100000000000000000000000000"
+    io1xh24t60df7m8pp0uddq2j8spnva9akk8umswj6: "100000000000000000000000000"
+    io1v6uk9rv036nnk2aa8uf8wv6p59a7thwxl9z8jr: "100000000000000000000000000"
+    io1ytga929zwaxmgnkfc9za0umlh3xe7jfrrf2g48: "100000000000000000000000000"
+    io1zg98t443ez9ksn4akaemyg0y59tk24khvfprnp: "100000000000000000000000000"
+    io1exp6wwaulzyvt8yya37ne8nrcaxr5z3hwsldms: "100000000000000000000000000"
+    io10ul9xdnp6yfdn0d2fw9yd00z7u4j5z25jfn5nv: "100000000000000000000000000"
+    io152yrq5djtvvax98gp6u74v7zrw32yrrclycs8h: "100000000000000000000000000"
+    io1jy0w7nlqgearryvx9rww9n5nf5m9xfh6jdd4zg: "100000000000000000000000000"
+    io1gagh5lu3grtl6pq6fw8apydm28dc43shyk5pnl: "100000000000000000000000000"
+    io17x0vwtpxvkce9cy7t822nfutl3fgl7pslc37vf: "100000000000000000000000000"
+    io1zjvdxn50v4kqatghcezy79f3rlph53wtd9zsf4: "100000000000000000000000000"
+    io1s779jqjfupy7q6x22ltksp0ef5g4fp2z46sk53: "100000000000000000000000000"
+    io1z9xkvu2crva6zcv9pcr7fspapzv3z035fztgdk: "100000000000000000000000000"
+    io1y4dt0l82kquh9fkd70pnydy8nkcvhxetjxgl3w: "100000000000000000000000000"
+    io1vmmhp4jrgzfl95yj7m7nwflmnpldpdvd9ycrp8: "100000000000000000000000000"
+    io1xu3gse459qren79dlug5d6uw5jdu0zap5zwmf5: "100000000000000000000000000"
+    io1t63ptv69s6am0r4juhs7up8uzt28q80tegqht3: "100000000000000000000000000"
+    io1wd94tvhg9q7kyrf2lcj746c4smwz8e9nm7mrrn: "100000000000000000000000000"
+    io1sz3w7svmfehvk0lcs9upf4truu6cwx0vhxw8v3: "100000000000000000000000000"
+    io1rwf60tjfch9r6fqa8jtwpjjchcfcmcpsd6j9vv: "100000000000000000000000000"
+    io12faecgvhyrgycdukjzr5zlrfk85tvt8m700srr: "100000000000000000000000000"
+    io1rqvle647qlytyy88qd9kmr7eweuszhuvw2748q: "100000000000000000000000000"
