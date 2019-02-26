@@ -29,8 +29,10 @@ consensus:
       acceptBlockTTL: 4s
       acceptProposalEndorsementTTL: 2s
       acceptLockEndorsementTTL: 2s
-      eventChanSize: 100000
-    delay: 30s
+    delay: 10s
+
+blockSync:
+  bufferSize: 100
 
 actPool:
   maxNumActsToPick: 2000
