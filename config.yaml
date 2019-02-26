@@ -31,7 +31,7 @@ consensus:
     delay: 10s
 
 blockSync:
-  bufferSize: 100
+  bufferSize: 200
 
 actPool:
   maxNumActsToPick: 2000
