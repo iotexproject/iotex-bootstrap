@@ -6,11 +6,11 @@ network:
 
 chain:
   genesisActionsPath: /etc/iotex/testnet_actions_override.yaml
-  chainDBPath: "/data/chain.db"
-  trieDBPath: "/data/trie.db"
+  chainDBPath: "/var/chain.db"
+  trieDBPath: "/var/trie.db"
   beaconChainAPI: "wss://kovan.infura.io/ws"
   beaconChainDB:
-    dbPath: "/data/poll.db"
+    dbPath: "/var/poll.db"
     numRetries: 100
   numCandidates: 24
   enableIndex: true

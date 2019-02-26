@@ -14,8 +14,8 @@ poll:
     numOfRetries: 100
     beaconChainHeightInterval: 100
     beaconChainStartHeight: 10439100
-    registerContractAddress: 0xd546bb3fc2db18618b7c16f155800c9897688f3e
-    stakingContractAddress: 0x1c0e85f8804f1448073aac395453c9e52835d968
+    registerContractAddress: 0x1c0e85f8804f1448073aac395453c9e52835d968
+    stakingContractAddress: 0xd546bb3fc2db18618b7c16f155800c9897688f3e
     paginationSize: 11
     voteThreshold: "100000000000000000000"
     scoreThreshold: "2000000000000000000000000"
