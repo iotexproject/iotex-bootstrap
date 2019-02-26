@@ -15,7 +15,6 @@ chain:
   numCandidates: 24
   enableIndex: true
   enableAsyncIndexWrite: true
-  enableSubChainStartInGenesis: false
   # Use your own key, otherwise, every run will use an arbitrary generated key
   # producerPubKey:
   # producerPrivKey:
