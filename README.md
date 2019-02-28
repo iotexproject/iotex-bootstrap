@@ -29,3 +29,9 @@ always use the same keys throughout runs. You can generate keys by:
 ```
 ./ioctl account create
 ```
+
+Docker images are hosted at
+```
+iotex/iotex-core:v0.5.0-rc1 (primary)
+gcr.io/iotex-servers/iotex-core:v0.5.0-rc1
+```
