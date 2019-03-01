@@ -12,7 +12,7 @@ docker run \
     -v=/path/to/iotex-testnet/config.yaml:/etc/iotex/config_override.yaml:ro \
     -v=/path/to/iotex-testnet/testnet_actions.yaml:/etc/iotex/testnet_actions_override.yaml:ro \
     -v=/path/to/iotex-testnet/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-    iotex/iotex-core:v0.5.0-rc1 \
+    iotex/iotex-core:v0.5.0-rc2 \
     iotex-server -config-path=/etc/iotex/config_override.yaml -genesis-path=/etc/iotex/genesis.yaml
 ```
 
@@ -32,6 +32,6 @@ always use the same keys throughout runs. You can generate keys by:
 
 Docker images are hosted at
 ```
-iotex/iotex-core:v0.5.0-rc1 (primary)
-gcr.io/iotex-servers/iotex-core:v0.5.0-rc1
+iotex/iotex-core:v0.5.0-rc2 (primary)
+gcr.io/iotex-servers/iotex-core:v0.5.0-rc2
 ```

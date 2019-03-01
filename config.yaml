@@ -10,7 +10,8 @@ chain:
   genesisActionsPath: /etc/iotex/testnet_actions_override.yaml
   chainDBPath: "/var/data/chain.db"
   trieDBPath: "/var/data/trie.db"
-  beaconChainAPI: "wss://kovan.infura.io/ws"
+  beaconChainAPIs:
+    - "wss://mainnet.infura.io/ws"
   beaconChainDB:
     dbPath: "/var/data/poll.db"
     numRetries: 100
@@ -18,7 +19,6 @@ chain:
   enableIndex: true
   enableAsyncIndexWrite: true
   # Use your own key, otherwise, every run will use an arbitrary generated key
-  # producerPubKey:
   # producerPrivKey:
 
 consensus:

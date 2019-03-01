@@ -9,13 +9,13 @@ blockchain:
   timeBasedRotation: false
 poll:
   enableBeaconChainVoting: true
-  initBeaconChainHeight: 10439100
+  initBeaconChainHeight: 7281500
   committeeConfig:
     numOfRetries: 100
     beaconChainHeightInterval: 100
-    beaconChainStartHeight: 10439100
-    registerContractAddress: 0x1c0e85f8804f1448073aac395453c9e52835d968
-    stakingContractAddress: 0xd546bb3fc2db18618b7c16f155800c9897688f3e
+    beaconChainStartHeight: 7281500
+    registerContractAddress: 0x3bbe2346c40d34fc3f66ab059f75a6caece2c3b3
+    stakingContractAddress: 0x92adef0e5e0c2b4f64a1ac79823f7ad3bc1662c4
     paginationSize: 11
     voteThreshold: "100000000000000000000"
     scoreThreshold: "2000000000000000000000000"
@@ -29,7 +29,7 @@ rewarding:
   numDelegatesForEpochReward: 24
 account:
   initBalances:
-    io1djxfexfvvpjn9mfc34l2yhhv20xvd3tdzn9drp: "100000000000000000000000000"
+    io1djxfexfvvpjn9mfc34l2yhhv20xvd3tdzn9drp: "100000000000000000000000002"
     io195l8pxnlz9tsahnvuyupphcwhekyryhec555mv: "100000000000000000000000000"
     io175whmu77v24mpe0m6z9yfd3xct6s353fyvylwz: "100000000000000000000000000"
     io13pzulhavfpvl6xpcmwljn3vy8sxtcfww9ef27e: "100000000000000000000000000"
