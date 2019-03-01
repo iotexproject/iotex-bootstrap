@@ -49,3 +49,8 @@ Docker images are hosted at
 iotex/iotex-core:v0.5.0-rc2 (primary)
 gcr.io/iotex-servers/iotex-core:v0.5.0-rc2
 ```
+
+Election contracts on Ethereum mainnet:
+
+- Registration: https://etherscan.io/address/0x92adef0e5e0c2b4f64a1ac79823f7ad3bc1662c4
+- Staking: https://etherscan.io/address/0x3bbe2346c40d34fc3f66ab059f75a6caece2c3b3
