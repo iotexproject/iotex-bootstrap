@@ -1,5 +1,19 @@
 # IOTEX TestNet Instructions
 
+## Updates
+
+**Note: for those who participated in the testnet of v0.5.0-rc1, you MUST clean your local state and then restart with
+v0.5.0-rc2!**
+
+New in v0.5.0-rc2:
+
+- Interacting with the election contract on Ethereum mainnet
+- Fixing the bugs in APIs
+- Implementing more ioctl commands
+- Cleaning up code (e.g., public key from configuration)
+
+## Instructions
+
 Run the following command to start a node:
 
 ```
