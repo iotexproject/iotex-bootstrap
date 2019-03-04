@@ -48,7 +48,7 @@ log:
     disableStacktrace: true
     outputPaths: ["stderr", "stdout"]
     errorOutputPaths: ["stderr"]
-  stderrRedirectFile: "/var/data/s.log"
+  stderrRedirectFile: "/var/log/s.log"
   stdLogRedirect: true
 
 api:

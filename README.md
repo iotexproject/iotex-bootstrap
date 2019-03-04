@@ -22,7 +22,8 @@ docker run \
     -p 8080:8080 \
     -p 7788:7788 \
     -p 4689:4689 \
-    -v=/tmp:/var/data:rw \
+    -v=/path/to/data:/var/data:rw \
+    -v=/path/to/log:/var/log:rw \
     -v=/path/to/iotex-testnet/config.yaml:/etc/iotex/config_override.yaml:ro \
     -v=/path/to/iotex-testnet/testnet_actions.yaml:/etc/iotex/testnet_actions_override.yaml:ro \
     -v=/path/to/iotex-testnet/genesis.yaml:/etc/iotex/genesis.yaml:ro \
