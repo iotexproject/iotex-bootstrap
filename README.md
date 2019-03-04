@@ -54,3 +54,14 @@ Election contracts on Ethereum mainnet:
 
 - Registration: https://etherscan.io/address/0x92adef0e5e0c2b4f64a1ac79823f7ad3bc1662c4
 - Staking: https://etherscan.io/address/0x3bbe2346c40d34fc3f66ab059f75a6caece2c3b3
+
+
+## Blockchain Archives
+
+Syncing from genesis usually take quite a while to catch up the blockchain, we provide the daily archives to start from
+a given snapshot.
+
+
+| Archive File | MD5 Checksum |
+| ------------ | ------------ |
+| [data-2019-03-04.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-04.tar.gz) | b9db1bd17ae5e876dae7832019f1218b |
