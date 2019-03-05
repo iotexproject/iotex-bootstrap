@@ -65,4 +65,4 @@ a given snapshot.
 
 | Archive File | MD5 Checksum |
 | ------------ | ------------ |
-| [data-2019-03-04.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-04.tar.gz) | b9db1bd17ae5e876dae7832019f1218b |
+| [data-2019-03-05.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-05.tar.gz) | 600213829d801ac79eea2863daf79a2d |
