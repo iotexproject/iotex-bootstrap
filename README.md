@@ -1,9 +1,13 @@
 # IOTEX TestNet Instructions
 
 ## Updates
+**Note: make sure you always rebase to the LATEST `iotex-testnet` repo**
 
 **Note: for those who participated in the testnet of v0.5.0-rc1 and/or v0.5.0-rc2, you MUST clean your local state and
 then restart with v0.5.0-rc3!**
+
+**Note: Address generation method is updated in v0.5.0-rc3. We recommend you generating a new address and key for this
+run.**
 
 Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc3) for what's new in v0.5.0-rc3.
 
