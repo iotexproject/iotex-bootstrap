@@ -65,5 +65,6 @@ a given snapshot.
 
 | Archive File | MD5 Checksum |
 | ------------ | ------------ |
-| [data-2019-03-05.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-05.tar.gz) | 600213829d801ac79eea2863daf79a2d |
+| [data-2019-03-07.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-07.tar.gz) (latest) | 362ba6a54c8ab302f2d280c83db17553 |
 | [data-2019-03-06.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-06.tar.gz) | 78ddd8103bb2c08f218ff0ed2dbbd62e |
+| [data-2019-03-05.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-05.tar.gz) | 600213829d801ac79eea2863daf79a2d |
