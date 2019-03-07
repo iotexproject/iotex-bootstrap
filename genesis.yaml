@@ -8,7 +8,7 @@ blockchain:
   numCandidateDelegates: 24
   timeBasedRotation: true
 poll:
-  enableBeaconChainVoting: true
+  enableGravityChainVoting: true
   gravityChainStartHeight: 7324037
   stakingContractAddress: 0x3bbe2346c40d34fc3f66ab059f75a6caece2c3b3
   registerContractAddress: 0x92adef0e5e0c2b4f64a1ac79823f7ad3bc1662c4
