@@ -7,12 +7,16 @@ network:
     - "/dns4/a12f5c5ca34a211e9809c02f3dedec74-0c7145ef4e7091ef.elb.us-west-2.amazonaws.com/tcp/4689/ipfs/12D3KooWEgPtefxSeWQHjXFdrze1NicjzqKyVmMgyxqRBRByqi2Q"
 
 chain:
-  genesisActionsPath: /etc/iotex/testnet_actions_override.yaml
   chainDBPath: "/var/data/chain.db"
   trieDBPath: "/var/data/trie.db"
-  beaconChainAPIs:
-    - "wss://mainnet.infura.io/ws"
-  beaconChainDB:
+  committee:
+    beaconChainAPIs:
+      - "wss://mainnet.infura.io/ws"
+    numOfRetries: 20
+    beaconChainHeightInterval: 10
+    paginationSize: 11
+    cacheSize: 1000
+  gravityChainDB:
     dbPath: "/var/data/poll.db"
     numRetries: 100
   numCandidates: 24
@@ -33,10 +37,7 @@ consensus:
     delay: 10s
 
 blockSync:
-  bufferSize: 200
-
-actPool:
-  maxNumActsToPick: 2000
+  bufferSize: 50
 
 system:
   httpProfilingPort: 6060

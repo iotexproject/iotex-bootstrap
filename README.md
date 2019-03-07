@@ -2,15 +2,10 @@
 
 ## Updates
 
-**Note: for those who participated in the testnet of v0.5.0-rc1, you MUST clean your local state and then restart with
-v0.5.0-rc2!**
+**Note: for those who participated in the testnet of v0.5.0-rc1 and/or v0.5.0-rc2, you MUST clean your local state and
+then restart with v0.5.0-rc3!**
 
-New in v0.5.0-rc2:
-
-- Interacting with the election contract on Ethereum mainnet
-- Fixing the bugs in APIs
-- Implementing more ioctl commands
-- Cleaning up code (e.g., public key from configuration)
+Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc3) for what's new in v0.5.0-rc3.
 
 ## Instructions
 
@@ -25,9 +20,8 @@ docker run \
     -v=/path/to/data:/var/data:rw \
     -v=/path/to/log:/var/log:rw \
     -v=/path/to/iotex-testnet/config.yaml:/etc/iotex/config_override.yaml:ro \
-    -v=/path/to/iotex-testnet/testnet_actions.yaml:/etc/iotex/testnet_actions_override.yaml:ro \
     -v=/path/to/iotex-testnet/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-    iotex/iotex-core:v0.5.0-rc2 \
+    iotex/iotex-core:v0.5.0-rc3 \
     iotex-server -config-path=/etc/iotex/config_override.yaml -genesis-path=/etc/iotex/genesis.yaml
 ```
 
@@ -42,13 +36,13 @@ By default, an arbitrary key will be created every time you run the node. You co
 always use the same keys throughout runs. You can generate keys by:
 
 ```
-./ioctl account create
+ioctl account create
 ```
 
 Docker images are hosted at
 ```
-iotex/iotex-core:v0.5.0-rc2 (primary)
-gcr.io/iotex-servers/iotex-core:v0.5.0-rc2
+iotex/iotex-core:v0.5.0-rc3 (primary)
+gcr.io/iotex-servers/iotex-core:v0.5.0-rc3
 ```
 
 Election contracts on Ethereum mainnet:
@@ -65,6 +59,3 @@ a given snapshot.
 
 | Archive File | MD5 Checksum |
 | ------------ | ------------ |
-| [data-2019-03-07.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-07.tar.gz) (latest) | 362ba6a54c8ab302f2d280c83db17553 |
-| [data-2019-03-06.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-06.tar.gz) | 78ddd8103bb2c08f218ff0ed2dbbd62e |
-| [data-2019-03-05.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-05.tar.gz) | 600213829d801ac79eea2863daf79a2d |
