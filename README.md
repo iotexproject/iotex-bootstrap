@@ -35,9 +35,11 @@ please delete files in this directory.
 If you have an external IP address, please replace it with `externalHost` in `config.yaml`, and enable it and `externalPort`.
 
 By default, an arbitrary key will be created every time you run the node. You could specify your key in `config.yaml` to
-always use the same keys throughout runs. You can generate keys by:
+always use the same keys throughout runs. You can install ioctl (a command-line interface for interacting with IoTeX blockchain) and generate keys by:
 
 ```
+curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cli.sh | sh
+
 ioctl account create
 ```
 
@@ -52,6 +54,23 @@ Election contracts on Ethereum mainnet:
 - Registration: https://etherscan.io/address/0x92adef0e5e0c2b4f64a1ac79823f7ad3bc1662c4
 - Staking: https://etherscan.io/address/0x3bbe2346c40d34fc3f66ab059f75a6caece2c3b3
 
+## Interact with Testnet
+Make sure ioctl is pointed to the testnet endpoint:
+```
+ioctl config set endpoint 35.230.103.170:10000
+```
+
+Get active delegates of current epoch:
+```
+ioctl node delegate
+```
+
+Get active delegates of current epoch:
+```
+ioctl node productivity
+```
+
+Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/cli/ioctl/README.md) for more details.
 
 ## Blockchain Archives
 
