@@ -13,7 +13,7 @@ chain:
     beaconChainAPIs:
       - "wss://mainnet.infura.io/ws"
     numOfRetries: 20
-    beaconChainHeightInterval: 10
+    beaconChainHeightInterval: 100
     paginationSize: 11
     cacheSize: 1000
   gravityChainDB:
