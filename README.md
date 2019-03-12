@@ -1,4 +1,4 @@
-# IOTEX TestNet Instructions
+# IoTeX TestNet Manual
 
 ## Updates
 **Note: make sure you always rebase to the LATEST `iotex-testnet` repo**
@@ -13,9 +13,31 @@ run.**
 
 Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc3) for what's new in v0.5.0-rc3.
 
-## Instructions
+## Join TestNet
 
-Run the following command to start a node:
+1. Pull the docker image:
+
+```
+docker pull iotex/iotex-core:v0.5.0-rc3
+```
+
+If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
+`gcr.io/iotex-servers/iotex-core:v0.5.0-rc3`.
+
+2. Edit `config.yaml` in this repo, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP
+and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
+
+3. Export `IOTEX_HOME`, create directories, and copy `config.yaml` and `genesis.yaml` into `$IOTEX_HOME/etc`.
+
+```
+export IOTEX_HOME=[SET YOUR IOTEX HOME PATH HERE]
+
+mkdir -p $IOTEX_HOME/data
+mkdir -p $IOTEX_HOME/log
+mkdir -p $IOTEX_HOME/etc
+```
+
+4. Run the following command to start a node:
 
 ```
 docker run -d \
@@ -23,47 +45,35 @@ docker run -d \
         -p 14014:14014 \
         -p 8080:8080 \
         -p 7788:7788 \
-        -v=/path/to/data:/var/data:rw \
-        -v=/path/to/log:/var/log:rw \
-        -v=/path/to/config.yaml:/etc/iotex/config_override.yaml:ro \
-        -v=/path/to/genesis.yaml:/etc/iotex/genesis.yaml:ro \
+        -v=$IOTEX_HOME/data:/var/data:rw \
+        -v=$IOTEX_HOME/log:/var/log:rw \
+        -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
+        -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
         iotex/iotex-core:v0.5.0-rc3 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
 ```
 
-Replace `/path/to/` with your actual paths.
+Now your node should be started successfully.
 
-Replace `/tmp` with the path that you want to persist the blockchain data and logs. If you want to make a clean restart,
-please delete files in this directory.
+## <a name="ioctl"/>Interact with Testnet
 
-If you have an external IP address, please replace it with `externalHost` in `config.yaml`, and enable it and `externalPort`.
 
-By default, an arbitrary key will be created every time you run the node. You could specify your key in `config.yaml` to
-always use the same keys throughout runs. You can install ioctl (a command-line interface for interacting with IoTeX blockchain) and generate keys by:
+You can install ioctl (a command-line interface for interacting with IoTeX blockchain)
 
 ```
 curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cli.sh | sh
-
-ioctl account create
 ```
 
-Docker images are hosted at
-```
-iotex/iotex-core:v0.5.0-rc3 (primary)
-gcr.io/iotex-servers/iotex-core:v0.5.0-rc3
-```
-
-Election contracts on Ethereum mainnet:
-
-- Registration: https://etherscan.io/address/0x92adef0e5e0c2b4f64a1ac79823f7ad3bc1662c4
-- Staking: https://etherscan.io/address/0x3bbe2346c40d34fc3f66ab059f75a6caece2c3b3
-
-## Interact with Testnet
 Make sure ioctl is pointed to the testnet endpoint:
 ```
 ioctl config set endpoint 35.230.103.170:10000
+```
+
+Generate key:
+```
+ioctl account create
 ```
 
 Get active delegates of current epoch:

@@ -1,7 +1,6 @@
 network:
-  # If you have external IP, put it here and config the port you want to map from docker to host
-  #externalHost:
-  #externalPort: 4689
+  # externalHost: [SET YOUR EXTERNAL IP HERE]
+  externalPort: 4689
   bootstrapNodes:
     - "/dns4/bootnode-0.testnet.iotex.one/tcp/4689/ipfs/12D3KooWCb1nZdLsR6WBgXqmGnzRvhxASQJaAB3NgwTNk3JE43Wj"
     - "/dns4/a12f5c5ca34a211e9809c02f3dedec74-0c7145ef4e7091ef.elb.us-west-2.amazonaws.com/tcp/4689/ipfs/12D3KooWEgPtefxSeWQHjXFdrze1NicjzqKyVmMgyxqRBRByqi2Q"
@@ -22,8 +21,7 @@ chain:
   numCandidates: 24
   enableIndex: true
   enableAsyncIndexWrite: true
-  # Use your own key, otherwise, every run will use an arbitrary generated key
-  # producerPrivKey:
+  # producerPrivKey: [SET YOUR PRIVATE KEY HERE]
 
 consensus:
   scheme: "ROLLDPOS"
