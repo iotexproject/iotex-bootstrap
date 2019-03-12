@@ -162,6 +162,6 @@ Response contents:
 
 - Find your name (in the hex form, https://codebeautify.org/string-hex-converter can be useful here) in the reponse.
 
-# Wait and Have Fun
+# Have Fun
 - Make sure your node is up and running and fully synced by following https://github.com/iotexproject/iotex-testnet
 - If your node is ranked in top 24, it will be swap into delegate group in about 1.5 hours. Stay tuned!
