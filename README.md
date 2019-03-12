@@ -88,6 +88,18 @@ ioctl node productivity
 
 Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/cli/ioctl/README.md) for more details.
 
+## Fast Sync
+
+IoTeX rootchain supports running with archives (see below) which will greatly help to reduce the time spent on synchronization.
+```
+cd $IOTEX_HOME
+wget https://storage.googleapis.com/blockchain-archive/data-2019-03-12.tar.gz
+rm -rf data/
+tar -zxvf data-2019-03-12.tar.gz
+rm -rf data-2019-03-12.tar.gz
+```
+Then "docker run ..." as above.
+
 ## Blockchain Archives
 
 Syncing from genesis usually take quite a while to catch up the blockchain, we provide the daily archives to start from
