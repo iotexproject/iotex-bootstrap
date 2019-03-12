@@ -57,7 +57,7 @@ docker run -d \
 
 Now your node should be started successfully.
 
-## <a name="ioctl"/>Interact with Testnet
+## <a name="ioctl"/>Interact with TestNet
 
 
 You can install ioctl (a command-line interface for interacting with IoTeX blockchain)
