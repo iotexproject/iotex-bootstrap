@@ -167,10 +167,18 @@ Response contents:
 
 - Find your name (in the hex form, https://codebeautify.org/string-hex-converter can be useful here) in the reponse.
 
-# Have fun
-
-If your node is ranked in top 24, it will be swap into delegate group in about 1.5 hours. Stay tuned!
-
 # Now what
 
+- If your node is ranked in top 24, it will be swap into delegate group in about 1.5 hours. Stay tuned!
+
+- Once it is in, check its performance by `ioctl node delegate` and its earning by
+```
+➜  wss ioctl node reward io1j07xpufsj03sc0dg020jahacx2pnt6m8cdl6qt
+io1j07xpufsj03sc0dg020jahacx2pnt6m8cdl6qt: 1621920.27288700615265475 IOTX
+```
+
+- You could claim the reward to an IoTeX address by using ```ioctl action claim```
+
+# Have fun?
 Feel free to tweet about it (@iotex_io please) if you feel proud for producing blocks for IoTeX Network.
+
