@@ -57,6 +57,8 @@ docker run -d \
 
 Now your node should be started successfully.
 
+5. Make sure TCP ports 4689, 14014, 8080 and 7788 are open on your firewall and loadbalancer (if any).
+
 ## <a name="ioctl"/>Interact with TestNet
 
 
