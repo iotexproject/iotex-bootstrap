@@ -1,28 +1,28 @@
 # IoTeX TestNet Manual
 
 ## Updates
+
+Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc4) for what's new in v0.5.0-rc4.
+
 **Note: make sure you always rebase to the LATEST `iotex-testnet` repo**
 
-**Note: for those who participated in the testnet of v0.5.0-rc1 and/or v0.5.0-rc2, you MUST clean your local state and
-then restart with v0.5.0-rc3 (image ID: d2773d858ca9)!**
-
-**Note: address generation method is updated in v0.5.0-rc3. We recommend you generating a new address and key for this
-run.**
+**Note: for those who participated in the previous testnet, you MUST clean your local state and then restart with
+v0.5.0-rc4 (image ID: 5d07869264da)!**
 
 **Note: the command to start a node has been changed. Please follow the new command bellow.**
 
-Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc3) for what's new in v0.5.0-rc3.
+**Note: we support claim block production rewards, please try it out by using ioctl.**
 
 ## Join TestNet
 
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.5.0-rc3
+docker pull iotex/iotex-core:v0.5.0-rc4
 ```
 
 If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
-`gcr.io/iotex-servers/iotex-core:v0.5.0-rc3`.
+`gcr.io/iotex-servers/iotex-core:v0.5.0-rc4`.
 
 2. Edit `config.yaml` in this repo, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP
 and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
@@ -44,20 +44,24 @@ docker run -d \
         -p 4689:4689 \
         -p 14014:14014 \
         -p 8080:8080 \
-        -p 7788:7788 \
         -v=$IOTEX_HOME/data:/var/data:rw \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0-rc3 \
+        iotex/iotex-core:v0.5.0-rc4 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
+        -plugin=gateway
 ```
 
 Now your node should be started successfully.
 
-5. Make sure TCP ports 4689, 14014, 8080 and 7788 are open on your firewall and loadbalancer (if any).
+Note that the command above will also make your node be a gateway, which could process API requests from users. If you
+don't want to enable this plugin, you could remove two lines from the command above: `-p 14014:14014 \` and
+`-plugin=gateway`.
+
+5. Make sure TCP ports 4689, 14014, 8080 are open on your firewall and load balancer (if any).
 
 ## <a name="ioctl"/>Interact with TestNet
 
@@ -108,7 +112,3 @@ We provide the daily archives to start from a given snapshot.
 
 | Archive File | MD5 Checksum |
 | ------------ | ------------ |
-| [data-2019-03-12.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-12.tar.gz) [(latest)](https://storage.googleapis.com/blockchain-archive/data-latest.tar.gz) | 22bf3c4ccafa45101ecf51848898373b |
-| [data-2019-03-11.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-11.tar.gz) | f6403860a4d9880b318fe1c832c2668a |
-| [data-2019-03-10.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-10.tar.gz) | e25fffb9082652b482c580409de5a043 |
-| [data-2019-03-09.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-09.tar.gz) | 6834b1dcd4c66485cbe5160071b11cc8 |

@@ -11,16 +11,14 @@ chain:
   committee:
     beaconChainAPIs:
       - "wss://mainnet.infura.io/ws"
+      - "wss://us-east-1.iotex.world/ws"
+      - "wss://singapore-1.iotex.world/ws"
     numOfRetries: 20
-    beaconChainHeightInterval: 100
     paginationSize: 11
     cacheSize: 1000
   gravityChainDB:
     dbPath: "/var/data/poll.db"
-    numRetries: 100
-  numCandidates: 24
-  enableIndex: true
-  enableAsyncIndexWrite: true
+    numRetries: 8
   # producerPrivKey: [SET YOUR PRIVATE KEY HERE]
 
 consensus:
@@ -49,6 +47,3 @@ log:
     errorOutputPaths: ["stderr"]
   stderrRedirectFile: "/var/log/s.log"
   stdLogRedirect: true
-
-api:
-  enabled: true
