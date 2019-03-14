@@ -6,6 +6,7 @@ network:
     - "/dns4/a12f5c5ca34a211e9809c02f3dedec74-0c7145ef4e7091ef.elb.us-west-2.amazonaws.com/tcp/4689/ipfs/12D3KooWEgPtefxSeWQHjXFdrze1NicjzqKyVmMgyxqRBRByqi2Q"
 
 chain:
+  # producerPrivKey: [SET YOUR PRIVATE KEY HERE]
   chainDBPath: "/var/data/chain.db"
   trieDBPath: "/var/data/trie.db"
   committee:
@@ -19,7 +20,6 @@ chain:
   gravityChainDB:
     dbPath: "/var/data/poll.db"
     numRetries: 8
-  # producerPrivKey: [SET YOUR PRIVATE KEY HERE]
 
 consensus:
   scheme: "ROLLDPOS"
