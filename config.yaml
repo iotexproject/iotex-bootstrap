@@ -35,9 +35,6 @@ consensus:
 blockSync:
   bufferSize: 50
 
-system:
-  httpProfilingPort: 6060
-
 log:
   zap:
     level: info

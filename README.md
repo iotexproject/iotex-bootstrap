@@ -51,7 +51,7 @@ docker run -d \
         iotex/iotex-core:v0.5.0-rc4 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
-        -genesis-path=/etc/iotex/genesis.yaml
+        -genesis-path=/etc/iotex/genesis.yaml \
         -plugin=gateway
 ```
 
