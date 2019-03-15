@@ -4,7 +4,8 @@
 
 Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc4) for what's new in v0.5.0-rc4.
 
-**Note: please use the up-to-date config, which your problem of syncing with the testnet**
+**Note: please use the up-to-date config and restart from the clean state again, which your problem of syncing with the
+testnet**
 
 **Note: make sure you always rebase to the LATEST `iotex-testnet` repo**
 
