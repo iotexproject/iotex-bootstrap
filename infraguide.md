@@ -1,4 +1,4 @@
-#IoTeX Delegates Infrastructure Guide
+## IoTeX Delegates Infrastructure Guide
 
 1. Run your node behind a commercial cloud load balancer.
 
