@@ -90,10 +90,6 @@ Get active delegates of current epoch:
 ioctl node delegate
 ```
 
-Get active delegates of current epoch:
-```
-ioctl node productivity
-```
 
 Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/cli/ioctl/README.md) for more details.
 
