@@ -76,7 +76,6 @@ The delegate bots we currently run for our testnet have a setup is very similar 
 We are still new in the area of running decentralized infrastructure. There are still many things we can learn and improve. And since it is decentralized, we will need options and ideas from different perspectives. That means we need a lot of help form your guys to help us getting better.
 
 
-## References
 [^1]: https://aws.amazon.com/answers/networking/aws-ddos-attack-mitigation/
 [^2]: https://cloud.google.com/files/GCPDDoSprotection-04122016.pdf
 [^3]: https://www.cloudflare.com/ddos/
