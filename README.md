@@ -106,5 +106,16 @@ Then "docker run ..." as above.
 
 We provide the daily archives to start from a given snapshot.
 
+The database with index data:
+
 | Archive File | MD5 Checksum |
 | ------------ | ------------ |
+| [data-with-idx-latest.tar.gz](https://storage.googleapis.com/blockchain-archive/data-with-idx-latest.tar.gz) | 81ac4bc3e891f6de8c692049c33da904 |
+| [data-with-idx-2019-03-16.tar.gz](https://storage.googleapis.com/blockchain-archive/data-with-idx-2019-03-16.tar.gz) | 81ac4bc3e891f6de8c692049c33da904 |
+
+The database without index data:
+
+| Archive File | MD5 Checksum |
+| ------------ | ------------ |
+| [data-latest.tar.gz](https://storage.googleapis.com/blockchain-archive/data-latest.tar.gz) | 8ff61d7a18ffef577a82e423ef48d6f7 |
+| [data-2019-03-16.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-16.tar.gz) | 8ff61d7a18ffef577a82e423ef48d6f7 |
