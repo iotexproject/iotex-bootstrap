@@ -30,17 +30,22 @@ and private key and uncomment the lines. Check the following [section](#ioctl) f
 3. Export `IOTEX_HOME`, create directories, and copy `config.yaml` and `genesis.yaml` into `$IOTEX_HOME/etc`.
 
 ```
-export IOTEX_HOME=[SET YOUR IOTEX HOME PATH HERE]
+cd iotex-testnet
+
+export IOTEX_HOME=$PWD #[SET YOUR IOTEX HOME PATH HERE]
 
 mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
+
+cp config.yaml etc/
+cp genesis.yaml etc/
 ```
 
 4. Run the following command to start a node:
 
 ```
-docker run -d \
+docker run -d --name IoTeX-Node\
         -p 4689:4689 \
         -p 14014:14014 \
         -p 8080:8080 \
@@ -89,6 +94,39 @@ ioctl node delegate
 
 
 Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/cli/ioctl/README.md) for more details.
+
+## Checking node log
+
+Container logs can be accessed with the following command. 
+
+```
+docker logs IoTeX-Node
+```
+
+content can be filtered with:
+
+```
+docker logs -f --tail 100 IoTeX-Node |grep --color -E "epoch|height|error|rolldposctx"
+```
+
+## Stop and remove container
+
+When starting the container with ```--name=IoTeX-Node```, you must remove before a new building
+
+```
+docker stop IoTeX-Node
+docker rm IoTeX-Node
+```
+
+## Pause and Restarting container
+
+Container can be "stopped" and "restarted" with:
+
+```
+docker stop IoTeX-Node
+docker start IoTeX-Node
+```
+
 
 ## Fast Sync
 
