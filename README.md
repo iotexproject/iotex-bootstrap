@@ -6,10 +6,8 @@ Check the release [notes](https://github.com/iotexproject/iotex-core/releases/ta
 
 **Note: make sure you always rebase to the LATEST `iotex-testnet` repo**
 
-**Note: for those who participated in the current testnet, you could restart with the docker image v0.5.0-rc4-hotfix
-(image ID: 3ec051608478) with our hot fix. you DOT NOT need to clean up the local database this time!**
-
-**Note: the command to start a node has been changed. Please follow the new command bellow.**
+**Note: for those who participated in the current testnet, please restart with the docker image v0.5.0-rc4-hotfix2
+(image ID: 21b502ff68d9) with our hot fix. you DOT NOT need to clean up the local database this time!**
 
 **Note: we support claim block production rewards, please try it out by using ioctl.**
 
@@ -18,11 +16,11 @@ Check the release [notes](https://github.com/iotexproject/iotex-core/releases/ta
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.5.0-rc4-hotfix
+docker pull iotex/iotex-core:v0.5.0-rc4-hotfix2
 ```
 
 If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
-`gcr.io/iotex-servers/iotex-core:v0.5.0-rc4-hotfix`.
+`gcr.io/iotex-servers/iotex-core:v0.5.0-rc4-hotfix2`.
 
 2. Edit `config.yaml` in this repo, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP
 and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
@@ -38,8 +36,8 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-cp config.yaml etc/
-cp genesis.yaml etc/
+cp config.yaml $IOTEX_HOME/etc/
+cp genesis.yaml $IOTEX_HOME/etc/
 ```
 
 4. Run the following command to start a node:
