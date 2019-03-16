@@ -74,7 +74,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cl
 
 Make sure ioctl is pointed to the testnet endpoint:
 ```
-ioctl config set endpoint 35.230.103.170:10000
+ioctl config set endpoint 35.203.158.71:14014
 ```
 
 Generate key:
