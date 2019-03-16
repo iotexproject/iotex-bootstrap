@@ -4,13 +4,10 @@
 
 Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc4) for what's new in v0.5.0-rc4.
 
-**Note: please use the up-to-date config and restart from the clean state again, which your problem of syncing with the
-testnet**
-
 **Note: make sure you always rebase to the LATEST `iotex-testnet` repo**
 
-**Note: for those who participated in the previous testnet, you MUST clean your local state and then restart with
-v0.5.0-rc4 (image ID: 5d07869264da)!**
+**Note: for those who participated in the current testnet, you could restart with the docker image v0.5.0-rc4-hotfix
+(image ID: 3ec051608478) with our hot fix. you DOT NOT need to clean up the local database this time!**
 
 **Note: the command to start a node has been changed. Please follow the new command bellow.**
 
@@ -21,11 +18,11 @@ v0.5.0-rc4 (image ID: 5d07869264da)!**
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.5.0-rc4
+docker pull iotex/iotex-core:v0.5.0-rc4-hotfix
 ```
 
 If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
-`gcr.io/iotex-servers/iotex-core:v0.5.0-rc4`.
+`gcr.io/iotex-servers/iotex-core:v0.5.0-rc4-hotfix`.
 
 2. Edit `config.yaml` in this repo, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP
 and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
@@ -51,7 +48,7 @@ docker run -d \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0-rc4 \
+        iotex/iotex-core:v0.5.0-rc4-hotfix \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
