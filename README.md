@@ -126,32 +126,18 @@ docker start IoTeX-Node
 ```
 
 
-## Fast Sync
+## Fast Block Sync
 
 IoTeX rootchain supports bootstrapping from archives (see below) which will greatly help to reduce the time spent on synchronization.
 ```
+export IOTEX_SANPSHOT_URL=https://storage.googleapis.com/blockchain-archive/$IOTEX_SNAPSHOT_NAME
 cd $IOTEX_HOME
-wget https://storage.googleapis.com/blockchain-archive/data-latest.tar.gz
+wget $IOTEX_SANPSHOT_URL
 rm -rf data/
-tar -zxvf data-latest.tar.gz
-rm -rf data-latest.tar.gz
+tar -zxvf $IOTEX_SNAPSHOT_NAME
+rm -rf $IOTEX_SNAPSHOT_NAME
 ```
-Then "docker run ..." as above.
+Before these instructions, if you want to run your node as a gateway, please `export IOTEX_SNAPSHOT_NAME=data-with-idx-latest.tar.gz`,
+otherwise, `export IOTEX_SNAPSHOT_NAME=data-latest.tar.gz`.
 
-## Blockchain Archives
-
-We provide the daily archives to start from a given snapshot.
-
-The database with index data:
-
-| Archive File | MD5 Checksum |
-| ------------ | ------------ |
-| [data-with-idx-latest.tar.gz](https://storage.googleapis.com/blockchain-archive/data-with-idx-latest.tar.gz) | 81ac4bc3e891f6de8c692049c33da904 |
-| [data-with-idx-2019-03-16.tar.gz](https://storage.googleapis.com/blockchain-archive/data-with-idx-2019-03-16.tar.gz) | 81ac4bc3e891f6de8c692049c33da904 |
-
-The database without index data:
-
-| Archive File | MD5 Checksum |
-| ------------ | ------------ |
-| [data-latest.tar.gz](https://storage.googleapis.com/blockchain-archive/data-latest.tar.gz) | 8ff61d7a18ffef577a82e423ef48d6f7 |
-| [data-2019-03-16.tar.gz](https://storage.googleapis.com/blockchain-archive/data-2019-03-16.tar.gz) | 8ff61d7a18ffef577a82e423ef48d6f7 |
+Then `docker run ...` as above after the snapshot is ready.
