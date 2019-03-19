@@ -1,6 +1,15 @@
 # First thing first!
 
-Make sure your node is up and running and fully synced by following https://github.com/iotexproject/iotex-testnet
+- Make sure your node is up and running and fully synced by following https://github.com/iotexproject/iotex-testnet
+- Have the command line tool installed
+```
+Latest/nightly build
+curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cli.sh | sh -s "unstable"
+
+Last released build
+curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cli.sh | sh
+```
+- Config the command line tool by `ioctl config set endpoint api.testnet.iotex.one:80`
 
 # Register a name, stake & vote
 - Request IOTTT (testing tokens on Ethereum mainnet) using `curl -H "Content-Type: application/json" -X POST https://iotex-tube.herokuapp.com/tokenrequest --data '{"address":"[YOUR ETH ADDRESS]","amount":"2000000","asset":"et"}' | jq`. Note that the min requested amount is 100,000 while the max is 3,000,000, and you will need at least 2,000,000 IOTTT to get elected as delegates on testnet. In addition, the faucet allows each address to request once every 10min. 
