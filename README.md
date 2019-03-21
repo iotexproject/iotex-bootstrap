@@ -6,7 +6,7 @@ Check the release [notes](https://github.com/iotexproject/iotex-core/releases/ta
 
 **Note: make sure you always rebase to the LATEST `iotex-testnet` repo**
 
-**Note: for those who participated in the previous testnet, please restart with the docker image v0.5.0-rc5. you MUST
+**Note: for those who participated in the previous testnet, please restart with the docker image v0.5.0-rc5-hotfix1. you MUST
 clean up the local database this time!**
 
 ## Join TestNet
@@ -14,11 +14,11 @@ clean up the local database this time!**
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.5.0-rc5
+docker pull iotex/iotex-core:v0.5.0-rc5-hotfix1
 ```
 
 If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
-`gcr.io/iotex-servers/iotex-core:v0.5.0-rc5`.
+`gcr.io/iotex-servers/iotex-core:v0.5.0-rc5-hotfix1`.
 
 2. Edit `config.yaml` in this repo, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP
 and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
@@ -49,7 +49,7 @@ docker run -d --name IoTeX-Node\
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0-rc5 \
+        iotex/iotex-core:v0.5.0-rc5-hotfix1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
