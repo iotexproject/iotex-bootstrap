@@ -11,9 +11,13 @@ chain:
   trieDBPath: "/var/data/trie.db"
   committee:
     beaconChainAPIs:
-      - "wss://mainnet.infura.io/ws"
-      - "wss://us-east-1.iotex.world/ws"
-      - "wss://singapore-1.iotex.world/ws"
+      - https://mainnet.infura.io/v3/b355cae6fafc4302b106b937ee6c15af
+      - wss://us-east-1.iotex.world/ws
+      - wss://singapore-1.iotex.world/ws
+      - wss://tokyo-1.iotex.world/ws
+      - wss://paris-1.iotex.world/ws
+      - wss://us-west-1.iotex.world/ws
+      - wss://sydney-1.iotex.world/ws
     numOfRetries: 20
     paginationSize: 11
     cacheSize: 1000
@@ -21,6 +25,9 @@ chain:
     dbPath: "/var/data/poll.db"
     numRetries: 8
   numCandidates: 24
+
+actPool:
+  minGasPrice: "0"
 
 consensus:
   scheme: "ROLLDPOS"
