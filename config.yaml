@@ -24,7 +24,6 @@ chain:
   gravityChainDB:
     dbPath: "/var/data/poll.db"
     numRetries: 8
-  numCandidates: 24
 
 actPool:
   minGasPrice: "0"
