@@ -1,0 +1,53 @@
+network:
+  externalHost: 12.34.56.78
+  externalPort: 4689
+  bootstrapNodes:
+    - "/dns4/bootnode-0.testnet.iotex.one/tcp/4689/ipfs/12D3KooWCb1nZdLsR6WBgXqmGnzRvhxASQJaAB3NgwTNk3JE43Wj"
+    - "/dns4/a12f5c5ca34a211e9809c02f3dedec74-0c7145ef4e7091ef.elb.us-west-2.amazonaws.com/tcp/4689/ipfs/12D3KooWEgPtefxSeWQHjXFdrze1NicjzqKyVmMgyxqRBRByqi2Q"
+
+chain:
+  producerPrivKey: 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8
+  chainDBPath: "/var/data/chain.db"
+  trieDBPath: "/var/data/trie.db"
+  committee:
+    beaconChainAPIs:
+      - https://mainnet.infura.io/v3/b355cae6fafc4302b106b937ee6c15af
+      - wss://us-east-1.iotex.world/ws
+      - wss://singapore-1.iotex.world/ws
+      - wss://tokyo-1.iotex.world/ws
+      - wss://paris-1.iotex.world/ws
+      - wss://us-west-1.iotex.world/ws
+      - wss://sydney-1.iotex.world/ws
+    numOfRetries: 20
+    paginationSize: 11
+    cacheSize: 1000
+  gravityChainDB:
+    dbPath: "/var/data/poll.db"
+    numRetries: 8
+
+actPool:
+  minGasPrice: "0"
+
+consensus:
+  scheme: "ROLLDPOS"
+  rollDPoS:
+    fsm:
+      unmatchedEventTTL: 3s
+      unmatchedEventInterval: 100ms
+      acceptBlockTTL: 4s
+      acceptProposalEndorsementTTL: 2s
+      acceptLockEndorsementTTL: 2s
+    delay: 10s
+
+blockSync:
+  bufferSize: 50
+
+log:
+  zap:
+    level: info
+    encoding: json
+    disableStacktrace: true
+    outputPaths: ["stderr", "stdout"]
+    errorOutputPaths: ["stderr"]
+  stderrRedirectFile: "/var/log/s.log"
+  stdLogRedirect: true
