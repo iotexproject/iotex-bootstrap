@@ -23,7 +23,7 @@ If you have problem to pull the image from docker hub, you can also try our mirr
 2. Edit `config.yaml` in this repo, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP
 and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
 
-3. Export `IOTEX_HOME`, create directories, and copy `config.yaml` and `genesis.yaml` into `$IOTEX_HOME/etc`.
+3. Export `IOTEX_HOME`, create directories, and copy `https://github.com/iotexproject/iotex-testnet/blob/master/config.yaml` and `https://github.com/iotexproject/iotex-testnet/blob/master/genesis.yaml` into `$IOTEX_HOME/etc`, i.e., 
 
 ```
 cd iotex-testnet
