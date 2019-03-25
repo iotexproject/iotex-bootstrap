@@ -26,8 +26,8 @@ and private key and uncomment the lines. Check the following [section](#ioctl) f
 3. Export `IOTEX_HOME`, create directories, and copy `https://github.com/iotexproject/iotex-testnet/blob/master/config.yaml` and `https://github.com/iotexproject/iotex-testnet/blob/master/genesis.yaml` into `$IOTEX_HOME/etc`, i.e., 
 
 ```
-wget https://github.com/iotexproject/iotex-testnet/blob/master/config.yaml
-wget https://github.com/iotexproject/iotex-testnet/blob/master/genesis.yaml
+wget https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/config.yaml
+wget https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/genesis.yaml
 
 cd iotex-testnet
 export IOTEX_HOME=$PWD #[SET YOUR IOTEX HOME PATH HERE]
