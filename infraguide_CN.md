@@ -2,7 +2,7 @@
 
 1. 在商业云负载均衡器后面运行您的节点。
 
-  像amazon AWS[^1], google GCE[^2] or Cloudflare[^3] 等云提供商会提供良好的保护, 防止大量的包括 SYN floods, IP fragment floods, port exhaustion在内的 L3, L4 DDoS 攻击, 我们建议使用这些解决方案网络专家来帮助您保护您的节点。
+   像amazon AWS[^1], google GCE[^2] or Cloudflare[^3] 等云提供商会提供良好的保护, 防止大量的包括 SYN floods, IP fragment floods, port exhaustion在内的 L3, L4 DDoS 攻击, 我们建议使用这些解决方案网络专家来帮助您保护您的节点。
 
 2. 将Envoy Proxy作为边缘代理放在节点前面。
 
@@ -71,10 +71,10 @@
      failureThreshold: 5
    ```
 
-我们目前为testnet运行的委托机器人的设置与下图非常相似:![infra](https://github.com/iotexproject/iotex-testnet/blob/master/infra.png?raw=true)
+   我们目前为testnet运行的委托机器人的设置与下图非常相似:![infra](https://github.com/iotexproject/iotex-testnet/blob/master/infra.png?raw=true)
 
 ## 让它变得更好
-我们在运行分散式基础设施方面仍然不够成熟。我们还有很多东西可以学习和改进。由于它是分散的，我们将需要从不同角度来看的选项和想法。这意味着我们需要很多帮助才能帮助我们变得更好。
+   我们在运行分散式基础设施方面仍然不够成熟。我们还有很多东西可以学习和改进。由于它是分散的，我们将需要从不同角度来看的选项和想法。这意味着我们需要很多帮助才能帮助我们变得更好。
 
 
 [^1]: https://aws.amazon.com/answers/networking/aws-ddos-attack-mitigation/
