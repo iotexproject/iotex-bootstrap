@@ -74,7 +74,7 @@
    我们目前为testnet运行的代理机器人设置与下图非常相似:![infra](https://github.com/iotexproject/iotex-testnet/blob/master/infra.png?raw=true)
 
 ## 让它变得更好
-   我们在运行分散式基础设施方面仍然不够成熟。我们还有很多东西可以学习和改进。由于它是分散的，我们将需要从不同角度来看的选项和想法。这意味着我们需要很多帮助才能帮助我们变得更好。
+   运行分布式基础设施仍在起步阶段，我们还有很多东西需要学习和改进。去中心化模式可以帮我们从不同角度看待问题，希望大家集思广益，与我们共同建立一个更开放的高性能网络。
 
 
 [^1]: https://aws.amazon.com/answers/networking/aws-ddos-attack-mitigation/
