@@ -1,29 +1,31 @@
-# IoTeX TestNet Manual
+# IoTeX 测试网络手册
 
-## Updates
+## 更新
 
-Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc5) for what's new in v0.5.0-rc5.
+查看发行[说明](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc5), 了解v0.5.0-rc5中的新增功能。
 
-**Note: make sure you always rebase to the LATEST `iotex-testnet` repo**
+**注意：请确保始终绑定到最新的`iotex-testnet`数据库**
 
-**Note: for those who participated in the previous testnet, please restart with the docker image v0.5.0-rc5-hotfix1. you MUST
-clean up the local database this time!**
+**注意：对于参与之前测试网络的用户，您必须清理本地数据库！再使用docker镜像v0.5.0-rc5-hotfix1重新启动!**
 
-## Join TestNet
+## 加入测试网络
 
-1. Pull the docker image:
+
+1. 提取(pull) docker镜象
+
 
 ```
 docker pull iotex/iotex-core:v0.5.0-rc5-hotfix1
 ```
 
-If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
+如果从docker hub中提取图像时遇到问题，您也可以在gcloud上尝试我们的镜像
 `gcr.io/iotex-servers/iotex-core:v0.5.0-rc5-hotfix1`.
 
-2. Edit `config.yaml` in this repo, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP
-and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
+2. 在此数据库下编辑 `config.yaml` ，寻找 `externalHost` 和 `producerPrivKey` 
+用您的外部IP和私钥替换`[...]`并取消注释。请查看以下[部分]（#ioctl）以了解如何生成密钥。
 
-3. Export `IOTEX_HOME`, create directories, and copy `https://github.com/iotexproject/iotex-testnet/blob/master/config.yaml` and `https://github.com/iotexproject/iotex-testnet/blob/master/genesis.yaml` into `$IOTEX_HOME/etc`, i.e., 
+
+3. 导出 `IOTEX_HOME`, 创建文件夹, 并复制 `https://github.com/iotexproject/iotex-testnet/blob/master/config.yaml` 和 `https://github.com/iotexproject/iotex-testnet/blob/master/genesis.yaml` 到 `$IOTEX_HOME/etc`, 也就是，
 
 ```
 wget https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/config.yaml
@@ -40,7 +42,7 @@ cp config.yaml $IOTEX_HOME/etc/
 cp genesis.yaml $IOTEX_HOME/etc/
 ```
 
-4. Run the following command to start a node:
+4. 运行下列命令以启动节点
 
 ```
 docker run -d --name IoTeX-Node\
@@ -58,67 +60,65 @@ docker run -d --name IoTeX-Node\
         -plugin=gateway
 ```
 
-Now your node should be started successfully.
+现在您的节点应该已经被成功启动了
 
-Note that the command above will also make your node be a gateway, which could process API requests from users. If you
-don't want to enable this plugin, you could remove two lines from the command above: `-p 14014:14014 \` and
-`-plugin=gateway`.
+要知道，上述命令同时也会让您的节点变成一个网关，可以处理来自用户的API请求。如果您不想启用此功能，可以从上面的命令中删除两行: `-p 14014:14014 \` 和 `-plugin=gateway`.
 
-5. Make sure TCP ports 4689, 14014, 8080 are open on your firewall and load balancer (if any).
+5. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 14014, 8080已打开。
 
-## <a name="ioctl"/>Interact with TestNet
+## <a name="ioctl"/>与测试网络互动
 
 
-You can install ioctl (a command-line interface for interacting with IoTeX blockchain)
+你可以安装 ioctl (用于与IoTeX区块链交互的命令行界面)
 
 ```
 curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cli.sh | sh
 ```
 
-Make sure ioctl is pointed to the testnet endpoint:
+确保您的ioctl已经指向了测试网络端点:
 ```
 ioctl config set endpoint api.testnet.iotex.one:80
 ```
 
-Generate key:
+生成密钥:
 ```
 ioctl account create
 ```
 
-Get active delegates of current epoch:
+获得当前epoch活跃的代表数量:
 ```
 ioctl node delegate
 ```
 
 
-Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/cli/ioctl/README.md) for more details.
+参考 [CLI document](https://github.com/iotexproject/iotex-core/blob/master/cli/ioctl/README.md) 获得更多细节
 
-## Checking node log
+## 检查节点日志
 
-Container logs can be accessed with the following command. 
+可以使用以下命令访问容器(container)日志。
 
 ```
 docker logs IoTeX-Node
 ```
 
-content can be filtered with:
+内容可以用以下命令筛选:
 
 ```
 docker logs -f --tail 100 IoTeX-Node |grep --color -E "epoch|height|error|rolldposctx"
 ```
 
-## Stop and remove container
+## 停止和移除容器(container)
 
-When starting the container with ```--name=IoTeX-Node```, you must remove before a new building
+当使用 ```--name=IoTeX-Node```启动一个container, 你必须在产生一个新的container之前先移除之前的container
 
 ```
 docker stop IoTeX-Node
 docker rm IoTeX-Node
 ```
 
-## Pause and Restarting container
+## 暂停和重启container
 
-Container can be "stopped" and "restarted" with:
+可以使用以下命令“停止”和“重新启动”container:
 
 ```
 docker stop IoTeX-Node
@@ -126,9 +126,9 @@ docker start IoTeX-Node
 ```
 
 
-## Fast Block Sync
+## Block快速同步
 
-IoTeX rootchain supports bootstrapping from archives (see below) which will greatly help to reduce the time spent on synchronization.
+IoTeX rootchain支持从档案中引导（见下文），这将极大地减少同步所花费的时间。
 ```
 export IOTEX_SANPSHOT_URL=https://storage.googleapis.com/blockchain-archive/$IOTEX_SNAPSHOT_NAME
 cd $IOTEX_HOME
@@ -137,7 +137,7 @@ rm -rf data/
 tar -zxvf $IOTEX_SNAPSHOT_NAME
 rm -rf $IOTEX_SNAPSHOT_NAME
 ```
-Before these instructions, if you want to run your node as a gateway, please `export IOTEX_SNAPSHOT_NAME=data-with-idx-latest.tar.gz`,
-otherwise, `export IOTEX_SNAPSHOT_NAME=data-latest.tar.gz`.
+在这些说明之前，如果要将节点作为网关运行, 请运行 `export IOTEX_SNAPSHOT_NAME=data-with-idx-latest.tar.gz`,
+否则, `export IOTEX_SNAPSHOT_NAME=data-latest.tar.gz`.
 
-Then `docker run ...` as above after the snapshot is ready.
+当snapshot准备好之后，运行 `docker run ...` 
