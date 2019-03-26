@@ -25,7 +25,7 @@ docker pull iotex/iotex-core:v0.5.0-rc5-hotfix1
 用您的外部IP和私钥替换`[...]`并取消注释。请查看以下[部分]（#ioctl）以了解如何生成密钥。
 
 
-3. 导出 `IOTEX_HOME`, 创建文件夹, 并复制 `https://github.com/iotexproject/iotex-testnet/blob/master/config.yaml` 和 `https://github.com/iotexproject/iotex-testnet/blob/master/genesis.yaml` 到 `$IOTEX_HOME/etc`, 也就是，
+3. 导出 `IOTEX_HOME`, 创建目录, 并复制 `https://github.com/iotexproject/iotex-testnet/blob/master/config.yaml` 和 `https://github.com/iotexproject/iotex-testnet/blob/master/genesis.yaml` 到 `$IOTEX_HOME/etc`, 也就是，
 
 ```
 wget https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/config.yaml
@@ -62,7 +62,7 @@ docker run -d --name IoTeX-Node\
 
 现在您的节点应该已经被成功启动了
 
-要知道，上述命令同时也会让您的节点变成一个网关，可以处理来自用户的API请求。如果您不想启用此功能，可以从上面的命令中删除两行: `-p 14014:14014 \` 和 `-plugin=gateway`.
+请注意，上述命令同时也会让您的节点变成一个网关，可以处理来自用户的API请求。如果您不想启用此功能，可以从上面的命令中删除两行: `-p 14014:14014 \` 和 `-plugin=gateway`.
 
 5. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 14014, 8080已打开。
 
