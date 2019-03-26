@@ -2,9 +2,9 @@
 
 ## 更新
 
-查看发行[说明](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc5), 了解v0.5.0-rc5中的新增功能。
+查看代码发布[说明](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc5), 了解v0.5.0-rc5中的新增功能。
 
-**注意：请确保始终绑定到最新的`iotex-testnet`数据库**
+**请确保始终绑定到`iotex-testnet`代码库的最新版本**
 
 **注意：对于参与之前测试网络的用户，您必须清理本地数据库！再使用docker镜像v0.5.0-rc5-hotfix1重新启动!**
 
@@ -66,7 +66,7 @@ docker run -d --name IoTeX-Node\
 
 5. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 14014, 8080已打开。
 
-## <a name="ioctl"/>与测试网络互动
+## <a name="ioctl"/>与测试网络交互
 
 
 你可以安装 ioctl (用于与IoTeX区块链交互的命令行界面)
@@ -85,7 +85,7 @@ ioctl config set endpoint api.testnet.iotex.one:80
 ioctl account create
 ```
 
-获得当前epoch活跃的代表数量:
+获得当前epoch共识节点的数量:
 ```
 ioctl node delegate
 ```
@@ -107,7 +107,7 @@ docker logs IoTeX-Node
 docker logs -f --tail 100 IoTeX-Node |grep --color -E "epoch|height|error|rolldposctx"
 ```
 
-## 停止和移除容器(container)
+## 停止和删除容器(container)
 
 当使用 ```--name=IoTeX-Node```启动一个container, 你必须在产生一个新的container之前先移除之前的container
 
@@ -128,7 +128,7 @@ docker start IoTeX-Node
 
 ## Block快速同步
 
-IoTeX rootchain支持从档案中引导（见下文），这将极大地减少同步所花费的时间。
+IoTeX rootchain支持从存档中读取（见下文），这将极大地减少同步所花费的时间。
 ```
 export IOTEX_SANPSHOT_URL=https://storage.googleapis.com/blockchain-archive/$IOTEX_SNAPSHOT_NAME
 cd $IOTEX_HOME
