@@ -109,7 +109,7 @@ docker logs -f --tail 100 IoTeX-Node |grep --color -E "epoch|height|error|rolldp
 
 ## Stop and remove container
 
-When starting the container with ```--name=IoTeX-Node```, you must remove before a new building
+When starting the container with ```--name=IoTeX-Node```, you must remove the old contaniner before a new build.
 
 ```
 docker stop IoTeX-Node
