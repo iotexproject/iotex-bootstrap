@@ -1,0 +1,56 @@
+network:
+  # externalHost: [SET YOUR EXTERNAL IP HERE]
+  externalPort: 4689
+  bootstrapNodes:
+    - /dns4/bootnode-0.prod.iotex.one/tcp/4689/ipfs/12D3KooWCb1nZdLsR6WBgXqmGnzRvhxASQJaAB3NgwTNk3JE43Wj
+    - /dns4/bootnode-1.prod.iotex.one/tcp/4689/ipfs/12D3KooWEgPtefxSeWQHjXFdrze1NicjzqKyVmMgyxqRBRByqi2Q
+    - /dns4/a8421485b49da11e9a08506c716aa958-46665b592dc9099a.elb.ap-southeast-1.amazonaws.com/tcp/4689/ipfs/12D3KooWCPqEAvK3xfBLFTqf2FjLyFeXy8zx5kY7ehcST7xQvVNr
+    - /dns4/a845bd31f49da11e9a08506c716aa958-06561ef7ac48d3a4.elb.ap-southeast-1.amazonaws.com/tcp/4689/ipfs/12D3KooWLSRmas8hfTDHxy8uGBETHHJTc66YMfnySpFi8RGnMJJK
+
+chain:
+  # producerPrivKey: [SET YOUR PRIVATE KEY HERE]
+  chainDBPath: /var/data/chain.db
+  trieDBPath: /var/data/trie.db
+  maxCacheSize: 1000
+  committee:
+    beaconChainAPIs:
+      - https://mainnet.infura.io/v3/b355cae6fafc4302b106b937ee6c15af
+      - wss://us-east-1.iotex.world/ws
+      - wss://singapore-1.iotex.world/ws
+      - wss://tokyo-1.iotex.world/ws
+      - wss://paris-1.iotex.world/ws
+      - wss://us-west-1.iotex.world/ws
+      - wss://sydney-1.iotex.world/ws
+    numOfRetries: 20
+    paginationSize: 11
+    cacheSize: 1000
+  gravityChainDB:
+    dbPath: /var/data/poll.db
+    numRetries: 8
+
+actPool:
+  minGasPrice: 0
+
+consensus:
+  scheme: ROLLDPOS
+  rollDPoS:
+    fsm:
+      unmatchedEventTTL: 3s
+      unmatchedEventInterval: 100ms
+      acceptBlockTTL: 4s
+      acceptProposalEndorsementTTL: 2s
+      acceptLockEndorsementTTL: 2s
+    delay: 10s
+
+blockSync:
+  bufferSize: 50
+
+log:
+  zap:
+    level: info
+    encoding: json
+    disableStacktrace: true
+    outputPaths: ["stderr", "stdout"]
+    errorOutputPaths: ["stderr"]
+  stderrRedirectFile: /var/log/s.log
+  stdLogRedirect: true

@@ -1,5 +1,7 @@
 # IoTeX TestNet Manual
 
+### For those who join MainNet rehearsal, please read the document [here](rehearsal/README.md)!
+
 ## Updates
 
 Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc5) for what's new in v0.5.0-rc5.
