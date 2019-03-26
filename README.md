@@ -85,7 +85,7 @@ Generate key:
 ioctl account create
 ```
 
-Get active delegates of current epoch:
+Get consensus delegates of current epoch:
 ```
 ioctl node delegate
 ```
