@@ -1,14 +1,14 @@
 ## IoTeX 代表(delegate)基础设施指南
 
-1. 在商业云负载均衡器后面运行您的节点。
+1. 基于商业云负载均衡器运行您的节点。
 
-   像amazon AWS[^1], google GCE[^2] or Cloudflare[^3] 等云提供商会提供良好的保护, 防止大量的包括 SYN floods, IP fragment floods, port exhaustion在内的 L3, L4 DDoS 攻击, 我们建议使用这些解决方案网络专家来帮助您保护您的节点。
+   像amazon AWS[^1], google GCE[^2] or Cloudflare[^3] 等云提供商会提供良好的保护, 防止大量的包括 SYN floods, IP fragment floods, port exhaustion在内的 L3, L4 DDoS 攻击, 我们建议使用这些专业解决方案来帮助您保护您的节点
 
 2. 将Envoy Proxy作为边缘代理放在节点前面。
 
    [Envoy](https://www.envoyproxy.io/) 与 [ratelimit](https://github.com/lyft/ratelimit) 对HTTP / HTTP2和所有网络流量的连接限制提供请求速率限制。将您的IoTeX节点置于Envoy代理后面，为您提供针对攻击者的另一层保护。此外，由于IoTeX节点API使用GRPC，如果您想成为服务节点并为浏览器单页面应用程序提供API请求, 您将需要Envoy的 [grpc-web](https://github.com/grpc/grpc-web) 过滤器以启用此功能。
 
-   在我们的测试网络集群中，我们在HTTP / HTTP2请求上为每个IP速率限制设置了每秒20个请求
+   在我们的测试网络集群中，我们在HTTP / HTTP2请求上为每个IP速率上限为每秒20个请求
 
    ```yaml
    domain: iotex-api
@@ -71,7 +71,7 @@
      failureThreshold: 5
    ```
 
-   我们目前为testnet运行的委托机器人的设置与下图非常相似:![infra](https://github.com/iotexproject/iotex-testnet/blob/master/infra.png?raw=true)
+   我们目前为testnet运行的代理机器人设置与下图非常相似:![infra](https://github.com/iotexproject/iotex-testnet/blob/master/infra.png?raw=true)
 
 ## 让它变得更好
    我们在运行分散式基础设施方面仍然不够成熟。我们还有很多东西可以学习和改进。由于它是分散的，我们将需要从不同角度来看的选项和想法。这意味着我们需要很多帮助才能帮助我们变得更好。
