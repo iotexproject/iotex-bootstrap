@@ -33,7 +33,7 @@ IP and private key and uncomment the lines.
 4. Run the following command to start a node:
 
 ```
-docker run -d --name iotex-node \
+docker run -d \
         -p 4689:4689 \
         -p 14014:14014 \
         -p 8080:8080 \
