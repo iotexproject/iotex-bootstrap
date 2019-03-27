@@ -20,10 +20,7 @@ docker pull iotex/iotex-core:v0.5.0-rc5-hotfix1
 If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
 `gcr.io/iotex-servers/iotex-core:v0.5.0-rc5-hotfix1`.
 
-2. Edit `config.yaml` in this repo, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP
-and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
-
-3. Export `IOTEX_HOME`, create directories, and copy `https://github.com/iotexproject/iotex-testnet/blob/master/config.yaml` and `https://github.com/iotexproject/iotex-testnet/blob/master/genesis.yaml` into `$IOTEX_HOME/etc`, i.e., 
+2. Export `IOTEX_HOME`, create directories, and copy `https://github.com/iotexproject/iotex-testnet/blob/master/config.yaml` and `https://github.com/iotexproject/iotex-testnet/blob/master/genesis.yaml` into `$IOTEX_HOME/etc`, i.e., 
 
 ```
 wget https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/config.yaml
@@ -39,6 +36,9 @@ mkdir -p $IOTEX_HOME/etc
 cp config.yaml $IOTEX_HOME/etc/
 cp genesis.yaml $IOTEX_HOME/etc/
 ```
+
+3. Edit `config.yaml` in this repo, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP
+and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
 
 4. Run the following command to start a node:
 
