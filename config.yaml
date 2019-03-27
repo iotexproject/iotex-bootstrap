@@ -9,6 +9,7 @@ chain:
   # producerPrivKey: [SET YOUR PRIVATE KEY HERE]
   chainDBPath: "/var/data/chain.db"
   trieDBPath: "/var/data/trie.db"
+  maxCacheSize: 1000
   committee:
     beaconChainAPIs:
       - https://mainnet.infura.io/v3/b355cae6fafc4302b106b937ee6c15af
