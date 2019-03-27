@@ -37,8 +37,7 @@ cp config.yaml $IOTEX_HOME/etc/
 cp genesis.yaml $IOTEX_HOME/etc/
 ```
 
-3. Edit `config.yaml` in this repo, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP
-and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
+3. Edit `config.yaml` in `$IOTEX_HOME/etc/`, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
 
 4. Run the following command to start a node:
 
