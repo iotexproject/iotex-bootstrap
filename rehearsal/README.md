@@ -30,7 +30,14 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/rehears
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external
 IP and private key and uncomment the lines.
 
-4. Run the following command to start a node:
+4. (Optional) If you prefer to start from a snapshot, run the following commands:
+
+```
+curl https://storage.googleapis.com/blockchain-archive/data-with-idx-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+tar -xzf data.tar.gz
+```
+
+5. Run the following command to start a node:
 
 ```
 docker run -d \
@@ -54,7 +61,7 @@ Note that the command above will also make your node be a gateway, which could p
 don't want to enable this plugin, you could remove two lines from the command above: `-p 14014:14014 \` and
 `-plugin=gateway`.
 
-5. Make sure TCP ports 4689, 14014, 8080 are open on your firewall and load balancer (if any).
+6. Make sure TCP ports 4689, 14014, 8080 are open on your firewall and load balancer (if any).
 
 ## <a name="ioctl"/>Interact with MainNet Rehearsal
 
