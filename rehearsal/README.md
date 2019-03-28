@@ -40,7 +40,7 @@ tar -xzf data.tar.gz
 5. Run the following command to start a node:
 
 ```
-docker run -d \
+docker run -d --restart on-failure \
         -p 4689:4689 \
         -p 14014:14014 \
         -p 8080:8080 \
