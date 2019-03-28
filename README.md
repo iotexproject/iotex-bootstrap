@@ -4,23 +4,22 @@
 
 ## Updates
 
-Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc6) for what's new in v0.5.0-rc6.
+Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc7) for what's new in v0.5.0-rc7.
 
 **Note: make sure you always rebase to the LATEST `iotex-testnet` repo**
 
-**Note: for those who participated in the previous testnet, please restart with the docker image v0.5.0-rc6. you MUST
-clean up the local database if you have particpated into previous testnet runs!**
+**Note: If you're upgrade from v0.5.0-rc6, you DO NOT need to clean your data.**
 
 ## Join TestNet
 
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.5.0-rc6
+docker pull iotex/iotex-core:v0.5.0-rc7
 ```
 
 If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
-`gcr.io/iotex-servers/iotex-core:v0.5.0-rc6`.
+`gcr.io/iotex-servers/iotex-core:v0.5.0-rc7`.
 
 2. Export `IOTEX_HOME`, create directories, and copy `https://github.com/iotexproject/iotex-testnet/blob/master/config.yaml` and `https://github.com/iotexproject/iotex-testnet/blob/master/genesis.yaml` into `$IOTEX_HOME/etc`, i.e., 
 
@@ -52,7 +51,7 @@ docker run -d --name IoTeX-Node\
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0-rc6 \
+        iotex/iotex-core:v0.5.0-rc7 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -125,20 +124,3 @@ Container can be "stopped" and "restarted" with:
 docker stop IoTeX-Node
 docker start IoTeX-Node
 ```
-
-
-## Fast Block Sync
-
-IoTeX rootchain supports bootstrapping from archives (see below) which will greatly help to reduce the time spent on synchronization.
-```
-export IOTEX_SANPSHOT_URL=https://storage.googleapis.com/blockchain-archive/$IOTEX_SNAPSHOT_NAME
-cd $IOTEX_HOME
-wget $IOTEX_SANPSHOT_URL
-rm -rf data/
-tar -zxvf $IOTEX_SNAPSHOT_NAME
-rm -rf $IOTEX_SNAPSHOT_NAME
-```
-Before these instructions, if you want to run your node as a gateway, please `export IOTEX_SNAPSHOT_NAME=data-with-idx-latest.tar.gz`,
-otherwise, `export IOTEX_SNAPSHOT_NAME=data-latest.tar.gz`.
-
-Then `docker run ...` as above after the snapshot is ready.

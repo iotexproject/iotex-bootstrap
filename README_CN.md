@@ -2,11 +2,11 @@
 
 ## 更新
 
-查看代码发布[说明](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc6), 了解v0.5.0-rc6中的新增功能。
+查看代码发布[说明](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc7), 了解v0.5.0-rc7中的新增功能。
 
-**请确保始终绑定到`iotex-testnet`代码库的最新版本**
+**请确保始终绑定到`iotex-testnet`代码库的最新版本。**
 
-**注意：对于参与之前测试网络的用户，您必须清理本地数据库！再使用docker镜像v0.5.0-rc6-hotfix1重新启动!**
+**注意：如果你从v0.5.0-rc6升级过来，不需要删除本地数据。**
 
 ## 加入测试网络
 
@@ -15,11 +15,11 @@
 
 
 ```
-docker pull iotex/iotex-core:v0.5.0-rc6-hotfix1
+docker pull iotex/iotex-core:v0.5.0-rc7-hotfix1
 ```
 
 如果从docker hub中提取图像时遇到问题，您也可以在gcloud上尝试我们的镜像
-`gcr.io/iotex-servers/iotex-core:v0.5.0-rc6-hotfix1`.
+`gcr.io/iotex-servers/iotex-core:v0.5.0-rc7-hotfix1`.
 
 2. 在此数据库下编辑 `config.yaml` ，寻找 `externalHost` 和 `producerPrivKey` 
 用您的外部IP和私钥替换`[...]`并取消注释。请查看以下[部分]（#ioctl）以了解如何生成密钥。
@@ -53,7 +53,7 @@ docker run -d --name IoTeX-Node\
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0-rc6-hotfix1 \
+        iotex/iotex-core:v0.5.0-rc7-hotfix1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -124,20 +124,3 @@ docker rm IoTeX-Node
 docker stop IoTeX-Node
 docker start IoTeX-Node
 ```
-
-
-## Block快速同步
-
-IoTeX rootchain支持从存档中读取（见下文），这将极大地减少同步所花费的时间。
-```
-export IOTEX_SANPSHOT_URL=https://storage.googleapis.com/blockchain-archive/$IOTEX_SNAPSHOT_NAME
-cd $IOTEX_HOME
-wget $IOTEX_SANPSHOT_URL
-rm -rf data/
-tar -zxvf $IOTEX_SNAPSHOT_NAME
-rm -rf $IOTEX_SNAPSHOT_NAME
-```
-在这些说明之前，如果要将节点作为网关运行, 请运行 `export IOTEX_SNAPSHOT_NAME=data-with-idx-latest.tar.gz`,
-否则, `export IOTEX_SNAPSHOT_NAME=data-latest.tar.gz`.
-
-当snapshot准备好之后，运行 `docker run ...` 
