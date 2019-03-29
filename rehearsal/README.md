@@ -33,7 +33,7 @@ IP and private key and uncomment the lines.
 4. (Optional) If you prefer to start from a snapshot, run the following commands:
 
 ```
-curl https://t.iotex.me/data-latest > $IOTEX_HOME/data.tar.gz
+curl -L https://t.iotex.me/data-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 
