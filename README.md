@@ -64,6 +64,8 @@ Note that the command above will also make your node be a gateway, which could p
 don't want to enable this plugin, you could remove two lines from the command above: `-p 14014:14014 \` and
 `-plugin=gateway`.
 
+Security Practice (option): After the container started, you could delete the private key from config.yaml as it is already loaded into memory.
+
 5. Make sure TCP ports 4689, 14014, 8080 are open on your firewall and load balancer (if any).
 
 ## <a name="ioctl"/>Interact with TestNet
