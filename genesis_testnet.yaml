@@ -1,10 +1,10 @@
 account:
   initBalances:
-    io13n3382cjhaawmqfk4vmvvgllnryw4tf56qdtks: "100000000000000000000000000"
     io14jp9s6mp85g2x00spq66cmdds4qe2ge5r0p72d: "100000000000000000000000000"
     io15ccuntztkkuu0xnfhqf2qt8y28kpu0mnr65050: "100000000000000000000000000"
     io120au9ra0nffdle04jx2g5gccn6gq8qd4fy03l4: "100000000000000000000000000"
     io1343pwahz73s7vzd3l8jxxrjwcugxae2nx58zwf: "100000000000000000000000000"
+    io13n3382cjhaawmqfk4vmvvgllnryw4tf56qdtks: "100000000000000000000000000"
     io1959ykdhkene09at5nfl42a7xjwf5wgplpg7eh9: "100000000000000000000000000"
     io1az8tln8432h42vf54e0c0fmaqcytwm2nk82g95: "100000000000000000000000000"
     io1c5a8kv4nljt4dy2mnxk23rj0255a9x4uvn4x5m: "100000000000000000000000000"
@@ -40,7 +40,7 @@ poll:
   delegates: []
   enableGravityChainVoting: true
   gravityChainHeightInterval: 100
-  gravityChainStartHeight: 7497000
+  gravityChainStartHeight: 7497800
   registerContractAddress: 0x92adef0e5e0c2b4f64a1ac79823f7ad3bc1662c4
   scoreThreshold: "2000000000000000000000000"
   selfStakingThreshold: "1200000000000000000000000"
