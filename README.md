@@ -1,49 +1,55 @@
-# IoTeX TestNet Manual
+# IoTeX Delegate Manual
 
-### For those who join MainNet rehearsal, please read the document [here](rehearsal/README.md)!
+### RC8 is an incompatible upgrade. Please cleanup your local data before restart.
 
-## Updates
+## Index
 
-Check the release [notes](https://github.com/iotexproject/iotex-core/releases/tag/v0.5.0-rc7) for what's new in v0.5.0-rc7.
+- [Join MainNet Rehearsal](#mainnet)
+- [Join TestNet](#testnet)
+- [Interact with Blockchain](#ioctl)
+- [Operate Your Node](#ops)
 
-**Note: make sure you always rebase to the LATEST `iotex-testnet` repo**
-
-**Note: If you're upgrade from v0.5.0-rc6, you DO NOT need to clean your data.**
-
-## Join TestNet
+## <a name="mainnet"/>Join MainNet Rehearsal
 
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.5.0-rc7
+docker pull iotex/iotex-core:v0.5.0-rc8
 ```
 
 If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
-`gcr.io/iotex-servers/iotex-core:v0.5.0-rc7`.
+`gcr.io/iotex-servers/iotex-core:v0.5.0-rc8`.
 
-2. Export `IOTEX_HOME`, create directories, and copy `https://github.com/iotexproject/iotex-testnet/blob/master/config.yaml` and `https://github.com/iotexproject/iotex-testnet/blob/master/genesis.yaml` into `$IOTEX_HOME/etc`, i.e., 
+2. Set the environment with the following commands:
 
 ```
-wget https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/config.yaml
-wget https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/genesis.yaml
+mkdir -p ~/iotex-var
+cd ~/iotex-var
 
-cd iotex-testnet
-export IOTEX_HOME=$PWD #[SET YOUR IOTEX HOME PATH HERE]
+export IOTEX_HOME=$PWD
 
 mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-cp config.yaml $IOTEX_HOME/etc/
-cp genesis.yaml $IOTEX_HOME/etc/
+curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/rehearsal/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/rehearsal/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
-3. Edit `config.yaml` in `$IOTEX_HOME/etc/`, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external IP and private key and uncomment the lines. Check the following [section](#ioctl) for how to generate a key.
+3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external
+IP and private key and uncomment the lines.
 
-4. Run the following command to start a node:
+4. (Optional) If you prefer to start from a snapshot, run the following commands:
 
 ```
-docker run -d --name IoTeX-Node\
+curl -L https://t.iotex.me/data-latest > $IOTEX_HOME/data.tar.gz
+tar -xzf data.tar.gz
+```
+
+5. Run the following command to start a node:
+
+```
+docker run -d --restart on-failure --name iotex \
         -p 4689:4689 \
         -p 14014:14014 \
         -p 8080:8080 \
@@ -51,7 +57,7 @@ docker run -d --name IoTeX-Node\
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0-rc7 \
+        iotex/iotex-core:v0.5.0-rc8 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -64,23 +70,39 @@ Note that the command above will also make your node be a gateway, which could p
 don't want to enable this plugin, you could remove two lines from the command above: `-p 14014:14014 \` and
 `-plugin=gateway`.
 
-Security Practice (option): After the container started, you could delete the private key from config.yaml as it is already loaded into memory.
+6. Make sure TCP ports 4689, 14014, 8080 are open on your firewall and load balancer (if any).
 
-5. Make sure TCP ports 4689, 14014, 8080 are open on your firewall and load balancer (if any).
+## <a name="testnet"/>Join TestNet
 
-## <a name="ioctl"/>Interact with TestNet
+There's almost no difference to join TestNet, but in step 2, you need to use the config and genesis files for TestNet:
+
+```
+curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/rehearsal/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/rehearsal/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+```
+
+In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/data-testnet-latest.
 
 
-You can install ioctl (a command-line interface for interacting with IoTeX blockchain)
+## <a name="ioctl"/>Interact with Blockchain
+
+
+You can install `ioctl` (a command-line interface for interacting with IoTeX blockchain)
 
 ```
 curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cli.sh | sh
 ```
 
-Make sure ioctl is pointed to the testnet endpoint:
+You can point `ioctl` to your node:
+
 ```
-ioctl config set endpoint api.testnet.iotex.one:80
+ioctl config set endpoint localhost:14014
 ```
+
+Or you can point it to our nodes:
+
+- MainNet rehearsal: api.iotex.one:80
+- TestNet: api.testnet.iotex.one:80
 
 Generate key:
 ```
@@ -92,37 +114,38 @@ Get active delegates of current epoch:
 ioctl node delegate
 ```
 
-
 Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/cli/ioctl/README.md) for more details.
 
-## Checking node log
+## <a name="ops"/>Operate Your Node
+
+### Checking Node log
 
 Container logs can be accessed with the following command. 
 
 ```
-docker logs IoTeX-Node
+docker logs iotex
 ```
 
-content can be filtered with:
+Content can be filtered with:
 
 ```
-docker logs -f --tail 100 IoTeX-Node |grep --color -E "epoch|height|error|rolldposctx"
+docker logs -f --tail 100 iotex |grep --color -E "epoch|height|error|rolldposctx"
 ```
 
-## Stop and remove container
+### Stop and remove container
 
-When starting the container with ```--name=IoTeX-Node```, you must remove before a new building
+You must remove before a new building
 
 ```
-docker stop IoTeX-Node
-docker rm IoTeX-Node
+docker stop iotex
+docker rm iotex
 ```
 
-## Pause and Restarting container
+### Pause and Restarting container
 
 Container can be "stopped" and "restarted" with:
 
 ```
-docker stop IoTeX-Node
-docker start IoTeX-Node
+docker stop iotex
+docker start iotex
 ```

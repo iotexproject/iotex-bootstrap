@@ -35,12 +35,12 @@ blockchain:
   numDelegates: 24
   numSubEpochs: 15
   timeBasedRotation: true
-  timestamp: 1552460600
+  timestamp: 1554274800
 poll:
   delegates: []
   enableGravityChainVoting: true
   gravityChainHeightInterval: 100
-  gravityChainStartHeight: 7453550
+  gravityChainStartHeight: 7497000
   registerContractAddress: 0x92adef0e5e0c2b4f64a1ac79823f7ad3bc1662c4
   scoreThreshold: "2000000000000000000000000"
   selfStakingThreshold: "1200000000000000000000000"
@@ -48,7 +48,7 @@ poll:
   voteThreshold: "100000000000000000000"
 rewarding:
   blockReward: "16000000000000000000"
-  epochReward: "300000000000000000000000"
+  epochReward: "12500000000000000000000"
   exemptAddrsFromEpochReward:
     - io1rm223d7jyflpg0cvkja4zmgnjz8hrrdgm09pu0
     - io1dg65erd07hrvyme0493f2kqj2utuvpyf6jeuhd
@@ -74,9 +74,9 @@ rewarding:
     - io14jp9s6mp85g2x00spq66cmdds4qe2ge5r0p72d
     - io1pgth3m3e4klanwdrfrgk6yelw03ws64ml8c22y
     - io1gn450vcrjkh7r35gcjyt93tp3u2dadz3k07wzw
-  foundationBonus: "1920000000000000000000"
-  foundationBonusLastEpoch: 365
+  foundationBonus: "80000000000000000000"
+  foundationBonusLastEpoch: 8760
   initBalance: "1200000000000000000000000000"
   numDelegatesForEpochReward: 100
   numDelegatesForFoundationBonus: 36
-  productivityThreshold: 90
+  productivityThreshold: 85
