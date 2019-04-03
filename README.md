@@ -1,5 +1,7 @@
 # IoTeX Delegate Manual
 
+### RC8 is available for testnet, but not mainnet rehearsal.
+
 ### RC8 is an incompatible upgrade. Please cleanup your local data before restart.
 
 ## Index

@@ -43,8 +43,9 @@ consensus:
     delay: 10s
 
 blockSync:
-  bufferSize: 200
-  intervalSize: 5
+  bufferSize: 400
+  maxRepeat: 3
+  repeatDecayStep: 3
 
 log:
   zap:
