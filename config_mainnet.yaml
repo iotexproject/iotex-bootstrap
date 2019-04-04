@@ -3,7 +3,7 @@ network:
   externalPort: 4689
   bootstrapNodes:
     - /dns4/35.237.67.212/tcp/4689/ipfs/12D3KooWCb1nZdLsR6WBgXqmGnzRvhxASQJaAB3NgwTNk3JE43Wj
-    - /dns4/a37d87f4756e311e9a08506c716aa958-68d97407a01c0a72.elb.ap-southeast-1.amazonaws.com/tcp/4689/ipfs/12D3KooWCPqEAvK3xfBLFTqf2FjLyFeXy8zx5kY7ehcST7xQvVNrroot@iotex-delegate-0:/go/src/github.com/iotexpro
+    - /dns4/a37d87f4756e311e9a08506c716aa958-68d97407a01c0a72.elb.ap-southeast-1.amazonaws.com/tcp/4689/ipfs/12D3KooWCPqEAvK3xfBLFTqf2FjLyFeXy8zx5kY7ehcST7xQvVNr
 
 chain:
   # producerPrivKey: SET YOUR PRIVATE KEY HERE (e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)
