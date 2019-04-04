@@ -47,6 +47,7 @@ IP and private key and uncomment the lines.
 curl -L https://t.iotex.me/data-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
+We will update the snapshot once a day.
 
 5. Run the following command to start a node:
 
