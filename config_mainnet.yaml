@@ -1,16 +1,17 @@
 network:
-  externalHost: 12.34.56.78
+  # externalHost: SET YOUR EXTERNAL IP HERE (e.g., 12.34.56.78)
   externalPort: 4689
   bootstrapNodes:
-    - "/dns4/bootnode-0.testnet.iotex.one/tcp/4689/ipfs/12D3KooWCb1nZdLsR6WBgXqmGnzRvhxASQJaAB3NgwTNk3JE43Wj"
-    - "/dns4/a12f5c5ca34a211e9809c02f3dedec74-0c7145ef4e7091ef.elb.us-west-2.amazonaws.com/tcp/4689/ipfs/12D3KooWEgPtefxSeWQHjXFdrze1NicjzqKyVmMgyxqRBRByqi2Q"
+    - /dns4/35.237.67.212/tcp/4689/ipfs/12D3KooWCb1nZdLsR6WBgXqmGnzRvhxASQJaAB3NgwTNk3JE43Wj
+    - /dns4/a37d87f4756e311e9a08506c716aa958-68d97407a01c0a72.elb.ap-southeast-1.amazonaws.com/tcp/4689/ipfs/12D3KooWCPqEAvK3xfBLFTqf2FjLyFeXy8zx5kY7ehcST7xQvVNr
 
 chain:
-  producerPrivKey: 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8
-  chainDBPath: "/var/data/chain.db"
-  trieDBPath: "/var/data/trie.db"
+  # producerPrivKey: SET YOUR PRIVATE KEY HERE (e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)
+  chainDBPath: /var/data/chain.db
+  trieDBPath: /var/data/trie.db
+  maxCacheSize: 1000
   committee:
-    beaconChainAPIs:
+    gravityChainAPIs:
       - https://mainnet.infura.io/v3/b355cae6fafc4302b106b937ee6c15af
       - wss://us-east-1.iotex.world/ws
       - wss://singapore-1.iotex.world/ws
@@ -22,14 +23,14 @@ chain:
     paginationSize: 11
     cacheSize: 1000
   gravityChainDB:
-    dbPath: "/var/data/poll.db"
+    dbPath: /var/data/poll.db
     numRetries: 8
 
 actPool:
-  minGasPrice: "0"
+  minGasPrice: 0
 
 consensus:
-  scheme: "ROLLDPOS"
+  scheme: ROLLDPOS
   rollDPoS:
     fsm:
       unmatchedEventTTL: 3s
@@ -40,7 +41,9 @@ consensus:
     delay: 10s
 
 blockSync:
-  bufferSize: 50
+  bufferSize: 400
+  maxRepeat: 3
+  repeatDecayStep: 3
 
 log:
   zap:
@@ -49,5 +52,5 @@ log:
     disableStacktrace: true
     outputPaths: ["stderr", "stdout"]
     errorOutputPaths: ["stderr"]
-  stderrRedirectFile: "/var/log/s.log"
+  stderrRedirectFile: /var/log/s.log
   stdLogRedirect: true
