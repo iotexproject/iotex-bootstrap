@@ -112,7 +112,7 @@ Generate key:
 ioctl account create
 ```
 
-Get active delegates of current epoch:
+Get consensus delegates of current epoch:
 ```
 ioctl node delegate
 ```
@@ -137,7 +137,7 @@ docker logs -f --tail 100 iotex |grep --color -E "epoch|height|error|rolldposctx
 
 ### Stop and remove container
 
-You must remove before a new building
+When starting the container with ```--name=IoTeX-Node```, you must remove the old contaniner before a new build.
 
 ```
 docker stop iotex
