@@ -1,9 +1,11 @@
 # IoTeX 主网预演手册
 
 
-**rc8适用于主网预演2和测试网络**
+**RC8适用于主网预演2和测试网络**
 
-**rc8是一个不兼容升级，请在开始之前清除本地数据**
+**RC8是一个不兼容升级，请在开始之前清除本地数据**
+
+## 索引
 
 - [加入主网预演](#mainnet)
 - [加入测试网络](#testnet)
@@ -13,10 +15,10 @@
 
 ## <a name="mainnet"/>参与主网预演
 
-1. 提取(pull) docker镜象
+1. 提取(pull) docker镜像
 
 ```
-docker pull iotex/iotex-core:v0.5.0-rc8-hotfix1
+docker pull iotex/iotex-core:v0.5.0-rc8
 ```
 
 如果从docker hub中提取图像时遇到问题，您也可以在gcloud上尝试我们的镜像
@@ -132,7 +134,7 @@ docker logs iotex
 内容可以用以下命令筛选:
 
 ```
-docker logs -f --tail 100 IoTeX-Node |grep --color -E "epoch|height|error|rolldposctx"
+docker logs -f --tail 100 iotex |grep --color -E "epoch|height|error|rolldposctx"
 ```
 
 ## 停止和删除容器(container)
@@ -140,8 +142,8 @@ docker logs -f --tail 100 IoTeX-Node |grep --color -E "epoch|height|error|rolldp
 你必须在产生一个新的container之前先移除之前的container
 
 ```
-docker stop IoTeX-Node
-docker rm IoTeX-Node
+docker stop iotex
+docker rm iotex
 ```
 
 ## 暂停和重启container
@@ -149,6 +151,6 @@ docker rm IoTeX-Node
 可以使用以下命令“停止”和“重新启动”container:
 
 ```
-docker stop IoTeX-Node
-docker start IoTeX-Node
+docker stop iotex
+docker start iotex
 ```
