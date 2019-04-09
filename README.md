@@ -54,6 +54,24 @@ We will update the snapshot once a day.
 ```
 docker run -d --restart on-failure --name iotex \
         -p 4689:4689 \
+        -p 8080:8080 \
+        -v=$IOTEX_HOME/data:/var/data:rw \
+        -v=$IOTEX_HOME/log:/var/log:rw \
+        -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
+        -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
+        iotex/iotex-core:v0.5.0-rc8 \
+        iotex-server \
+        -config-path=/etc/iotex/config_override.yaml \
+        -genesis-path=/etc/iotex/genesis.yaml
+```
+
+Now your node should be started successfully.
+
+If you want to also make your node be a gateway, which could process API requests from users, use the following command instead:
+
+```
+docker run -d --restart on-failure --name iotex \
+        -p 4689:4689 \
         -p 14014:14014 \
         -p 8080:8080 \
         -v=$IOTEX_HOME/data:/var/data:rw \
@@ -67,13 +85,7 @@ docker run -d --restart on-failure --name iotex \
         -plugin=gateway
 ```
 
-Now your node should be started successfully.
-
-Note that the command above will also make your node be a gateway, which could process API requests from users. If you
-don't want to enable this plugin, you could remove two lines from the command above: `-p 14014:14014 \` and
-`-plugin=gateway`.
-
-6. Make sure TCP ports 4689, 14014, 8080 are open on your firewall and load balancer (if any).
+6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
 ## <a name="testnet"/>Join TestNet
 
