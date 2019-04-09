@@ -44,10 +44,11 @@ IP and private key and uncomment the lines.
 4. (Optional) If you prefer to start from a snapshot, run the following commands:
 
 ```
-curl -L https://t.iotex.me/data-latest > $IOTEX_HOME/data.tar.gz
+curl -L https://t.iotex.me/mainnet-data-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
-We will update the snapshot once a day.
+We will update the snapshot once a day. If you plan to run your node as a gateway, please use the snapshot with index data:
+https://t.iotex.me/mainnet-data-with-idx-latest.
 
 5. Run the following command to start a node:
 
@@ -96,7 +97,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/config_
 curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
-In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/data-testnet-latest.
+In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
 
 ## <a name="ioctl"/>Interact with Blockchain
