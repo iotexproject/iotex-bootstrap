@@ -16,11 +16,11 @@
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.5.0-rc8
+docker pull iotex/iotex-core:v0.5.0-rc8-hotfix2
 ```
 
 If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
-`gcr.io/iotex-servers/iotex-core:v0.5.0-rc8`.
+`gcr.io/iotex-servers/iotex-core:v0.5.0-rc8-hotfix2`.
 
 2. Set the environment with the following commands:
 
