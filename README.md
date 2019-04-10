@@ -1,15 +1,20 @@
 # IoTeX Delegate Manual
 
-### RC8 is available for both testnet and mainnet rehearsal 2.
-
-### RC8 is an incompatible upgrade. Please cleanup your local data before restart.
+### V0.5.0-rc9 is rollout to testnet. Please try it out. If you join the previous round of testnet, you MUST restart with the clean state.
 
 ## Index
 
+- [Release Status](#status)
 - [Join MainNet Rehearsal](#mainnet)
 - [Join TestNet](#testnet)
 - [Interact with Blockchain](#ioctl)
 - [Operate Your Node](#ops)
+
+
+## <a name="status"/>Release Status
+
+- MainNet Rehearsal: v0.5.0-rc8-hotfix8
+- TestNet: v0.5.0-rc9
 
 ## <a name="mainnet"/>Join MainNet Rehearsal
 
@@ -90,6 +95,8 @@ docker run -d --restart on-failure --name iotex \
 
 ## <a name="testnet"/>Join TestNet
 
+Current testnet is running with release `v0.5.0-rc9`.
+
 There's almost no difference to join TestNet, but in step 2, you need to use the config and genesis files for TestNet:
 
 ```
@@ -99,6 +106,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/genesis
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
+In step 5, you need to replace the docker image tag in the command with `v0.5.0-rc9`.
 
 ## <a name="ioctl"/>Interact with Blockchain
 
@@ -150,7 +158,7 @@ docker logs -f --tail 100 iotex |grep --color -E "epoch|height|error|rolldposctx
 
 ### Stop and remove container
 
-When starting the container with ```--name=IoTeX-Node```, you must remove the old contaniner before a new build.
+When starting the container with ```--name=iotex```, you must remove the old container before a new build.
 
 ```
 docker stop iotex
