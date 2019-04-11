@@ -60,3 +60,7 @@ Grafana is an open source metric analytics & visualization suite. It is most com
 ### Check Grafana status
     sudo netstat -nltp|grep 3000
     open http://${hostip}:3000
+
+## Setup in Kubernetes
+You can use [prometheus operator](https://github.com/coreos/prometheus-operator) in k8s.
+To set it up, you can install this helm chart: https://github.com/helm/charts/tree/master/stable/prometheus-operator
