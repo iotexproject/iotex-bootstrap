@@ -1,9 +1,9 @@
 # Prometheus monitoring and visualize the metrics iotex-testnet
 
-## precondition
+## Precondition
 
 - docker installed
-- iotex node mainnet-rehearsal (https://github.com/iotexproject/iotex-testnet)
+- full node connected to mainnet-rehearsal (https://github.com/iotexproject/iotex-testnet)
 
 ## Install prometheus
 
