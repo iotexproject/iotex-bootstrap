@@ -30,7 +30,7 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
         - targets: ["${hostip}:8080"]
     EOF
 
-## get dcoker image and run prometheus
+## get image and run prometheus
 
     sudo docker pull prom/prometheus
 
@@ -44,6 +44,7 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
     sudo netstat -nltp|grep 9090
 
 ## visit http://${hostip}:9090/targets
+
 [![](https://github.com/feigu1984/iotex-testnet/blob/patch-1/monitoring/iotex_targets.png)]
 
 [![](https://github.com/feigu1984/iotex-testnet/blob/patch-1/monitoring/iotex_metric.png)]
@@ -58,3 +59,4 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
 
     sudo netstat -nltp|grep 3000
 
+## visit http://${hostip}:3000
