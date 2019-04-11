@@ -1,4 +1,11 @@
-# Using Docker Install prometheus
+# Prometheus monitoring and visualize the metrics iotex-testnet
+
+## precondition
+
+- docker installed
+- iotex node mainnet-rehearsal (https://github.com/iotexproject/iotex-testnet)
+
+## Install prometheus
 
 ## Custom config  
 reference: https://prometheus.io/docs/prometheus/latest/configuration/configuration/
@@ -37,8 +44,9 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
     sudo netstat -nltp|grep 9090
 
 ## visit http://${hostip}:9090/targets
+[![](https://github.com/feigu1984/iotex-testnet/blob/patch-1/monitoring/iotex_targets.png)]
 
-
+[![](https://github.com/feigu1984/iotex-testnet/blob/patch-1/monitoring/iotex_metric.png)]
 
 
 ## Using Docker Install Grafana
@@ -49,3 +57,4 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
 ## check grafana running
 
     sudo netstat -nltp|grep 3000
+
