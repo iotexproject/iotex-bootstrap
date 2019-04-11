@@ -1,19 +1,24 @@
 # IoTeX 主网预演手册
 
+### v0.5.0-rc9已经在测试网上线，可供大家试用。如果您之前加入了前一轮的测试网，你必须删除所有数据后启动
 
-**RC8适用于主网预演2和测试网络**
-
-**RC8是一个不兼容升级，请在开始之前清除本地数据**
 
 ## 索引
 
+- [版本状态](#status)
 - [加入主网预演](#mainnet)
 - [加入测试网络](#testnet)
 - [与区块链交互](#ioctl)
 - [操作您的节点](#ops)
 
 
-## <a name="mainnet"/>参与主网预演
+## <a name="status"/>版本状态
+
+主网预演：v0.5.0-rc8-hotfix2
+测试网：v.5.0-rc9
+
+
+## <a name="mainnet"/>加入主网预演
 
 1. 提取(pull) docker镜像
 
@@ -79,6 +84,8 @@ docker run -d --restart on-failure --name iotex \
 
 ## <a name="testnet"/>加入测试网络
 
+当前测试网络运行的是“v0.5.0-rc9“版本
+
 加入测试网络基本没有什么不同，只是在第二步，您需要使用以下的源文件：
 ```
 curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
@@ -86,6 +93,8 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/genesis
 ```
 
 在第四步，您需要使用针对于测试网络的snapshot: https://t.iotex.me/data-testnet-latest.
+
+在第五步，您需要将``iotex/iotex-core:v0.5.0-rc8``用``iotex/iotex-core:v0.5.0-rc9``代替
 
 
 ## <a name="ioctl"/>与区块链交互
