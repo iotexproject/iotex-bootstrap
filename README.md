@@ -13,7 +13,7 @@
 
 ## <a name="status"/>Release Status
 
-- MainNet Rehearsal: v0.5.0-rc8-hotfix8
+- MainNet Rehearsal: v0.5.0-rc8-hotfix2
 - TestNet: v0.5.0-rc9
 
 ## <a name="mainnet"/>Join MainNet Rehearsal
