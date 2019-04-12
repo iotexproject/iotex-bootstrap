@@ -1,18 +1,20 @@
-# Prometheus monitoring and visualize the metrics iotex-testnet
+# Visualize Metrics of Your Fullnode
 
-## precondition
+## Precondition
 
 - docker installed
-- iotex node mainnet-rehearsal (https://github.com/iotexproject/iotex-testnet)
+- full node connected to mainnet-rehearsal (https://github.com/iotexproject/iotex-testnet)
 
-## Install prometheus
+## Setup Prometheus
+Prometheus is an open-source systems monitoring and alerting toolkit originally built at SoundCloud. Since its inception in 2012, many companies and organizations have adopted Prometheus, and the project has a very active developer and user community. It is now a standalone open source project and maintained independently of any company. We use prometheus as the backend for the monitoring of IoTeX fullnodes.
 
-## Custom config  
+
+### Custom Config  
 reference: https://prometheus.io/docs/prometheus/latest/configuration/configuration/
 
 **get system eth0 ip**  
 
-> hostip=$(hostname -i|awk '{print$1}')
+    hostip=$(hostname -i|awk '{print$1}')
 
     cat <<EOF> ~/prometheus.yml
     global:
@@ -30,7 +32,7 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
         - targets: ["${hostip}:8080"]
     EOF
 
-## get image and run prometheus
+### Download and run prometheus
 
     sudo docker pull prom/prometheus
 
@@ -40,10 +42,10 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
       prom/prometheus \
       --config.file=/etc/prometheus/prometheus.yml
 
-## check prometheus running
+### Check prometheus status
     sudo netstat -nltp|grep 9090
+    open http://${hostip}:9090/targets
 
-## visit http://${hostip}:9090/targets
 - check target
 
 ![](iotex_targets.png)
@@ -52,17 +54,16 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
 
 ![](iotex_metric.png)
 
+## Setup Grafana
+Grafana is an open source metric analytics & visualization suite. It is most commonly used for visualizing time series data for infrastructure and application analytics but many use it in other domains including industrial sensors, home automation, weather, and process control. We use prometheus as the frontend for the monitoring of IoTeX fullnodes.
 
-## Using Docker Install Grafana
-
+### Download and run Grafana
     docker pull grafana/grafana
     docker run -d --name=grafana -p 3000:3000 grafana/grafana
 
-## check grafana running
-
+### Check Grafana status
     sudo netstat -nltp|grep 3000
-
-## visit you grafana web ui :http://${hostip}:3000
+    open http://${hostip}:3000
 
 - download iotex template: [iotex-grafana.json](https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/monitoring/iotex-grafana.json)
 
@@ -71,3 +72,7 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
 ![](grafana_01.png)
 
 ![](grafana_02.png)
+
+## Setup in Kubernetes
+You can use [prometheus operator](https://github.com/coreos/prometheus-operator) in k8s.
+To set it up, you can install this helm chart: https://github.com/helm/charts/tree/master/stable/prometheus-operator
