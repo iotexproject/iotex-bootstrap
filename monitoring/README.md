@@ -44,10 +44,13 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
     sudo netstat -nltp|grep 9090
 
 ## visit http://${hostip}:9090/targets
+- check target
 
-[![](https://github.com/feigu1984/iotex-testnet/blob/patch-1/monitoring/iotex_targets.png)]
+[![](iotex_targets.png)]
 
-[![](https://github.com/feigu1984/iotex-testnet/blob/patch-1/monitoring/iotex_metric.png)]
+- check metric
+
+[![](iotex_metric.png)]
 
 
 ## Using Docker Install Grafana
@@ -59,4 +62,12 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
 
     sudo netstat -nltp|grep 3000
 
-## visit http://${hostip}:3000
+## visit you grafana web ui :http://${hostip}:3000
+
+- download iotex template: [iotex-grafana.json](https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/monitoring/iotex-grafana.json)
+
+- import you grafana
+
+[![](grafana_01.png)]
+
+[![](grafana_02.png)]
