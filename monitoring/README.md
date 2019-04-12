@@ -42,16 +42,11 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
       prom/prometheus \
       --config.file=/etc/prometheus/prometheus.yml
 
-### Check prometheus status
+### Check Prometheus status
     sudo netstat -nltp|grep 9090
     open http://${hostip}:9090/targets
 
-
-- check target
-
 ![](iotex_targets.png)
-
-- check metric
 
 ![](iotex_metric.png)
 
