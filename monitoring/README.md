@@ -42,16 +42,17 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
       prom/prometheus \
       --config.file=/etc/prometheus/prometheus.yml
 
-### Check prometheus status
+### Check Prometheus status
     sudo netstat -nltp|grep 9090
     open http://${hostip}:9090/targets
 
-[![](https://github.com/feigu1984/iotex-testnet/blob/patch-1/monitoring/iotex_targets.png)]
+![](iotex_targets.png)
 
-[![](https://github.com/feigu1984/iotex-testnet/blob/patch-1/monitoring/iotex_metric.png)]
+![](iotex_metric.png)
 
 ## Setup Grafana
 Grafana is an open source metric analytics & visualization suite. It is most commonly used for visualizing time series data for infrastructure and application analytics but many use it in other domains including industrial sensors, home automation, weather, and process control. We use prometheus as the frontend for the monitoring of IoTeX fullnodes.
+
 
 ### Download and run Grafana
     docker pull grafana/grafana
@@ -60,6 +61,15 @@ Grafana is an open source metric analytics & visualization suite. It is most com
 ### Check Grafana status
     sudo netstat -nltp|grep 3000
     open http://${hostip}:3000
+
+- download iotex template: [iotex-grafana.json](https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/monitoring/iotex-grafana.json)
+
+- import you grafana
+
+![](grafana_01.png)
+
+![](grafana_02.png)
+
 
 ## Setup in Kubernetes
 You can use [prometheus operator](https://github.com/coreos/prometheus-operator) in k8s.
