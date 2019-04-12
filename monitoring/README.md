@@ -46,6 +46,7 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
     sudo netstat -nltp|grep 9090
     open http://${hostip}:9090/targets
 
+
 - check target
 
 ![](iotex_targets.png)
@@ -56,6 +57,7 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
 
 ## Setup Grafana
 Grafana is an open source metric analytics & visualization suite. It is most commonly used for visualizing time series data for infrastructure and application analytics but many use it in other domains including industrial sensors, home automation, weather, and process control. We use prometheus as the frontend for the monitoring of IoTeX fullnodes.
+
 
 ### Download and run Grafana
     docker pull grafana/grafana
@@ -72,6 +74,7 @@ Grafana is an open source metric analytics & visualization suite. It is most com
 ![](grafana_01.png)
 
 ![](grafana_02.png)
+
 
 ## Setup in Kubernetes
 You can use [prometheus operator](https://github.com/coreos/prometheus-operator) in k8s.
