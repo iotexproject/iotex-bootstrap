@@ -46,11 +46,11 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
 ## visit http://${hostip}:9090/targets
 - check target
 
-[![](iotex_targets.png)]
+![](iotex_targets.png)
 
 - check metric
 
-[![](iotex_metric.png)]
+![](iotex_metric.png)
 
 
 ## Using Docker Install Grafana
@@ -68,6 +68,6 @@ reference: https://prometheus.io/docs/prometheus/latest/configuration/configurat
 
 - import you grafana
 
-[![](grafana_01.png)]
+![](grafana_01.png)
 
-[![](grafana_02.png)]
+![](grafana_02.png)
