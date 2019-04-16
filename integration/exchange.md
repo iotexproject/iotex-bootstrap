@@ -1,0 +1,38 @@
+# IoTeX Mainnet - Integration Guide
+
+This guide provides the steps for exchanges to integarte with IoTeX blockchain. The full IoTeX documentation can be found at http://docs.iotex.io.
+
+# 1. Deploy IoTeX Full Nodes
+
+You'll need to deploy a few full nodes that connect to the network, for reading from and writing to the network.  The full node stores the entire blockchain state, including pending actions/transactions; and broadcast new states (blocks, actions/transactions) to the network.
+
+Please follow [this guide](https://github.com/iotexproject/iotex-testnet/blob/master/README.md) to setup a full node running with `gateway` enabled. 
+
+Optionally, please follow [this guide](https://github.com/iotexproject/iotex-testnet/blob/master/monitoring/README.md) to setup the dashboard for monitoring.
+
+## Mainnet
+- Config: https://github.com/iotexproject/iotex-testnet/blob/master/config_testnet.yaml
+- Genesis: https://github.com/iotexproject/iotex-testnet/blob/master/genesis_testnet.yaml
+
+## Testnet
+- Config: https://github.com/iotexproject/iotex-testnet/blob/master/config_mainnet.yaml
+- Genesis: https://github.com/iotexproject/iotex-testnet/blob/master/genesis_mainnet.yaml
+
+# 2. Interact with IoTeX Full Nodes
+
+Once the full nodes are fully synced, one can communicate with them on the [gRPC](https://grpc.io/) port specified in the configuration file. The details of APIs are specified in https://docs.iotex.io/#api-2-0, and the corresponding proto files are located at https://github.com/iotexproject/iotex-core/tree/master/proto/api.
+
+# 3. Common Integration Patterns (TBD)
+
+## Generating Addresses
+
+## Sending IOTX from an address
+
+## Reading Actions from the network
+
+# 4. Testing
+
+Once you've fully integrated with the network, please test on both the testnet and the mainnet. All states on IoTeX blockchain can be queried through either the command line tool [ioctl](https://docs.iotex.io/#cli-command-line-interface) or the explorer ([Mainnet](https://iotexscan.io), [Testnet](https://testnet.iotexscan.io)).
+
+Please reach to IoTeX Team if you have any question.
+
