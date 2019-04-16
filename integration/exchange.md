@@ -6,17 +6,17 @@ This guide provides the steps for exchanges to integarte with IoTeX blockchain. 
 
 You'll need to deploy a few full nodes that connect to the network, for reading from and writing to the network.  The full node stores the entire blockchain state, including pending actions/transactions; and broadcast new states (blocks, actions/transactions) to the network.
 
-Please follow [this guide](https://github.com/iotexproject/iotex-testnet/blob/master/README.md) to setup a full node running with `gateway` enabled. 
+Please follow [this guide](../README.md) to setup a full node running with `gateway` enabled. 
 
-Optionally, please follow [this guide](https://github.com/iotexproject/iotex-testnet/blob/master/monitoring/README.md) to setup the dashboard for monitoring.
+Optionally, please follow [this guide](../monitoring/README.md) to setup the dashboard for monitoring.
 
 ## Mainnet
-- Config: https://github.com/iotexproject/iotex-testnet/blob/master/config_testnet.yaml
-- Genesis: https://github.com/iotexproject/iotex-testnet/blob/master/genesis_testnet.yaml
+- Config: https://github.com/iotexproject/iotex-bootstrap/blob/master/config_testnet.yaml
+- Genesis: https://github.com/iotexproject/iotex-bootstrap/blob/master/genesis_testnet.yaml
 
 ## Testnet
-- Config: https://github.com/iotexproject/iotex-testnet/blob/master/config_mainnet.yaml
-- Genesis: https://github.com/iotexproject/iotex-testnet/blob/master/genesis_mainnet.yaml
+- Config: https://github.com/iotexproject/iotex-bootstrap/blob/master/config_mainnet.yaml
+- Genesis: https://github.com/iotexproject/iotex-bootstrap/blob/master/genesis_mainnet.yaml
 
 # 2. Interact with IoTeX Full Nodes
 

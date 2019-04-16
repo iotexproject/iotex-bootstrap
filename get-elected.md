@@ -1,6 +1,6 @@
 # First thing first!
 
-- Make sure your node is up and running and fully synced by following https://github.com/iotexproject/iotex-testnet
+- Make sure your node is up and running and fully synced by following https://github.com/iotexproject/iotex-bootstrap
 - Have the command line tool installed
 ```
 Latest/nightly build

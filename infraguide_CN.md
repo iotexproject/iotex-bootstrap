@@ -71,7 +71,7 @@
      failureThreshold: 5
    ```
 
-   我们目前为testnet运行的代理机器人设置与下图非常相似:![infra](https://github.com/iotexproject/iotex-testnet/blob/master/infra.png?raw=true)
+   我们目前为testnet运行的代理机器人设置与下图非常相似:![infra](infra.png?raw=true)
 
 ## 让它变得更好
    运行分布式基础设施仍在起步阶段，我们还有很多东西需要学习和改进。去中心化模式可以帮我们从不同角度看待问题，希望大家集思广益，与我们共同建立一个更开放的高性能网络。

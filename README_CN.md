@@ -1,6 +1,6 @@
 # IoTeX 主网预演手册
 
-### v0.5.0-rc9已经在测试网上线，可供大家试用。如果您之前加入了前一轮的测试网，你必须删除所有数据后启动
+### v0.5.0-rc10已经在测试网上线，可供大家试用。如果您之前加入了前一轮的测试网，你必须删除所有数据后启动
 
 
 ## 索引
@@ -15,7 +15,7 @@
 ## <a name="status"/>版本状态
 
 主网预演：v0.5.0-rc8-hotfix2
-测试网：v.5.0-rc9
+测试网：v.5.0-rc10
 
 
 ## <a name="mainnet"/>加入主网预演
@@ -42,8 +42,8 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 3. 编辑 `$IOTEX_HOME/etc/config.yaml`, 查找 `externalHost` and `producerPrivKey`, 使用您的ip地址和私钥代替`[...]`，并且取消该行备注 
@@ -84,17 +84,17 @@ docker run -d --restart on-failure --name iotex \
 
 ## <a name="testnet"/>加入测试网络
 
-当前测试网络运行的是“v0.5.0-rc9“版本
+当前测试网络运行的是“v0.5.0-rc10“版本
 
 加入测试网络基本没有什么不同，只是在第二步，您需要使用以下的源文件：
 ```
-curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 在第四步，您需要使用针对于测试网络的snapshot: https://t.iotex.me/data-testnet-latest.
 
-在第五步，您需要将``iotex/iotex-core:v0.5.0-rc8``用``iotex/iotex-core:v0.5.0-rc9``代替
+在第五步，您需要将``iotex/iotex-core:v0.5.0-rc8``用``iotex/iotex-core:v0.5.0-rc10``代替
 
 
 ## <a name="ioctl"/>与区块链交互

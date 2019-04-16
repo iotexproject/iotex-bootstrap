@@ -70,7 +70,7 @@
      failureThreshold: 5
    ```
 
-The delegate bots we currently run for our testnet have a setup is very similar to following graph:![infra](https://github.com/iotexproject/iotex-testnet/blob/master/infra.png?raw=true)
+The delegate bots we currently run for our testnet have a setup is very similar to following graph:![infra](infra.png?raw=true)
 
 ## Make It Even Better
 We are still new in the area of running decentralized infrastructure. There are still many things we can learn and improve. And since it is decentralized, we will need options and ideas from different perspectives. That means we need a lot of help form your guys to help us getting better.

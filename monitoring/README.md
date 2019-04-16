@@ -3,7 +3,7 @@
 ## Precondition
 
 - docker installed
-- full node connected to mainnet-rehearsal (https://github.com/iotexproject/iotex-testnet)
+- full node connected to mainnet-rehearsal (https://github.com/iotexproject/iotex-bootstrap)
 
 ## Setup Prometheus
 Prometheus is an open-source systems monitoring and alerting toolkit originally built at SoundCloud. Since its inception in 2012, many companies and organizations have adopted Prometheus, and the project has a very active developer and user community. It is now a standalone open source project and maintained independently of any company. We use prometheus as the backend for the monitoring of IoTeX fullnodes.
@@ -62,7 +62,7 @@ Grafana is an open source metric analytics & visualization suite. It is most com
     sudo netstat -nltp|grep 3000
     open http://${hostip}:3000
 
-- download iotex template: [iotex-grafana.json](https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/monitoring/iotex-grafana.json)
+- download iotex template: [iotex-grafana.json](https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitoring/iotex-grafana.json)
 
 - import you grafana
 
