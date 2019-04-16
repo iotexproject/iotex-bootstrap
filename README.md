@@ -1,6 +1,6 @@
 # IoTeX Delegate Manual
 
-### V0.5.0-rc9 is rollout to testnet. Please try it out. If you join the previous round of testnet, you MUST restart with the clean state.
+### V0.5.0-rc10 is rollout to testnet. Please try it out. If you join the previous round of testnet, you MUST restart with the clean state.
 
 ## Index
 
@@ -14,7 +14,7 @@
 ## <a name="status"/>Release Status
 
 - MainNet Rehearsal: v0.5.0-rc8-hotfix2
-- TestNet: v0.5.0-rc9
+- TestNet: v0.5.0-rc10
 
 ## <a name="mainnet"/>Join MainNet Rehearsal
 
@@ -95,7 +95,7 @@ docker run -d --restart on-failure --name iotex \
 
 ## <a name="testnet"/>Join TestNet
 
-Current testnet is running with release `v0.5.0-rc9`.
+Current testnet is running with release `v0.5.0-rc10`.
 
 There's almost no difference to join TestNet, but in step 2, you need to use the config and genesis files for TestNet:
 
@@ -106,7 +106,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-testnet/master/genesis
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
-In step 5, you need to replace the docker image tag in the command with `v0.5.0-rc9`.
+In step 5, you need to replace the docker image tag in the command with `v0.5.0-rc10`.
 
 ## <a name="ioctl"/>Interact with Blockchain
 

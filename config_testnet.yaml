@@ -27,7 +27,7 @@ chain:
     numRetries: 8
 
 actPool:
-  minGasPrice: 0
+  minGasPrice: "1000000000000"
 
 consensus:
   scheme: ROLLDPOS
