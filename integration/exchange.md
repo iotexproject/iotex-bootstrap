@@ -11,12 +11,12 @@ Please follow [this guide](../README.md) to setup a full node running with `gate
 Optionally, please follow [this guide](../monitoring/README.md) to setup the dashboard for monitoring.
 
 ## Mainnet
-- Config: https://github.com/iotexproject/iotex-bootstrap/blob/master/config_testnet.yaml
-- Genesis: https://github.com/iotexproject/iotex-bootstrap/blob/master/genesis_testnet.yaml
-
-## Testnet
 - Config: https://github.com/iotexproject/iotex-bootstrap/blob/master/config_mainnet.yaml
 - Genesis: https://github.com/iotexproject/iotex-bootstrap/blob/master/genesis_mainnet.yaml
+
+## Testnet
+- Config: https://github.com/iotexproject/iotex-bootstrap/blob/master/config_testnet.yaml
+- Genesis: https://github.com/iotexproject/iotex-bootstrap/blob/master/genesis_testnet.yaml
 
 # 2. Interact with IoTeX Full Nodes
 
@@ -34,29 +34,7 @@ Then follow https://docs.iotex.io/#create-account-s to create a new account whic
 ## Sending IOTX from an address
 ### Use RPC call
 /APIService/SendAction with a complete signed action.
-To send a transfer from an address to another, you need to generate a SendActionRequest as follows:
-
-```
-iotexapi.SendActionRequest {
-  Action: iotextypes.Action{
-    Core: iotextypes.ActionCore{
-      Version: Version of Transfer (uint32)
-      Nonce: Pending Nonce of Source Address (uint64)
-      GasLimit:Gas Limit of Transfer (uint64)
-      GasPrice: Gas Price of Transfer (string)
-      Transfer: iotextypes.Transfer{
-        Amount: Transfer Amount (String)
-        Recipient: Transfer Recipient Address (string)
-        Payload: Transfer Payload (bytes)
-      }
-    }
-    SenderPubKey: Transfer Sender's Public Key (bytes)
-    Signature: Signature of Transfer (bytes)
-  }
-}
-```
-
-Upon success of sending a transfer, the action hash would be returned as the SendActionResponse.
+You can find a demo of [here](https://github.com/iotexproject/iotex-docs#sendaction)
 
 ### Use Command-line interface
 If you have not installed the latest Command-line interface tool, please follow https://docs.iotex.io/#cli-command-line-interface for ioctl installation.
