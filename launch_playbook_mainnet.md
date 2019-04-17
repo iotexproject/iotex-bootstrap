@@ -48,5 +48,7 @@ Please use ioctl tool to [check](https://docs.iotex.io/#query-reward) and [claim
 # Infrastructure Best Practice
 Please refer to [this guide](https://github.com/iotexproject/iotex-bootstrap/blob/master/infra/infraguide.md) to setup an infrastructure (rather than a solo node) to have high block productivity.
 
+Please refer to [this guide](https://github.com/iotexproject/iotex-bootstrap/tree/master/infra/monitoring) to setup a dashboard for monitoring your nodes.
+
 # Security practice
 TBD
