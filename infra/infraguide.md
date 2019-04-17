@@ -72,6 +72,49 @@
 
 The delegate bots we currently run for our testnet have a setup is very similar to following graph:![infra](infra.png?raw=true)
 
+## High Availability
+
+It's likely that one IoTeX node could be in outage because of code bugs, insufficient compute resource, host failure, network failure and etc, or you have to shutdown a node to do some maintenance work. Running multiple IoTeX nodes is the way to guarantee high availability (zero downtime) of your delegation. We provide the feature to run these nodes conveniently.
+
+Assuming that you will run 3 nodes for your delegate, 1 will run actively and participant into the consensus work, and 2 will standby and only listen to the blocks.
+
+All nodes can use the SAME `producerPrivKey`. For all nodes, add the following settings in `config.yaml`:
+
+```yaml
+...
+network:
+  ...
+  masterKey: producer_private_key-replica_id
+  ...
+...
+```
+
+For the active node, add the following settings in `config.yaml`:
+
+```yaml
+...
+system:
+  ...
+  active: true
+  ...
+...
+```
+
+For the standby nodes, add the following settings in `config.yaml`: 
+
+```yaml
+...
+system:
+  ...
+  active: false
+  ...
+...
+```
+
+Additionally, export `9009` port from the node's docker container. Once the active node is down, use `http://ip-to-one-node:9009/ha?activate=true` to turn a standby node into active mode.
+
+If you have quite a few nodes, and want to get rid of the tedious manual operation from your nodes or just want to try out the fancy setup of a high availability cluster, please check out the leader election solution [here](https://github.com/zjshen14/iotex-leader-election).
+
 ## Make It Even Better
 We are still new in the area of running decentralized infrastructure. There are still many things we can learn and improve. And since it is decentralized, we will need options and ideas from different perspectives. That means we need a lot of help form your guys to help us getting better.
 
