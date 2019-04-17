@@ -111,7 +111,7 @@ system:
 ...
 ```
 
-Additionally, export `9009` port from the node's docker container. Once the active node is down, use `http://ip-to-one-node:9009/ha?activate=true` to turn a standby node into active mode.
+Additionally, export `9009` port from the node's docker container. Once the active node is down, use `http://ip-to-one-node:9009/ha?activate=true` to turn a standby node into active mode. Similarly, you can turn an active node into standby mode by using `http://ip-to-one-node:9009/ha?activate=false`. `http://ip-to-one-node:9009/ha` can tell you the mode of a node.
 
 If you have quite a few nodes, and want to get rid of the tedious manual operation from your nodes or just want to try out the fancy setup of a high availability cluster, please check out the leader election solution [here](https://github.com/zjshen14/iotex-leader-election).
 
