@@ -72,7 +72,50 @@
    ```
 
    我们目前为testnet运行的代理机器人设置与下图非常相似:![infra](infra.png?raw=true)
+   
+   ## 高可用性
 
+ 由于代码错误，计算资源不足，主机故障，网络故障等原因，一个IoTeX节点可能处于中断状态，或者您必须关闭节点以执行某些维护工作。运行多个IoTeX节点是保证授权的高可用性（零停机时间）的方法。我们提供了方便地运行这些节点的功能。
+ 
+ 假设您将以一个注册身份运行3个节点，1个将主动运行并参与共识工作，2个将待机并且仅监听块。
+ 
+ 所有节点可以使用同样的 `producerPrivKey`. 对于所有的节点，添加下述设置到 `config.yaml`:
+
+ ```yaml
+...
+network:
+  ...
+  masterKey: producer_private_key-replica_id
+  ...
+...
+```
+
+ 对于主动节点，天下如下命令到 `config.yaml`:
+
+ ```yaml
+...
+system:
+  ...
+  active: true
+  ...
+...
+```
+
+ 对于待机节点，添加以下命令到 `config.yaml`: 
+
+ ```yaml
+...
+system:
+  ...
+  active: false
+  ...
+...
+```
+
+ 除此之外, 从节点的docker container导出 `9009` 端口. 一旦主动节点关闭，使用`http://ip-to-one-node:9009/ha?activate=true` 将待机节点变为主动模式。同样，您可以使用`http://ip-to-one-node:9009/ha?activate=false`将活动节点转为待机模式。 `http://ip-to-one-node:9009/ha`可以告诉你节点的模式。
+
+ 如果您有相当多的节点，并希望从您的节点中删除繁琐的手动操作，或者只是想尝试高可用性集群的设置，请在[此处](https://github.com/zjshen14/iotex-leader-election)查看领导者选举解决方案。
+ 
 ## 让它变得更好
    运行分布式基础设施仍在起步阶段，我们还有很多东西需要学习和改进。去中心化模式可以帮我们从不同角度看待问题，希望大家集思广益，与我们共同建立一个更开放的高性能网络。
 
