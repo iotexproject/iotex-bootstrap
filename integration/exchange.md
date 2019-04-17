@@ -34,7 +34,7 @@ Then follow https://docs.iotex.io/#create-account-s to create a new account whic
 ## Sending IOTX from an address
 ### Use RPC call
 /APIService/SendAction with a complete signed action.
-You can find a demo of [here](https://github.com/iotexproject/iotex-docs#sendaction)
+You can find a demo of [here](https://github.com/iotexproject/iotex-docs#sendaction).
 
 ### Use Command-line interface
 If you have not installed the latest Command-line interface tool, please follow https://docs.iotex.io/#cli-command-line-interface for ioctl installation.
