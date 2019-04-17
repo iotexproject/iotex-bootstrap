@@ -1,3 +1,5 @@
+# Best Security Practice
+
 Any server exposed to the public can become a potential target to hackers. This guide provides basic instructions and tips for securing the nodes.
 
 ## System Updates
