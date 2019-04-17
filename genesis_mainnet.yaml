@@ -1,6 +1,6 @@
 account:
   initBalances:
-    io12yxdwewry70gr9fs6fphyfaky9c7gurmzk8f4f: "9800000000000000000000000000" # Need to update the address
+    io1uqhmnttmv0pg8prugxxn7d8ex9angrvfjfthxa: "9800000000000000000000000000"
 blockchain:
   actionGasLimit: 5000000
   blockGasLimit: 20000000
