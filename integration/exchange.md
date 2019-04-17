@@ -51,7 +51,7 @@ One can retrieve blocks that contain the target transfers by using `/APIService/
 1. [Get block metadata by index](https://docs.iotex.io/#getblockmetas)
 2. [Get block metadata by block hash](https://docs.iotex.io/#getblockmetas-2)
 
-One can use ioctl to [query a block by height/hash](https://docs.iotex.io/#query-block).
+One can use ioctl to [query a block by height or hash](https://docs.iotex.io/#query-block).
 
 # 4. Testing
 
