@@ -29,7 +29,7 @@ Server: primary server and backup server
 • Network: 100 Mb/sec
 ```
 
-You could run [this script](https://TBD/) to get the basic hardware information. Note that slow network and slow local storage have prominent negative impact on the productivity of a node.
+You could run [this script](https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/get_systemstat.sh) to get the basic hardware information. Note that slow network and slow local storage have prominent negative impact on the productivity of a node.
 
 # Setup Operating Nodes
 Please follow [this guide](https://github.com/iotexproject/iotex-bootstrap/blob/master/README.md) for the basic setup of an operating node.
