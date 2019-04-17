@@ -44,7 +44,7 @@ One can retrieve confirmed transfers as well as pending (unconfirmed) transfers 
 3. [Get unconfirmed actions by address](https://docs.iotex.io/#getactions-4)
 4. [Get actions by block](https://docs.iotex.io/#getactions-5)
 
-One can use ioctl to [query an action by Hash](https://docs.iotex.io/#query-action).
+One can use ioctl to [query an action by hash](https://docs.iotex.io/#query-action).
 
 ## Retrieve Blocks
 One can retrieve blocks that contain the target transfers by using `/APIService/GetBlockMetas` endpoint. Examples are given below:
