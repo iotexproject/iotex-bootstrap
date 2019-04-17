@@ -33,8 +33,7 @@ Then follow https://docs.iotex.io/#create-account-s to create a new account whic
 
 ## Sending IOTX from an address
 ### Use RPC call
-/APIService/SendAction with a complete signed action.
-You can find a demo of how to send a transfer [here](https://github.com/iotexproject/iotex-docs#sendaction).
+One can evoke `/APIService/SendAction` endpoint with a signed action, e.g., [here](https://github.com/iotexproject/iotex-docs#sendaction).
 
 ### Use Command-line interface
 If you have not installed the latest Command-line interface tool, please follow https://docs.iotex.io/#cli-command-line-interface for ioctl installation.
@@ -43,7 +42,7 @@ Then follow https://docs.iotex.io/#transfer-tokens to send IOTX from an address 
 ## Reading Actions from the network
 ### Use RPC call
 #### Use an RPC call for action queries
-You can retrieve confirmed transfers as well as pending (unconfirmed) transfers by using APIService/GetActions API with the following usages:
+One can retrieve confirmed transfers as well as pending (unconfirmed) transfers by using APIService/GetActions API with the following usages:
 1. [Get Action By Action Hash](https://github.com/iotexproject/iotex-docs#getactions-1) 
 2. [Get Confirmed Actions By Address](https://github.com/iotexproject/iotex-docs#getactions-2) 
 3. [Get Unconfirmed Actions By Address](https://github.com/iotexproject/iotex-docs#getactions-3)
