@@ -51,4 +51,4 @@ Please refer to [this guide](https://github.com/iotexproject/iotex-bootstrap/blo
 Please refer to [this guide](https://github.com/iotexproject/iotex-bootstrap/tree/master/infra/monitoring) to setup a dashboard for monitoring your nodes.
 
 # Security practice
-TBD
+Please refer to [this guide](https://github.com/iotexproject/iotex-bootstrap/blob/master/infra/security_practice.md) to make sure your node is operating in a secure way.
