@@ -39,27 +39,26 @@ If you have not installed the latest Command-line interface tool, please follow 
 One can evoke `/APIService/SendAction` endpoint with a signed action. An example is given [here](https://github.com/iotexproject/iotex-docs#sendaction).
 
 ### Use Command-line Interface 
-Please follow https://docs.iotex.io/#transfer-tokens to send IOTX from an address to another.
+One can use ioctl to [send IOTX from an address to another](https://docs.iotex.io/#transfer-tokens).
 
 ## Retrieve States
 
 ### Use gRPC Endpoint
 
-#### Read Actions/Transactions
-One can retrieve confirmed transfers as well as pending (unconfirmed) transfers by using APIService/GetActions API with the following usages:
-1. [Get Action By Action Hash](https://github.com/iotexproject/iotex-docs#getactions-1) 
-2. [Get Confirmed Actions By Address](https://github.com/iotexproject/iotex-docs#getactions-2) 
-3. [Get Unconfirmed Actions By Address](https://github.com/iotexproject/iotex-docs#getactions-3)
-4. [Get Actions By Block](https://github.com/iotexproject/iotex-docs#getactions-4)
+#### Retrieve Transfers
+One can retrieve confirmed transfers as well as pending (unconfirmed) transfers by using `/APIService/GetActions` endpoint. Examples are given below:
+1. [Get Action By Action Hash](https://docs.iotex.io/#getactions-2) 
+2. [Get Confirmed Actions By Address](https://docs.iotex.io/#getactions-3) 
+3. [Get Unconfirmed Actions By Address](https://docs.iotex.io/#getactions-4)
+4. [Get Actions By Block](https://docs.iotex.io/#getactions-5)
 
-#### Use an RPC call for block queries
-You can also retrieve blocks that contain the target transfers by using APIService/GetBlockMetas API with the following usages:
-1. [Get Block Metadata By Index](https://github.com/iotexproject/iotex-docs#getblockmetas)
-2. [Get Block Metadata By Block Hash](https://github.com/iotexproject/iotex-docs#getblockmetas-1)
+#### Retrieve Blocks
+One can retrieve blocks that contain the target transfers by using `/APIService/GetBlockMetas` endpoint. Examples are given below:
+1. [Get Block Metadata By Index](https://docs.iotex.io/#getblockmetas)
+2. [Get Block Metadata By Block Hash](https://docs.iotex.io/#getblockmetas-2)
 
 ### Use Command-line Interface 
-If you have not installed the latest Command-line interface tool, please follow https://docs.iotex.io/#cli-command-line-interface for ioctl installation.
-Then you can use ioctl tool to [query an action by Hash](https://github.com/iotexproject/iotex-docs#query-action),
+One can use ioctl to [query an action by Hash](https://github.com/iotexproject/iotex-docs#query-action),
 or [query a block by height/hash](https://github.com/iotexproject/iotex-docs#query-block).
 
 # 4. Testing
