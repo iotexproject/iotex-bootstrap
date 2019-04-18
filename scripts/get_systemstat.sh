@@ -2,7 +2,7 @@
 
 # Define variables
 LSB=/usr/bin/lsb_release
-
+log=~/systemstat.log
 # Purpose: Display pause prompt
 # $1-> Message (optional)
 function pause(){
@@ -30,7 +30,7 @@ function show_menu(){
 function write_header(){
     local h="$@"
     echo "---------------------------------------------------------------"
-    echo "     ${h}"
+    echo -e "\033[31m   ${h} \033[0m"
     echo "---------------------------------------------------------------"
 }
 
@@ -41,7 +41,7 @@ function os_info(){
     echo "Kernel information : $(uname -r)"
 
     #pause "Press [Enter] key to continue..."
-    pause
+   # pause
 }
 
 function tool_install(){
@@ -58,30 +58,32 @@ function disk_info(){
     write_header " Disk information "
     local disks=$(df -lh|grep -v "loop\|tmpfs\|udev\|Filesystem")
     echo "Disk : $disks"
-    write_header " Disk Test Iops"
-    echo " check tools fio exists ......"
+    write_header " Disk Test Iops "
+    #echo " check tools fio exists ......"
     
     if ! type "fio" > /dev/null; then
 	echo "Will install fio tool "
 	pause
-        tool_install "fio" "3.13" "https://github.com/axboe/fio/archive"
+        tool_install "fio" "3.13" "https://github.com/axboe/fio/archive" > /dev/null 2>&1
 
     else
 	echo "fio version $(fio --version)"
     fi
-    local diskparts=$(echo $disks|awk '{print$NF}')
-    echo "Select disk part:  $diskparts"
+    local diskparts=$(df -lh|grep -v "loop\|tmpfs\|udev\|Filesystem"|awk '{print$NF}'|sed '$!N;s/\n/ "OR" /')
+    #echo "Select disk part:  $diskparts"
 
-    read -p "Do you wish to fio test part Mounted ?  " cmd
+    while read -p "Select the node data partition : $diskparts ?  " datanode_dir ;do
     
-    local cpucore=$(lscpu|grep "^CPU(s)"|awk '{print $2}')
-    case $cmd in 
-        $diskparts)
-        echo "fio test write $cmd cpucore=$cpucore  size=1G bs=16k: "
-        sudo fio -filename=${cmd}fio.test -direct=1 -iodepth 1 -thread -rw=write -ioengine=psync -bs=16k -size=1G -numjobs=$cpucore -runtime=30 -group_reporting -name=write|grep 'IOPS'
-        echo "fio test read $cmd cpucore=$cpucore  size=1G bs=16k:" 
-	sudo fio -filename=${cmd}fio.test -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1G -numjobs=$cpucore -runtime=30 -group_reporting -name=write|grep 'IOPS'
-    esac
+        local cpucore=$(lscpu|grep "^CPU(s)"|awk '{print $2}')
+        if [[ "$diskparts" =~ "${datanode_dir}" ]]; then
+            echo "fio test write ${datanode_dir} cpucore=$cpucore  size=1G bs=16k runtime=30s : "
+            sudo fio -filename=${datanode_dir}/fio.test -direct=1 -iodepth 1 -thread -rw=write -ioengine=psync -bs=16k -size=1G -numjobs=$cpucore -runtime=30 -group_reporting -name=write|grep 'IOPS'
+            echo "fio test read ${datanode_dir} cpucore=$cpucore  size=1G bs=16k runtime=30s :" 
+	    sudo fio -filename=${datanode_dir}/fio.test -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1G -numjobs=$cpucore -runtime=30 -group_reporting -name=write|grep 'IOPS'
+            break;
+	
+        fi
+    done
     pause
 }
 
@@ -116,14 +118,14 @@ function net_info(){
 #    iperf -s & 
 #    wth=$(curl ip.sb)
 #    echo "other server as client connect iperf server: iperf -c $wth"
-    echo "connect iperf server us-west 18.144.21.59 "
+    echo "connect test iperf server us-west 18.144.21.59 "
     iperf -c 18.144.21.59
-    pause
+    #pause
 }
 function cpu_info(){
     write_header " Cpu core and Model "
     lscpu |grep "Model name:\|^CPU(s)"
-    pause
+    #pause
 }
 
 # Purpose - Display used and free memory info
@@ -139,7 +141,7 @@ function mem_info(){
     echo "*** Top 5 memory eating process ***"
     echo "***********************************"
     ps auxf | sort -nr -k 4 | head -5
-    pause
+    #pause
 }
 # Purpose - Get input via the keyboard and make a decision using case..esac
 function read_input(){
@@ -161,10 +163,18 @@ function read_input(){
 # ignore CTRL+C, CTRL+Z and quit singles using the trap
 trap '' SIGINT SIGQUIT SIGTSTP
 
+os_info |tee $log
+cpu_info | tee -a $log
+mem_info | tee -a $log
+disk_info | tee -a $log
+net_info | tee -a $log
+
+write_header " Please send us the log file $log !!!! "
+pause
 # main logic
-while true
-do
-    clear
-    show_menu   # display memu
-    read_input  # wait for user input
-done
+#while true
+#do
+#    clear
+#    show_menu   # display memu
+#    read_input  # wait for user input
+#done
