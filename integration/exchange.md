@@ -36,6 +36,8 @@ One can evoke `/APIService/SendAction` endpoint with a signed action. An example
 
 One can use ioctl to [send IOTX from an address to another](https://docs.iotex.io/#transfer-tokens).
 
+**Note that once a withdraw is succeeded, the exchange needs to validate the receipt to make sure the status is 1.**
+
 ## Retrieve Transfers
 
 One can retrieve confirmed transfers as well as pending (unconfirmed) transfers by using `/APIService/GetActions` endpoint. Examples are given below:
@@ -45,6 +47,13 @@ One can retrieve confirmed transfers as well as pending (unconfirmed) transfers 
 4. [Get actions by block](https://docs.iotex.io/#getactions-5)
 
 One can use ioctl to [query an action by hash](https://docs.iotex.io/#query-action).
+
+**Note that to validate if a user's deposit is succeeded, one needs to validate the following against the action:**
+- action type is transfer
+- amount equals to the deposit amount 
+- recipient equals to deposit address
+- timestamp of this action is recent enough
+
 
 ## Retrieve Blocks
 One can retrieve blocks that contain the target transfers by using `/APIService/GetBlockMetas` endpoint. Examples are given below:
