@@ -15,7 +15,7 @@ poll:
   enableGravityChainVoting: true
   gravityChainHeightInterval: 100
   gravityChainStartHeight: 7614500
-  registerContractAddress: 0xc8c2bc733bbf0935e9e9e080456661b96d7946c8
+  registerContractAddress: 0x95724986563028deb58f15c5fac19fa09304f32d
   scoreThreshold: "2000000000000000000000000"
   selfStakingThreshold: "1200000000000000000000000"
   stakingContractAddress: 0x87c9dbff0016af23f5b1ab9b8e072124ab729193
