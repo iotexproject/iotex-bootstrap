@@ -13,7 +13,7 @@
 
 Here are the software versions we use:
 
-- MainNet: v0.5.0
+- MainNet: [v0.5.0](https://github.com/iotexproject/iotex-core/tree/a4308fc82bea22cfaa45addef679a09f41f3a998)
 - TestNet: v0.5.0-rc10
 
 ## <a name="mainnet"/>Join MainNet Rehearsal
@@ -24,8 +24,7 @@ Here are the software versions we use:
 docker pull iotex/iotex-core:v0.5.0
 ```
 
-If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
-`gcr.io/iotex-servers/iotex-core:v0.5.0`.
+Please check if the docker image digest is `28677428d15c858484176ca70b93dae5fd8d621a299a769706faaf669e2095e7`.
 
 2. Set the environment with the following commands:
 
