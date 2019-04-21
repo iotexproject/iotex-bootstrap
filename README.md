@@ -1,7 +1,5 @@
 # IoTeX Delegate Manual
 
-### V0.5.0-rc10 is rollout to testnet. Please try it out. If you join the previous round of testnet, you MUST restart with the clean state.
-
 ## Index
 
 - [Release Status](#status)
@@ -13,7 +11,9 @@
 
 ## <a name="status"/>Release Status
 
-- MainNet Rehearsal: v0.5.0-rc8-hotfix2
+Here are the software versions we use:
+
+- MainNet: v0.5.0
 - TestNet: v0.5.0-rc10
 
 ## <a name="mainnet"/>Join MainNet Rehearsal
@@ -21,11 +21,11 @@
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.5.0-rc8-hotfix2
+docker pull iotex/iotex-core:v0.5.0
 ```
 
 If you have problem to pull the image from docker hub, you can also try our mirror image on gcloud
-`gcr.io/iotex-servers/iotex-core:v0.5.0-rc8-hotfix2`.
+`gcr.io/iotex-servers/iotex-core:v0.5.0`.
 
 2. Set the environment with the following commands:
 
@@ -65,7 +65,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0-rc8-hotfix2 \
+        iotex/iotex-core:v0.5.0 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -84,7 +84,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0-rc8-hotfix2 \
+        iotex/iotex-core:v0.5.0 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -94,8 +94,6 @@ docker run -d --restart on-failure --name iotex \
 6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
 ## <a name="testnet"/>Join TestNet
-
-Current testnet is running with release `v0.5.0-rc10`.
 
 There's almost no difference to join TestNet, but in step 2, you need to use the config and genesis files for TestNet:
 
@@ -117,7 +115,7 @@ You can install `ioctl` (a command-line interface for interacting with IoTeX blo
 curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cli.sh | sh
 ```
 
-You can point `ioctl` to your node:
+You can point `ioctl` to your node (if you enable the gateway plugin):
 
 ```
 ioctl config set endpoint localhost:14014
