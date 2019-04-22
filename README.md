@@ -122,10 +122,10 @@ ioctl config set endpoint localhost:14014 --insecure
 
 Or you can point it to our nodes:
 
-- MainNet secure: api.iotex.one:443
-- MainNet insecure: api.iotex.one:80
-- TestNet secure: api.testnet.iotex.one:443
-- TestNet insecure: api.testnet.iotex.one:80
+- MainNet secure: `api.iotex.one:443`
+- MainNet insecure: `api.iotex.one:80`
+- TestNet secure: `api.testnet.iotex.one:443`
+- TestNet insecure: `api.testnet.iotex.one:80`
 
 Generate key:
 ```
