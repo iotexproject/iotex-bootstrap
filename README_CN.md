@@ -100,14 +100,17 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cl
 
 您可以将`ioctl`指向您的节点
 ```
-ioctl config set endpoint localhost:14014
+ioctl config set endpoint localhost:14014 --insecure
 ```
 
 或者您可以将它指向我们的节点:
 
-- 主网预演: api.iotex.one:80
-- 测试网络: api.testnet.iotex.one:80
+- 主网安全端口: api.iotex.one:443
+- 主网安非全端口: api.iotex.one:80
+- 测试网安全端口: api.testnet.iotex.one:443
+- 测试网安全端口: api.testnet.iotex.one:80
 
+如果你准备使用非安全端口，你需要添加`--insecure`参数。
 
 生成密钥:
 ```
