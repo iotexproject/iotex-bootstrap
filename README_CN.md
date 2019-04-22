@@ -15,7 +15,7 @@
 测试网：v.5.0-rc10
 
 
-## <a name="mainnet"/>加入主网预演
+## <a name="mainnet"/>加入主网内测
 
 1. 提取(pull) docker镜像
 
