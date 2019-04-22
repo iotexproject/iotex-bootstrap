@@ -3,7 +3,7 @@
 ## Index
 
 - [Release Status](#status)
-- [Join MainNet Rehearsal](#mainnet)
+- [Join MainNet Alpha](#mainnet)
 - [Join TestNet](#testnet)
 - [Interact with Blockchain](#ioctl)
 - [Operate Your Node](#ops)
@@ -16,7 +16,7 @@ Here are the software versions we use:
 - MainNet: [v0.5.0](https://github.com/iotexproject/iotex-core/tree/a4308fc82bea22cfaa45addef679a09f41f3a998)
 - TestNet: v0.5.0-rc10
 
-## <a name="mainnet"/>Join MainNet Rehearsal
+## <a name="mainnet"/>Join MainNet Alpha
 
 1. Pull the docker image:
 
