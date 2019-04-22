@@ -1,8 +1,5 @@
 # IoTeX 主网预演手册
 
-### v0.5.0-rc10已经在测试网上线，可供大家试用。如果您之前加入了前一轮的测试网，你必须删除所有数据后启动
-
-
 ## 索引
 
 - [版本状态](#status)
@@ -14,7 +11,7 @@
 
 ## <a name="status"/>版本状态
 
-主网预演：v0.5.0-rc8-hotfix2
+主网：[v0.5.0](https://github.com/iotexproject/iotex-core/tree/a4308fc82bea22cfaa45addef679a09f41f3a998)
 测试网：v.5.0-rc10
 
 
@@ -25,10 +22,7 @@
 ```
 docker pull iotex/iotex-core:v0.5.0-rc8
 ```
-
-如果从docker hub中提取图像时遇到问题，您也可以在gcloud上尝试我们的镜像
-`gcr.io/iotex-servers/iotex-core:v0.5.0-rc8`.
-
+请检查你的docker镜像的摘要是`28677428d15c858484176ca70b93dae5fd8d621a299a769706faaf669e2095e7`。
 
 2. 使用以下命令设置运行环境
 
@@ -69,7 +63,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0-rc8 \
+        iotex/iotex-core:v0.5.0 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -84,17 +78,15 @@ docker run -d --restart on-failure --name iotex \
 
 ## <a name="testnet"/>加入测试网络
 
-当前测试网络运行的是“v0.5.0-rc10“版本
-
 加入测试网络基本没有什么不同，只是在第二步，您需要使用以下的源文件：
 ```
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
-在第四步，您需要使用针对于测试网络的snapshot: https://t.iotex.me/data-testnet-latest.
+在第四步，您需要使用针对于测试网络的snapshot: https://t.iotex.me/data-testnet-latest。
 
-在第五步，您需要将``iotex/iotex-core:v0.5.0-rc8``用``iotex/iotex-core:v0.5.0-rc10``代替
+在第五步，您需要将docker镜像的标签替换成``iotex/iotex-core:v0.5.0-rc10``。
 
 
 ## <a name="ioctl"/>与区块链交互
