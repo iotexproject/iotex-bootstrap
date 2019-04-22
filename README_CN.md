@@ -20,7 +20,7 @@
 1. 提取(pull) docker镜像
 
 ```
-docker pull iotex/iotex-core:v0.5.0-rc8
+docker pull iotex/iotex-core:v0.5.0
 ```
 请检查你的docker镜像的摘要是`28677428d15c858484176ca70b93dae5fd8d621a299a769706faaf669e2095e7`。
 
