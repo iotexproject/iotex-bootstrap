@@ -127,6 +127,8 @@ Or you can point it to our nodes:
 - TestNet secure: `api.testnet.iotex.one:443`
 - TestNet insecure: `api.testnet.iotex.one:80`
 
+If you want to set an insecure endpoint, you need to add `--insecure` option.
+
 Generate key:
 ```
 ioctl account create
