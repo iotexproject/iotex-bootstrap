@@ -60,3 +60,4 @@ You can check address **0x789F340eD3b726df6f3ec625183E1Ee6b9b5a65e** on ethersca
 
 # 3. Multi-send tool
 
+Now you have ERC20 IOTX, and you want to distribute them to multiple addresses? Please goto https://member.iotex.io/multi-send.
