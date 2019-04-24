@@ -42,8 +42,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/confi
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
-3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, replace `[...]` with your external
-IP and private key and uncomment the lines.
+3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key.
 
 4. (Optional) If you prefer to start from a snapshot, run the following commands:
 
