@@ -1,6 +1,8 @@
 account:
   initBalances:
     io1uqhmnttmv0pg8prugxxn7d8ex9angrvfjfthxa: "9800000000000000000000000000"
+    # The balances on following test accounts will be burned into the all-zero address.
+    # Check https://github.com/iotexproject/iotex-bootstrap/blob/master/postmortem/1.md for more details.
     io1v3gkc49d5vwtdfdka2ekjl3h468egun8e43r7z: "100000000000000000000000000"
     io1vrl48nsdm8jaujccd9cx4ve23cskr0ys6urx92: "100000000000000000000000000"
     io1llupp3n8q5x8usnr5w08j6hc6hn55x64l46rr7: "100000000000000000000000000"
