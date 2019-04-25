@@ -144,7 +144,7 @@ Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/c
 
 Claim reward:
 ```
-ioctl action claim ${amountInRau} -l 10000 -p 1 -n ${pendingNonce} -s ${ioAddress|alias}
+ioctl action claim ${amountInRau} -l 10000 -p 1 -s ${ioAddress|alias}
 ```
 
 Exchange to ERC20 on Ethereum via Faucet:
