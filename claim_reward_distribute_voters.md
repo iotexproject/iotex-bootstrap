@@ -1,10 +1,16 @@
+This doc will guide you how to claim rewards and distribute to your voters. Here's a sneak peek of all the topics this guide will cover:
+* [Prerequisite](#prerequisite)
+* [Claim Rewards](#claim-rewards)
+* [Swap to Ethereum ERC20 Token](#swap-to-ethereum-erc20-token)
+* [Distribution to Voters](#distribution-to-voters)
+
 # Prerequisite
 
 Before moving onto any of the following sections, please install our `ioctl` and `bookkeeper` commandline tool
 
-## Install `ioctl` Tool
+## Install ioctl Tool
 
-`ioctl` is a tool to create/manage IoTeX address and interact with our mainnet Blockchain. [How to install `ioctl`](https://github.com/iotexproject/iotex-bootstrap#interact-with-blockchain)
+`ioctl` is a tool to create/manage IoTeX address and interact with our mainnet Blockchain. For more details, please refer to [How to install ioctl](https://github.com/iotexproject/iotex-bootstrap#interact-with-blockchain)
 
 After installation, be sure to point to our mainnet secure endpoint `api.iotex.one:443` by running the following in terminal:
 
@@ -16,11 +22,15 @@ After installation, be sure to point to our mainnet secure endpoint `api.iotex.o
 
 Rest assured that the `ioctl` tool does not store your private key in cleartext, the key is imported in an encrypted format using Ethereum's keystore package and protected by a password set by you. To import your account, run the following command in the terminal:
 
-```ioctl account import my_first_account```
+```ioctl account import ${account_name}```
 
-"my_first_account" is a name/alias for the IoTeX address, you can give it other name. After hitting Enter, you will be prompted to enter your private key. Copy your ETH private key (a hex string) and paste it (it won't show up on the screen); hit Enter you will be prompted to Set password. Enter a strong password, hit Enter you will be prompted to re-enter password, enter the same password, hit Enter you will see
+For example, if you want to name your account as `my_primary_account`, you can type:
 
-```New account #my_first_account is created. Keep your password, or you will lose your private key.```
+```ioctl account import my_primary_account```
+
+After hitting `Enter`, you will be prompted to enter your private key. Copy your ETH private key (a hex string) and paste it (it won't show up on the screen); hit `Enter` you will be prompted to set password. Enter a strong password, hit `Enter` you will be prompted to re-enter password, enter the same password, hit Enter you will see
+
+```New account #my_primary_account is created. Keep your password, or you will lose your private key.```
 
 ### Check Your Balance
 
@@ -28,21 +38,31 @@ Run the following command in terminal to query the balance in your address:
 
 ```ioctl account balance ${io_address|account_name}```
 
-## Install `bookkeeper` Tool
+For example, you can use the following command to check the balance of your account `my_primary_account`:
 
-Bookkeeper is a reward distribution tool provided by IOTEX FOUNDATION to assist calculation of reward tokens for voters. To install, run the following command in terminal:
+```ioctl account balance my_primary_account```
+
+You will find your balance in IOTX in the output.
+
+## Install bookkeeper Tool
+
+`bookkeeper` is a reward distribution tool provided by __IoTeX Foundation__ to assist calculation of reward tokens for voters. To install, run the following command in terminal:
 
 ```curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-bookkeeper.sh | sh```
 
-# Step 1: Claim Reward
+Download [the config yaml](https://github.com/iotexproject/iotex-tools/blob/master/bookkeeper/committee.yaml) for our mainnet to the directory you want to store the csv files exported by the `bookkeeper` tool.
 
-All Delegate rewards (block rewards, epoch bonus reward, foundation bonus) will be sent to your Rewards address as “unclaimed rewards”. You must claim these rewards from the blockchain before you can swap/distribute them. The rewards will remain “unclaimed” until you claim them using the following steps.
+---
+
+# Claim Rewards
+
+All `Delegate Rewards` (block rewards, epoch bonus reward, foundation bonus) will be sent to your rewards address as “unclaimed rewards”. You must claim these rewards from the blockchain before you can swap/distribute them. The rewards will remain “unclaimed” until you claim them with the following steps.
 
 ## Query Your Unclaimed Rewards
 
 Run the following command in terminal to query the unclaimed rewards in your account:
 
-```ioctl node reward ${io_address|name}```
+```ioctl node reward ${io_address|account_name}```
 
 You will find the unclaimed reward amount in IOTX in the output.
 
@@ -50,65 +70,82 @@ You will find the unclaimed reward amount in IOTX in the output.
 
 To claim your reward, run in terminal:
 
-```ioctl action claim ${amount_in_rau} -l 10000 -p 1 -s ${io_address|name}```
+```ioctl action claim ${amount_in_iotx} -l 10000 -p 1 -s ${io_address|name}```
+
+For example, if you want ot claim 1200 IOTX from your account `my_primary_account`, you can type the following command:
+
+```ioctl action claim 1200 -l 10000 -p 1 -s my_primary_account```
 
 If your claim is successful, you will notice an increase of the balance in your account.
 
-# Step 2: Swap to Ethereum ERC20 Token
+---
 
-This service allows our user to seamlessly swap the IoTeX mainnet token to the IoTeX Network ERC20 token (https://etherscan.io/token/0x6fb3e0a217407efff7ca062d46c26e5d60a14d69).
+# Swap to Ethereum ERC20 Token
 
-To initiate a swap, simply send a transfer to the lock contract on IoTeX mainnet from your IoTeX address. The service keeps monitoring the lock contract on IoTeX mainnet. Once a transfer into the lock contract is detected, a transfer with the equal amount of ECR20 token less gas fee will be sent to the ETH address associated with your IoTeX address.
+We provide a service to swap the IoTeX mainnet coin to the [IoTeX Network ERC20 token](https://etherscan.io/token/0x6fb3e0a217407efff7ca062d46c26e5d60a14d69) via a lock contract **io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y**.
 
-Here's the lock contract: **io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y**
+## Swap IOTX Coin to the Lock Contract
 
-## Transfer IoTeX native token to lock contract
+To invoke with the lock contract, run the following command in terminal:
 
-Run the following command to transfer IoTeX native token to lock contract (amount is the amount you want to swap, addr is the IoTeX address/alias):
+```ioctl action invoke io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y ${amount} -s ${io_address|account_name} -l 400000 -p 1 -b d0e30db0```
 
-```ioctl action invoke io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y ${amount} -s ${io_address|name} -l 400000 -p 1 -b d0e30db0```
+The `amount` in the command should be equal to the amount you want to swap plus a fee (20 IOTX). For example, if you want to swap 30000 IOTX from you account `my_primary_account`, you can input:
 
-You will be prompted to enter password, then enter 'yes' to confirm the transfer.
+```ioctl action invoke io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y 30020 -s my_primary_account -l 400000 -p 1 -b d0e30db0```
 
-> Note: The lock contract has imposed a minimum transfer amount of 1020 and maximum 1,000,000 tokens. Amount not in this range will automatically be rejected. The contract will charge 20 tokens as gas fee for each transfer, so the minimum/maximum range is to help user make swap in an economical way.
+You will be prompted to enter password, then enter `yes` to confirm.
+
+> Note: The lock contract has imposed a minimum amount of 1020 and maximum 1,000,020 IOTX. Amount not in this range will automatically be rejected. The contract will charge 20 tokens as gas fee for each swap, so the minimum/maximum range is to help user make swap in an economical way.
 
 Due to this reason, do not transfer the total balance in the IoTeX address, that will be rejected (because that won't leave enough balance to cover the gas fee). We suggest leave about ~100 tokens in the IoTeX address so you will have enough balance to cover gas fee and use it next time.
 
-Please keep the transaction hash of your transfer for future reference, especially in the rare case that the ERC20 token transfer failed and you request for a re-issue
+Please keep the transaction hash of your transfer for future reference, especially in the rare case that the ERC20 token transfer failed and you request for a re-issue.
 
-## Check received ERC20 token
+## Check Received ERC20 Token
 Each IoTeX address is by itself associated with an ETH address, which shares the same private key.
 
-Use the iotcl command line tool to get the ETH address associated with your IoTeX address, for example:
+Use the iotcl command line tool to get the ETH address associated with your IoTeX address, run the following command in terminal:
 
-```ioctl account ethaddr io10z0ngrknkund7me7ccj3s0s7u6umtfj7yjrzh3```
+```ioctl account ethaddr ${io_address|account_name}```
 
-```io10z0ngrknkund7me7ccj3s0s7u6umtfj7yjrzh3 - 0x789F340eD3b726df6f3ec625183E1Ee6b9b5a65e```
+For example, to get the ETH address of your account `my_primary_account`:
 
-You can check address **0x789F340eD3b726df6f3ec625183E1Ee6b9b5a65e** on etherscan.io to verify that you have received equal amount of IoTeX Network ERC20 token
+```ioctl account ethaddr my_primary_account```
 
-# Step 3: Distribution to Voters
+You will find your IoTeX address and the corresponding ETH address in the output. Then you can check address the ETH address on https://etherscan.io to verify the IoTeX Network ERC20 tokens you have received.
 
-You can use the bookkeeper tool to calculate voter's reward. The usage is:
+---
+
+# Distribution to Voters
+
+To distribute rewards to your voters, you need to first export the distribution with `bookkeeper`, and then send out tokens with some multi-send tool or send them one by one.
+
+## Export Distribution with `bookkeeper`
+You can use the bookkeeper tool to calculate voters' rewards. The usage is:
 
 `bookkeeper --bp BP_NAME --start START_EPOCH_NUM --to END_EPOCH_NUM --percentage PERCENTAGE [--with-foundation-bonus] [--endpoint IOTEX_ENDPOINT] [--CONFIG CONFIG_FILE]`
 
-For example, delegate `xyz` wants to distribute 90% of its reward from epoch 24 to epoch 48. To distribute Epoch Reward only:
+For example, delegate `xyz` wants to distribute `90%` of its reward from epoch `24` to epoch `48`. To distribute Epoch Reward only:
 
-```
-./bookkeeper --bp xyz --start 24 --to 48 --percentage 90
-```
+```bookkeeper --bp xyz --start 24 --to 48 --percentage 90```
 
 To distribute Foundation Bonus in addition to Epoch Reward:
 
-```
-./bookkeeper --bp xyz --start 24 --to 48 --percentage 90 --with-foundation-bonus
-```
+```bookkeeper --bp xyz --start 24 --to 48 --percentage 90 --with-foundation-bonus```
 
 The result will be saved to file `epoch_24_to_48.csv`, with the first column as the voter address, and the second column as the reward in Rau the corresponding voter will get. This csv file will be used in the next step MultiSend tool where the rewards are actually distributed to your voters.
 
-## IoTeX MultiSend Tool
-To distribute ECR20 tokens to your voters, go to https://member.iotex.io/multi-send, sign into Metamask, paste the csv file from the above step into "Recipients and Amounts", then click the button "Distribute ERC-20 IOTX", and follow instructions from Metamask.
+## Send ERC20 Tokens to Voters
 
-## Third Party MultiSend Tool
-You can also try the third party multi-send tool: https://multisender.app.
+To send tokens to your voters, you may choose one of the following tools
+
+### IoTeX MultiSend Tool
+
+[multi-send](https://member.iotex.io/multi-send) is a tool developed by __IoTeX Foundation__ to send IOTX tokens on Ethereum to multi accounts. To use this tool, you need to sign into Metamask. After that, paste the csv file from the above step into "Recipients and Amounts". After clicking the button "Distribute ERC-20 IOTX", follow instructions from Metamask to finish sending tokens.
+
+> Note: A fee in ETH will be charged automatically.
+
+### Third Party MultiSend Tool
+
+You can also try some third party multi-send tools, e.g., https://multisender.app.
