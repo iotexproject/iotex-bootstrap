@@ -115,6 +115,32 @@ Additionally, export `9009` port from the node's docker container. Once the acti
 
 If you have quite a few nodes, and want to get rid of the tedious manual operation from your nodes or just want to try out the fancy setup of a high availability cluster, please check out the leader election solution [here](https://github.com/zjshen14/iotex-leader-election).
 
+## Decentralized Gravity Chain Binding
+
+IoTeX relies on the election result on our contract deployed on Ethereum, so that the server needs to a list of Ethereum JSON-RPC endpoints to consume the relevant data. While we provide a list of default JSON-RPC endpoints, delegates are encouraged to 
+setup their own endpoint, to be more decentralized, secured and performant.
+
+There are two approaches that we have experimented before and you could consider of:
+
+- Setup an Ethereum node (no need to mine) ([geth](https://github.com/ethereum/go-ethereum/wiki/Installing-Geth) and [parity](https://wiki.parity.io/Setup)) for your own, and expose the JSON-RPC endpoint.
+- Use [Infura](https://infura.io/) Ethereum blockchain infrasturcture: signing up an account and creating an project. The JSON-RPC endpoint would be https://mainnet.infura.io/v3/YOUR-PROJECT-ID.
+
+After getting your own JSON-RPC endpoint, you could add it into following place in `config.yaml` and restart your server. Then, your IoTeX server will read from this endpoint to get Ethereum data. You could also create and add multiple endpoints for the sake of robustness.
+
+```yaml
+...
+chain:
+  ...
+  committee:
+    ...
+    gravityChainAPIs:
+      - [YOUR JSON-RPC ENDPOINT]
+      ...
+    ...
+  ...
+...
+```
+
 ## Make It Even Better
 We are still new in the area of running decentralized infrastructure. There are still many things we can learn and improve. And since it is decentralized, we will need options and ideas from different perspectives. That means we need a lot of help form your guys to help us getting better.
 
