@@ -2,8 +2,8 @@ network:
   # externalHost: SET YOUR EXTERNAL IP HERE (e.g., 12.34.56.78)
   externalPort: 4689
   bootstrapNodes:
-    - /dns4/bootnode-0.testnet.iotex.one/tcp/4689/ipfs/12D3KooWCb1nZdLsR6WBgXqmGnzRvhxASQJaAB3NgwTNk3JE43Wj
-    - /dns4/a12f5c5ca34a211e9809c02f3dedec74-0c7145ef4e7091ef.elb.us-west-2.amazonaws.com/tcp/4689/ipfs/12D3KooWEgPtefxSeWQHjXFdrze1NicjzqKyVmMgyxqRBRByqi2Q
+    - /dns4/bootnode-0.testnet.iotex.one/tcp/4689/ipfs/12D3KooWFnaTYuLo8Mkbm3wzaWHtUuaxBRe24Uiopu15Wr5EhD3o
+    - /dns4/bootnode-1.testnet.iotex.one/tcp/4689/ipfs/12D3KooWS7hkdFozeUqriUxv7zw8Y6NCeV8E5HUbgmVkGJUv4jHS
 
 chain:
   # producerPrivKey: SET YOUR PRIVATE KEY HERE (e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)
@@ -12,7 +12,7 @@ chain:
   maxCacheSize: 1000
   committee:
     gravityChainAPIs:
-      - https://mainnet.infura.io/v3/b355cae6fafc4302b106b937ee6c15af
+      - https://mainnet.infura.io/v3/dc9a1597c278426aa65da3ad4fa637dc
       - wss://us-east-1.iotex.world/ws
       - wss://singapore-1.iotex.world/ws
       - wss://tokyo-1.iotex.world/ws
