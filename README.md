@@ -1,5 +1,10 @@
 # IoTeX Delegate Manual
 
+## News
+
+- TestNet is upgraded to v0.5.1. It's an incompatible upgrade and people who joined previous TestNet runs need to restart
+from a clean state.
+
 ## Index
 
 - [Release Status](#status)
@@ -14,7 +19,7 @@
 Here are the software versions we use:
 
 - MainNet: [v0.5.0](https://github.com/iotexproject/iotex-core/tree/a4308fc82bea22cfaa45addef679a09f41f3a998)
-- TestNet: v0.5.0-rc10
+- TestNet: v0.5.1
 
 ## <a name="mainnet"/>Join MainNet Alpha
 
@@ -102,7 +107,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genes
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
-In step 5, you need to replace the docker image tag in the command with `v0.5.0-rc10`.
+In step 5, you need to replace the docker image tag in the command with `v0.5.1`.
 
 ## <a name="ioctl"/>Interact with Blockchain
 
