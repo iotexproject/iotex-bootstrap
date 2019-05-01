@@ -105,7 +105,7 @@ Please keep the transaction hash of your transfer for future reference, especial
 ## Check Received ERC20 Token
 Each IoTeX address is by itself associated with an ETH address, which shares the same private key.
 
-Use the iotcl command line tool to get the ETH address associated with your IoTeX address, run the following command in terminal:
+Use the ioctl command line tool to get the ETH address associated with your IoTeX address, run the following command in terminal:
 
 ```ioctl account ethaddr ${io_address|account_name}```
 
