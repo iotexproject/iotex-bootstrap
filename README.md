@@ -1,10 +1,5 @@
 # IoTeX Delegate Manual
 
-## News
-
-- TestNet is upgraded to v0.5.1. It's an incompatible upgrade and people who joined previous TestNet runs need to restart
-from a clean state.
-
 ## Index
 
 - [Release Status](#status)
@@ -18,7 +13,7 @@ from a clean state.
 
 Here are the software versions we use:
 
-- MainNet: [v0.5.0](https://github.com/iotexproject/iotex-core/tree/a4308fc82bea22cfaa45addef679a09f41f3a998)
+- MainNet: [v0.5.1](https://github.com/iotexproject/iotex-core/tree/0810e5166d12c7ae06110cf6429f332c59585056)
 - TestNet: v0.5.1
 
 ## <a name="mainnet"/>Join MainNet Alpha
@@ -26,10 +21,10 @@ Here are the software versions we use:
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.5.0
+docker pull iotex/iotex-core:v0.5.1
 ```
 
-Please check if the docker image digest is `28677428d15c858484176ca70b93dae5fd8d621a299a769706faaf669e2095e7`.
+Please check if the docker image digest is `ad495eee20a758402d2a7b01eee9e2fdb842be9a1786ba2fb67bf6d440c21625`.
 
 2. Set the environment with the following commands:
 
@@ -68,7 +63,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0 \
+        iotex/iotex-core:v0.5.1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -87,7 +82,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0 \
+        iotex/iotex-core:v0.5.1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
