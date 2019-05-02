@@ -1,5 +1,9 @@
 # IoTeX Delegate Manual
 
+## News
+
+- Delegates could upgrade software to v0.5.1 on MainNet too. Please make sure you download the up-to-date `genesis.yaml` again and replace your local one with it before restarting the node.
+
 ## Index
 
 - [Release Status](#status)
