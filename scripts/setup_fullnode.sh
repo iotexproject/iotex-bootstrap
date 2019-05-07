@@ -11,10 +11,10 @@ docker pull iotex/iotex-core:${version}
 # or use gcr.io/iotex-servers/iotex-core:${version}
 
 #Set the environment with the following commands:
-mkdir -p ~/iotex-var && cd ~/iotex-var
+mkdir -p ~/iotex-var && cd ~/iotex-var && mkdir data log etc
 export IOTEX_HOME=$PWD
 
-mkdir -p $IOTEX_HOME/{data log etc}
+#mkdir -p $IOTEX_HOME/{data,log,etc}
 
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
