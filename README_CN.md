@@ -1,5 +1,9 @@
 # IoTeX 主网预演手册
 
+## 更新
+
+节点现在可以将主网更新到 v0.5.1了。请确保你下载了最新的`genesis.yaml` 并且在重启节点之前覆盖现在的`genesis.yaml`
+
 ## 索引
 
 - [版本状态](#status)
@@ -11,8 +15,8 @@
 
 ## <a name="status"/>版本状态
 
-主网：[v0.5.0](https://github.com/iotexproject/iotex-core/tree/a4308fc82bea22cfaa45addef679a09f41f3a998)
-测试网：v.5.0-rc10
+主网：[v0.5.1](https://github.com/iotexproject/iotex-core/tree/0810e5166d12c7ae06110cf6429f332c59585056)
+测试网：v0.5.1
 
 
 ## <a name="mainnet"/>加入主网内测
@@ -20,9 +24,9 @@
 1. 提取(pull) docker镜像
 
 ```
-docker pull iotex/iotex-core:v0.5.0
+docker pull iotex/iotex-core:v0.5.1
 ```
-请检查你的docker镜像的摘要是`28677428d15c858484176ca70b93dae5fd8d621a299a769706faaf669e2095e7`。
+请检查你的docker镜像的摘要是`ad495eee20a758402d2a7b01eee9e2fdb842be9a1786ba2fb67bf6d440c21625`。
 
 2. 使用以下命令设置运行环境
 
@@ -63,7 +67,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.0 \
+        iotex/iotex-core:v0.5.1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -86,7 +90,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genes
 
 在第四步，您需要使用针对于测试网络的snapshot: https://t.iotex.me/data-testnet-latest。
 
-在第五步，您需要将docker镜像的标签替换成``iotex/iotex-core:v0.5.0-rc10``。
+在第五步，您需要将docker镜像的标签替换成``iotex/iotex-core:v0.5.1``。
 
 
 ## <a name="ioctl"/>与区块链交互
