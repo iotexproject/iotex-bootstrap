@@ -84,6 +84,8 @@ If your claim is successful, you will notice an increase of the balance in your 
 
 We provide a service to swap the IoTeX mainnet coin to the [IoTeX Network ERC20 token](https://etherscan.io/token/0x6fb3e0a217407efff7ca062d46c26e5d60a14d69) via a lock contract **io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y**.
 
+The abi of this lock contract is available [here](https://github.com/iotexproject/iotex-bootstrap/blob/master/native-to-erc20.abi)
+
 ## Swap IOTX Coin to the Lock Contract
 
 To invoke with the lock contract, run the following command in terminal:
