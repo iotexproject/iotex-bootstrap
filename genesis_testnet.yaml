@@ -1,6 +1,7 @@
 account:
   initBalances:
-    io120au9ra0nffdle04jx2g5gccn6gq8qd4fy03l4: "8000000000000000000000000000"
+    io10t7juxazfteqzjsd6qjk7tkgmngj2tm7n4fvrd: "1000000000000000000000000000"
+    io120au9ra0nffdle04jx2g5gccn6gq8qd4fy03l4: "7000000000000000000000000000"
     io1yrzvkucxpytn4fru35lc8r8jk4jtue4syg8d4h: "800000000000000000000000000"
 blockchain:
   actionGasLimit: 5000000
@@ -11,12 +12,12 @@ blockchain:
   numSubEpochs: 15
   pacificHeight: 1
   timeBasedRotation: true
-  timestamp: 1558594800
+  timestamp: 1558681200
 poll:
   delegates: []
   enableGravityChainVoting: true
   gravityChainHeightInterval: 100
-  gravityChainStartHeight: 7817200
+  gravityChainStartHeight: 7825200
   registerContractAddress: 0x92adef0e5e0c2b4f64a1ac79823f7ad3bc1662c4
   scoreThreshold: "2000000000000000000000000"
   selfStakingThreshold: "1200000000000000000000000"
