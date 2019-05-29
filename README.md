@@ -2,6 +2,8 @@
 
 ## News
 
+- TestNet is upgraded to v0.6.2. (2019-05-29)
+- TestNet is upgraded to v0.6.1 and restarted from a clean state again. (2019-05-24)
 - TestNet is upgraded to v0.6.0. If you join the previous TestNet, you need to restart with a clean local state. (2019-05-23)
 
 ## Index
@@ -18,7 +20,7 @@
 Here are the software versions we use:
 
 - MainNet: [v0.5.1](https://github.com/iotexproject/iotex-core/tree/0810e5166d12c7ae06110cf6429f332c59585056)
-- TestNet: v0.6.0
+- TestNet: v0.6.2
 
 ## <a name="mainnet"/>Join MainNet Alpha
 
@@ -106,7 +108,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genes
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
-In step 5, you need to replace the docker image tag in the command with `v0.6.0`.
+In step 5, you need to replace the docker image tag in the command with `v0.6.2`.
 
 ## <a name="ioctl"/>Interact with Blockchain
 
