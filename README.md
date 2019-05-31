@@ -2,6 +2,10 @@
 
 ## News
 
+- Delegates for MainNet should upgrade software to v0.6.2 before block height 432001. (2019-05-30)
+  - Those who have upgraded to v0.5.1+ before, you just need to restart the docker container with new tag v0.6.2.
+  - Those who are still on v0.5.0, please make sure you pull the **up-to-date** [genesis](https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml) file again, and then restart the docker container with new tag v0.6.2.
+  - Do **not** clean up local data for the upgrade.
 - TestNet is upgraded to v0.6.2. (2019-05-29)
 - TestNet is upgraded to v0.6.1 and restarted from a clean state again. (2019-05-24)
 - TestNet is upgraded to v0.6.0. If you join the previous TestNet, you need to restart with a clean local state. (2019-05-23)
@@ -19,7 +23,7 @@
 
 Here are the software versions we use:
 
-- MainNet: [v0.5.1](https://github.com/iotexproject/iotex-core/tree/0810e5166d12c7ae06110cf6429f332c59585056)
+- MainNet: [v0.6.2](https://github.com/iotexproject/iotex-core/tree/2df78e9460dee3bd3d96526468472409ac36d615)
 - TestNet: v0.6.2
 
 ## <a name="mainnet"/>Join MainNet Alpha
@@ -27,10 +31,10 @@ Here are the software versions we use:
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.5.1
+docker pull iotex/iotex-core:v0.6.2
 ```
 
-Please check if the docker image digest is `ad495eee20a758402d2a7b01eee9e2fdb842be9a1786ba2fb67bf6d440c21625`.
+Please check if the docker image digest is `d710efc6c76ad7e79414ef26e6386771de091767bd078eb9f7f32c79b3087692`.
 
 2. Set the environment with the following commands:
 
@@ -69,7 +73,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.1 \
+        iotex/iotex-core:v0.6.2 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -88,7 +92,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.1 \
+        iotex/iotex-core:v0.6.2 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
