@@ -123,7 +123,7 @@ You will find your IoTeX address and the corresponding ETH address in the output
 
 To distribute rewards to your voters, you need to first export the distribution with `bookkeeper`, and then send out tokens with some multi-send tool or send them one by one.
 
-## Export Distribution with `bookkeeper`
+## ~~Export Distribution with `bookkeeper`~~
 You can use the bookkeeper tool to calculate voters' rewards. The usage is:
 
 `bookkeeper --bp BP_NAME --start START_EPOCH_NUM --to END_EPOCH_NUM --percentage PERCENTAGE [--with-foundation-bonus] [--endpoint IOTEX_ENDPOINT] [--CONFIG CONFIG_FILE]`
@@ -138,7 +138,8 @@ To distribute Foundation Bonus in addition to Epoch Reward:
 
 The result will be saved to file `epoch_24_to_48.csv`, with the first column as the voter address, and the second column as the reward in Rau the corresponding voter will get. This csv file will be used in the next step MultiSend tool where the rewards are actually distributed to your voters.
 
-You can also use our GraphQL interface tool to get the reward distributions. The usage is:
+## Export Distribution with `bookkeeping` GraphQL web interface
+You can use our GraphQL interface tool to get the reward distributions. The usage is:
 
 ```
 query {
@@ -150,6 +151,8 @@ query {
 ```
 Once you specify all the arguments and return information, click the PLAY button, and you will see the reward information on the right.
 <img width="1600" alt="Screen Shot 2019-05-30 at 8 30 09 PM" src="https://user-images.githubusercontent.com/15241597/58680014-d3f5cb00-831a-11e9-9f9f-cc781185ff28.png">
+
+You can find the GraphQL web tool [here](https://iotex-analytics.herokuapp.com/).
 
 ## Send ERC20 Tokens to Voters
 
