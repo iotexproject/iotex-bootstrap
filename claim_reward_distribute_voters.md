@@ -138,6 +138,19 @@ To distribute Foundation Bonus in addition to Epoch Reward:
 
 The result will be saved to file `epoch_24_to_48.csv`, with the first column as the voter address, and the second column as the reward in Rau the corresponding voter will get. This csv file will be used in the next step MultiSend tool where the rewards are actually distributed to your voters.
 
+You can also use our GraphQL interface tool to get the reward distributions. The usage is:
+
+```
+query {
+  bookkeeping(startEpoch: START_EPOCH_NUMBER, epochCount: EPOCH_COUNT, delegateName: DELEGATE_NAME, includeFoundationBonus: WHETHER_DISTRIBUTE_FOUNDATION_BONUS, percentage: PERCENTAGE_OF_DISTRIBUTION){
+    voterAddress
+    amount
+  }
+}
+```
+Once you specify all the arguments and return information, click the PLAY button, and you will see the reward information on the right.
+<img width="1600" alt="Screen Shot 2019-05-30 at 8 30 09 PM" src="https://user-images.githubusercontent.com/15241597/58680014-d3f5cb00-831a-11e9-9f9f-cc781185ff28.png">
+
 ## Send ERC20 Tokens to Voters
 
 To send tokens to your voters, you may choose one of the following tools
