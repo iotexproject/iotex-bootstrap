@@ -160,7 +160,7 @@ To send tokens to your voters, you may choose one of the following tools
 
 ### IoTeX MultiSend Tool
 
-[multi-send](https://member.iotex.io/multi-send) is a tool developed by __IoTeX Foundation__ to send IOTX tokens on Ethereum to multi accounts. To use this tool, you need to sign into Metamask. After that, paste the csv file from the above step into "Recipients and Amounts". After clicking the button "Distribute ERC-20 IOTX", follow instructions from Metamask to finish sending tokens.
+[multi-send](https://member.iotex.io/tools/multi-send) is a tool developed by __IoTeX Foundation__ to send IOTX tokens on Ethereum to multi accounts. To use this tool, you need to sign into Metamask. After that, paste the csv file from the above step into "Recipients and Amounts". After clicking the button "Distribute ERC-20 IOTX", follow instructions from Metamask to finish sending tokens.
 
 > Note: A fee in ETH will be charged automatically.
 
