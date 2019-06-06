@@ -115,7 +115,7 @@ For example, to get the ETH address of your account `my_primary_account`:
 
 ```ioctl account ethaddr my_primary_account```
 
-You will find your IoTeX address and the corresponding ETH address in the output. Then you can check address the ETH address on https://etherscan.io to verify the IoTeX Network ERC20 tokens you have received.
+You will find your IoTeX address and the corresponding ETH address in the output. Then you can check the ETH address on https://etherscan.io to verify the IoTeX Network ERC20 tokens you have received.
 
 ---
 
