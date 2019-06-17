@@ -152,6 +152,7 @@ query {
       amount
     }
     count
+    }
   }
 }
 ```
