@@ -145,13 +145,14 @@ You can use our GraphQL interface tool to get the reward distributions. The usag
 query {
   delegate(startEpoch: START_EPOCH_NUMBER, epochCount: EPOCH_COUNT, delegateName: DELEGATE_NAME){
     bookkeeping(percentage: PERCENTAGE_OF_DISTRIBUTION, includeFoundationBonus: WHETHER_DISTRIBUTE_FOUNDATION_BONUS){
-    exist
-    rewardDistribution(pagination: {skip: START_INDEX_OF_DISPLAYING_REWARD_DISTRIBUTION_LIST, first: NUMBER_OF_REWARD_DISTRIBUTIONS_TO_DISPLAY}){
-      voterEthAddress
-      voterIotexAddress
-      amount
+      exist
+      rewardDistribution(pagination: {skip: START_INDEX_OF_DISPLAYING_REWARD_DISTRIBUTION_LIST, first: NUMBER_OF_REWARD_DISTRIBUTIONS_TO_DISPLAY}){
+        voterEthAddress
+        voterIotexAddress
+        amount
+      }
+      count
     }
-    count
   }
 }
 ```
