@@ -144,9 +144,9 @@ You can use our GraphQL interface tool to get the reward distributions. The usag
 ```
 query {
   delegate(startEpoch: START_EPOCH_NUMBER, epochCount: EPOCH_COUNT, delegateName: DELEGATE_NAME){
-    bookkeeping(percentage: PERCENTAGE_OF_DISTRIBUTION, includeFoundationBonus: WHETHER_DISTRIBUTE_FOUNDATION_BONUS, pagination: {skip: START_INDEX_OF_DISPLAYING_REWARD_DISTRIBUTION_LIST, first: NUMBER_OF_REWARD_DISTRIBUTIONS_TO_DISPLAY}){
+    bookkeeping(percentage: PERCENTAGE_OF_DISTRIBUTION, includeFoundationBonus: WHETHER_DISTRIBUTE_FOUNDATION_BONUS){
     exist
-    rewardDistribution{
+    rewardDistribution(pagination: {skip: START_INDEX_OF_DISPLAYING_REWARD_DISTRIBUTION_LIST, first: NUMBER_OF_REWARD_DISTRIBUTIONS_TO_DISPLAY}){
       voterEthAddress
       voterIotexAddress
       amount
@@ -159,7 +159,7 @@ query {
 Note that you can add the optional return field **exist** as above to check wether the delegate has bookkeeping information within the specified epoch range. Specifying the optional argument **pagination** would only show you part of the reward distribution list while the optional return field **count** would tell the total number of reward distributions. If you don't specify **pagination** argument, by default you will get the complete reward distribution list sorted by voter's ETH address.
 
 Once you specify all the arguments and return information, click the PLAY button, and you will see the reward information on the right.
-<img width="1621" alt="Screen Shot 2019-06-14 at 5 32 30 PM" src="https://user-images.githubusercontent.com/15241597/59544819-7476ee00-8eca-11e9-8f8b-e9ff46eb1188.png">
+<img width="1517" alt="Screen Shot 2019-06-16 at 4 52 48 PM" src="https://user-images.githubusercontent.com/15241597/59571278-07915e80-9058-11e9-8f8f-ee238a822164.png">
 
 You can find the GraphQL web tool [here](https://iotex-analytics.herokuapp.com/).
 
