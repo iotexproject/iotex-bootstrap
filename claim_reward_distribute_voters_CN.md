@@ -121,7 +121,7 @@
 
 要向投票者分发奖励，您需要首先使用`bookkeeper`导出分发明细，然后使用一些多重发送工具发送代币或逐个发送。
 
-## 使用`bookkeeper`导出分发明细
+## ~~使用`bookkeeper`导出分发明细~~
 您可以使用bookkeeper工具计算投票者的奖励。用法是：
 
 `bookkeeper --bp BP_NAME --start START_EPOCH_NUM --to END_EPOCH_NUM --percentage PERCENTAGE [--with-foundation-bonus] [--endpoint IOTEX_ENDPOINT] [--CONFIG CONFIG_FILE]`
@@ -135,6 +135,33 @@
 ```bookkeeper --bp xyz --start 24 --to 48 --percentage 90 --with-foundation-bonus```
 
 结果将保存到文件`epoch_24_to_48.csv`，第一列作为投票者地址，第二列作为相应投票者将获得的Rau奖励。此csv文件将用于下一步MultiSend工具，其中奖励实际分配给您的投票者。
+
+## 使用`bookkeeping`GraphQL网页工具导出分发明细
+您可以使用bookkeeping GraphQL工具计算投票者的奖励。用法是：
+
+```
+query {
+  delegate(startEpoch: START_EPOCH_NUMBER, epochCount: EPOCH_COUNT, delegateName: DELEGATE_NAME){
+    bookkeeping(percentage: PERCENTAGE_OF_DISTRIBUTION, includeFoundationBonus: WHETHER_DISTRIBUTE_FOUNDATION_BONUS){
+      exist
+      rewardDistribution(pagination: {skip: START_INDEX_OF_DISPLAYING_REWARD_DISTRIBUTION_LIST, first: NUMBER_OF_REWARD_DISTRIBUTIONS_TO_DISPLAY}){
+        voterEthAddress
+        voterIotexAddress
+        amount
+      }
+      count
+    }
+  }
+}
+```
+
+如上所示，您可以通过添加可选返回项**exist**来查看节点在周期范围内是否拥有奖励分发所需的数据记录。您可以通过设置可选参数**pagination**来获取部分奖励分发明细。与此同时，添加可选返回项**count**以用来返回奖励分发的个数。如果选择不设置参数**pagination**，您将会默认收到按投票人以太坊地址排序的完整奖励明细列表。
+
+当您设置好所有参数和返回项后，点击PLAY按钮，奖励明细会出现在界面右边。
+<img width="1517" alt="Screen Shot 2019-06-16 at 4 52 48 PM" src="https://user-images.githubusercontent.com/15241597/59571278-07915e80-9058-11e9-8f8f-ee238a822164.png">
+
+您可以在[这里](https://iotex-analytics.herokuapp.com/)找到GraphQL网页工具。
+
 
 ## 发送ERC20代币到投票者
 
