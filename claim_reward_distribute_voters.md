@@ -162,7 +162,7 @@ Note that you can add the optional return field **exist** as above to check weth
 Once you specify all the arguments and return information, click the PLAY button, and you will see the reward information on the right.
 <img width="1517" alt="Screen Shot 2019-06-16 at 4 52 48 PM" src="https://user-images.githubusercontent.com/15241597/59571278-07915e80-9058-11e9-8f8f-ee238a822164.png">
 
-You can find the GraphQL web tool [here](https://iotex-analytics.herokuapp.com/).
+You can find the GraphQL web tool [here](https://analytics.iotexscan.io/).
 
 ## Send ERC20 Tokens to Voters
 

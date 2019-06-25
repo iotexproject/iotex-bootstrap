@@ -160,7 +160,7 @@ query {
 当您设置好所有参数和返回项后，点击PLAY按钮，奖励明细会出现在界面右边。
 <img width="1517" alt="Screen Shot 2019-06-16 at 4 52 48 PM" src="https://user-images.githubusercontent.com/15241597/59571278-07915e80-9058-11e9-8f8f-ee238a822164.png">
 
-您可以在[这里](https://iotex-analytics.herokuapp.com/)找到GraphQL网页工具。
+您可以在[这里](https://analytics.iotexscan.io/)找到GraphQL网页工具。
 
 
 ## 发送ERC20代币到投票者
