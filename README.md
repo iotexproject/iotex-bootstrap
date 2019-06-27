@@ -2,13 +2,8 @@
 
 ## News
 
-- Delegates for MainNet should upgrade software to v0.6.2 before block height 432001. (2019-05-30)
-  - Those who have upgraded to v0.5.1+ before, you just need to restart the docker container with new tag v0.6.2.
-  - Those who are still on v0.5.0, please make sure you pull the **up-to-date** [genesis](https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml) file again, and then restart the docker container with new tag v0.6.2.
-  - Do **not** clean up local data for the upgrade.
-- TestNet is upgraded to v0.6.2. (2019-05-29)
-- TestNet is upgraded to v0.6.1 and restarted from a clean state again. (2019-05-24)
-- TestNet is upgraded to v0.6.0. If you join the previous TestNet, you need to restart with a clean local state. (2019-05-23)
+- TestNet is upgraded to v0.7.0. If you join the previous TestNet, you DO NOT need to clean up your local database.
+You only need to load the up-to-date genesis file again (`curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml`), and restart the node with v0.7.0 docker image. (2019-06-27)
 
 ## Index
 
@@ -24,7 +19,7 @@
 Here are the software versions we use:
 
 - MainNet: [v0.6.2](https://github.com/iotexproject/iotex-core/tree/2df78e9460dee3bd3d96526468472409ac36d615)
-- TestNet: v0.6.2
+- TestNet: v0.7.0
 
 ## <a name="mainnet"/>Join MainNet Alpha
 
@@ -112,7 +107,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genes
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
-In step 5, you need to replace the docker image tag in the command with `v0.6.2`.
+In step 5, you need to replace the docker image tag in the command with `v0.7.0`.
 
 ## <a name="ioctl"/>Interact with Blockchain
 
