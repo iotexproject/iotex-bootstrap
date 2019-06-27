@@ -6,9 +6,9 @@
 
 2. 将Envoy Proxy作为边缘代理放在节点前面。
 
-   [Envoy](https://www.envoyproxy.io/) 与 [ratelimit](https://github.com/lyft/ratelimit) 对HTTP / HTTP2和所有网络流量的连接限制提供请求速率限制。将您的IoTeX节点置于Envoy代理后面，为您提供针对攻击者的另一层保护。此外，由于IoTeX节点API使用GRPC，如果您想成为服务节点并为浏览器单页面应用程序提供API请求, 您将需要Envoy的 [grpc-web](https://github.com/grpc/grpc-web) 过滤器以启用此功能。
+   [Envoy](https://www.envoyproxy.io/) 与 [ratelimit](https://github.com/lyft/ratelimit) 针对HTTP / HTTP2能提供请求速率限制，并对所有网络流量提供连接限制。将您的IoTeX节点置于Envoy代理后面，能为您提供针对攻击者的另一层保护。此外，由于IoTeX节点API使用GRPC，如果您想成为服务节点并为浏览器单页面应用程序提供API请求, 您将需要Envoy的 [grpc-web](https://github.com/grpc/grpc-web) 过滤器以启用此功能。
 
-   在我们的测试网络集群中，我们在HTTP / HTTP2请求上为每个IP速率上限为每秒20个请求
+   在我们的测试网络集群中，我们设置HTTP / HTTP2请求速率上限为每个IP每秒20个请求
 
    ```yaml
    domain: iotex-api
@@ -43,9 +43,9 @@
 
 3. 使用Kubernetes进行部署和运行状况监控。
 
-   [Kubernetes](https://kubernetes.io)(k8s) 是一个非常强大的用于管理您的容器化服务工具。在Kubernetes中部署和升级在docker容器中运行的服务非常方便。
+   [Kubernetes](https://kubernetes.io)(k8s) 是一个非常强大的用于管理您的容器化服务的工具。在Kubernetes中部署和升级在docker容器中运行的服务非常方便。
 
-   k8s 还将执行运行状况检查并自动重启下降节点以最大化正常运行时间。
+   k8s 还将执行运行状况检查并自动重启下降的节点以最大化正常运行时间。
 
    我们在测试环境中非常依赖k8s。根据我们自己的经验，我们可以确定k8s肯定会降低您的运营成本。
 
@@ -71,7 +71,7 @@
      failureThreshold: 5
    ```
 
-   我们目前为testnet运行的代理机器人设置与下图非常相似:![infra](infra.png?raw=true)
+   我们目前在testnet运行的代理机器人设置与下图非常相似:![infra](infra.png?raw=true)
    
    ## 高可用性
 
