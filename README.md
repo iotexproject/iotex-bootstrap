@@ -2,6 +2,8 @@
 
 ## News
 
+- TestNet is upgraded to v0.7.1 with a fix in API to sort actions on one address correctly. (2019-07-02)
+
 - TestNet is upgraded to v0.7.0. If you join the previous TestNet, you DO NOT need to clean up your local database.
 You only need to load the up-to-date genesis file again (`curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml`), and restart the node with v0.7.0 docker image. (2019-06-27)
 
@@ -19,7 +21,7 @@ You only need to load the up-to-date genesis file again (`curl https://raw.githu
 Here are the software versions we use:
 
 - MainNet: [v0.6.2](https://github.com/iotexproject/iotex-core/tree/2df78e9460dee3bd3d96526468472409ac36d615)
-- TestNet: v0.7.0
+- TestNet: v0.7.1
 
 ## <a name="mainnet"/>Join MainNet Alpha
 
@@ -107,7 +109,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genes
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
-In step 5, you need to replace the docker image tag in the command with `v0.7.0`.
+In step 5, you need to replace the docker image tag in the command with `v0.7.1`.
 
 ## <a name="ioctl"/>Interact with Blockchain
 
