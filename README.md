@@ -145,7 +145,7 @@ Get consensus delegates of current epoch:
 ioctl node delegate
 ```
 
-Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/cli/ioctl/README.md) for more details.
+Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/ioctl/README.md) for more details.
 
 ### Other Commonly Used Commands
 
