@@ -2,8 +2,8 @@
 
 ## News
 
+- TestNet is upgraded to v0.7.2. (2019-07-11)
 - TestNet is upgraded to v0.7.1 with a fix in API to sort actions on one address correctly. (2019-07-02)
-
 - TestNet is upgraded to v0.7.0. If you join the previous TestNet, you DO NOT need to clean up your local database.
 You only need to load the up-to-date genesis file again (`curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml`), and restart the node with v0.7.0 docker image. (2019-06-27)
 
