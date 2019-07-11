@@ -159,8 +159,6 @@ Exchange to ERC20 on Ethereum via Faucet:
 ioctl action invoke io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y ${amountInIOTX} -s ${ioAddress|alias} -l 400000 -p 1 -b d0e30db0
 ```
 
-Besides ioctl, we also provide a tool named "bookkeeper" to help calculate the reward distribution for voters by epoch. Refer to [bookkeeper instruction](https://github.com/iotexproject/iotex-election/tree/master/tools) for more details.
-
 ## <a name="ops"/>Operate Your Node
 
 ### Checking Node log
