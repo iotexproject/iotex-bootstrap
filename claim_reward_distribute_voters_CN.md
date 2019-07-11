@@ -6,7 +6,7 @@
 
 # 必要条件
 
-在进行以下任何一个步骤之前，请安装我们的`ioctl` 和 `bookkeeper` 命令行工具
+在进行以下任何一个步骤之前，请安装我们的`ioctl`命令行工具
 
 ##安装ioctl工具
 
@@ -43,14 +43,6 @@
 ```ioctl account balance my_primary_account```
 
 您将在输出中找到IOTX中的余额。
-
-## 安装bookkeeper工具
-
-`bookkeeper`是__IoTeX Foundation__提供的奖励分发工具，用于帮助计算选民的奖励代币。要安装，请在终端中运行以下命令：
-
-```curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-bookkeeper.sh | sh```
-
-将[config yaml](https://github.com/iotexproject/iotex-tools/blob/master/bookkeeper/committee.yaml)从我们的主网上面下载到您想储存由`bookkeeper`工具导出的csv文件的文件夹下。
 
 ---
 
@@ -119,22 +111,7 @@
 
 #分发给投票者
 
-要向投票者分发奖励，您需要首先使用`bookkeeper`导出分发明细，然后使用一些多重发送工具发送代币或逐个发送。
-
-## ~~使用`bookkeeper`导出分发明细~~
-您可以使用bookkeeper工具计算投票者的奖励。用法是：
-
-`bookkeeper --bp BP_NAME --start START_EPOCH_NUM --to END_EPOCH_NUM --percentage PERCENTAGE [--with-foundation-bonus] [--endpoint IOTEX_ENDPOINT] [--CONFIG CONFIG_FILE]`
-
-例如，节点`xyz`想要分配`90%`的奖励，从第`24`个周期到第`48`个周期。如果只分配周期奖励：
-
-```bookkeeper --bp xyz --start 24 --to 48 --percentage 90```
-
-如果要分配基金奖励和周期奖励：
-
-```bookkeeper --bp xyz --start 24 --to 48 --percentage 90 --with-foundation-bonus```
-
-结果将保存到文件`epoch_24_to_48.csv`，第一列作为投票者地址，第二列作为相应投票者将获得的Rau奖励。此csv文件将用于下一步MultiSend工具，其中奖励实际分配给您的投票者。
+要向投票者分发奖励，您需要首先使用`bookkeeping`导出分发明细，然后使用一些多重发送工具发送代币或逐个发送。
 
 ## 使用`bookkeeping`GraphQL网页工具导出分发明细
 您可以使用bookkeeping GraphQL工具计算投票者的奖励。用法是：
