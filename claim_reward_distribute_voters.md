@@ -6,7 +6,7 @@ This doc will guide you how to claim rewards and distribute to your voters. Here
 
 # Prerequisite
 
-Before moving onto any of the following sections, please install our `ioctl` and `bookkeeper` commandline tool
+Before moving onto any of the following sections, please install our `ioctl` commandline tool
 
 ## Install ioctl Tool
 
@@ -43,14 +43,6 @@ For example, you can use the following command to check the balance of your acco
 ```ioctl account balance my_primary_account```
 
 You will find your balance in IOTX in the output.
-
-## Install bookkeeper Tool
-
-`bookkeeper` is a reward distribution tool provided by __IoTeX Foundation__ to assist calculation of reward tokens for voters. To install, run the following command in terminal:
-
-```curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-bookkeeper.sh | sh```
-
-Download [the config yaml](https://github.com/iotexproject/iotex-tools/blob/master/bookkeeper/committee.yaml) for our mainnet to the directory you want to store the csv files exported by the `bookkeeper` tool.
 
 ---
 
@@ -121,22 +113,7 @@ You will find your IoTeX address and the corresponding ETH address in the output
 
 # Distribution to Voters
 
-To distribute rewards to your voters, you need to first export the distribution with `bookkeeper`, and then send out tokens with some multi-send tool or send them one by one.
-
-## ~~Export Distribution with `bookkeeper`~~
-You can use the bookkeeper tool to calculate voters' rewards. The usage is:
-
-`bookkeeper --bp BP_NAME --start START_EPOCH_NUM --to END_EPOCH_NUM --percentage PERCENTAGE [--with-foundation-bonus] [--endpoint IOTEX_ENDPOINT] [--CONFIG CONFIG_FILE]`
-
-For example, delegate `xyz` wants to distribute `90%` of its reward from epoch `24` to epoch `48`. To distribute Epoch Reward only:
-
-```bookkeeper --bp xyz --start 24 --to 48 --percentage 90```
-
-To distribute Foundation Bonus in addition to Epoch Reward:
-
-```bookkeeper --bp xyz --start 24 --to 48 --percentage 90 --with-foundation-bonus```
-
-The result will be saved to file `epoch_24_to_48.csv`, with the first column as the voter address, and the second column as the reward in Rau the corresponding voter will get. This csv file will be used in the next step MultiSend tool where the rewards are actually distributed to your voters.
+To distribute rewards to your voters, you need to first export the distribution with `bookkeeping`, and then send out tokens with some multi-send tool or send them one by one.
 
 ## Export Distribution with `bookkeeping` GraphQL web interface
 You can use our GraphQL interface tool to get the reward distributions. The usage is:
