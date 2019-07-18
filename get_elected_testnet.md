@@ -35,7 +35,7 @@ Response contents:
 
 - Use height from the obtained response, and check the current ranking status
 ```
-➜  grpcurl -v -plaintext -d '{"height": "7356100", "offset": 0, "limit": 100}' 35.203.165.104:8089 ranking.Ranking.getCandidates
+➜  grpcurl -v -plaintext -d '{"height": "7356100", "offset": 0, "limit": 100}' 35.203.165.104:8089 api.APIService.getCandidates
 Response contents:
 {
   "candidates": [
