@@ -155,10 +155,11 @@ Claim reward:
 ioctl action claim ${amountInIOTX} -l 10000 -p 1 -s ${ioAddress|alias}
 ```
 
-Exchange to ERC20 on Ethereum via Faucet:
+Exchange IoTeX native token to ERC20 token on Ethereum via Tube service:
 ```
-ioctl action invoke io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y ${amountInIOTX} -s ${ioAddress|alias} -l 400000 -p 1 -b d0e30db0
+ioctl action invoke io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5 ${amountInIOTX} -s ${ioAddress|alias} -l 400000 -p 1 -b d0e30db0
 ```
+Click [IoTeX Tube docs](https://github.com/iotexproject/iotex-bootstrap/blob/master/tube/tube.md) for detailed documentation of the tube service.
 
 ## <a name="ops"/>Operate Your Node
 
