@@ -74,17 +74,17 @@
 
 # 交换为ETH ERC代币
 我们提供服务，通过固定合约将IoTeX主网代币交换到[IoTeX网络ERC20令牌](https://etherscan.io/token/0x6fb3e0a217407efff7ca062d46c26e5d60a14d69)
-**io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y**
+**io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5**
 
 ## 转换IOTX代币到固定合约
 
 要调用固定合约，请在终端中运行以下命令：
 
-```ioctl action invoke io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y ${amount} -s ${io_address|account_name} -l 400000 -p 1 -b d0e30db0```
+```ioctl action invoke io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5 ${amount} -s ${io_address|account_name} -l 400000 -p 1 -b d0e30db0```
 
 命令中的`amount`应该等于您要交换的金额加上费用（20 IOTX）。例如，如果要从帐户`my_primary_account`交换30000 IOTX，则可以输入：
 
-```ioctl action invoke io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y 30020 -s my_primary_account -l 400000 -p 1 -b d0e30db0```
+```ioctl action invoke io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5 30020 -s my_primary_account -l 400000 -p 1 -b d0e30db0```
 
 系统将提示您输入密码，然后输入`yes`进行确认。
 
