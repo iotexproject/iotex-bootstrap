@@ -74,40 +74,11 @@ If your claim is successful, you will notice an increase of the balance in your 
 
 # Swap to Ethereum ERC20 Token
 
-We provide a service to swap the IoTeX mainnet coin to the [IoTeX Network ERC20 token](https://etherscan.io/token/0x6fb3e0a217407efff7ca062d46c26e5d60a14d69) via a lock contract **io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y**.
-
-The abi of this lock contract is available [here](https://github.com/iotexproject/iotex-bootstrap/blob/master/native-to-erc20.abi)
-
-## Swap IOTX Coin to the Lock Contract
-
-To invoke with the lock contract, run the following command in terminal:
-
-```ioctl action invoke io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y ${amount} -s ${io_address|account_name} -l 400000 -p 1 -b d0e30db0```
-
-The `amount` in the command should be equal to the amount you want to swap plus a fee (20 IOTX). For example, if you want to swap 30000 IOTX from you account `my_primary_account`, you can input:
-
-```ioctl action invoke io1pcg2ja9krrhujpazswgz77ss46xgt88afqlk6y 30020 -s my_primary_account -l 400000 -p 1 -b d0e30db0```
-
-You will be prompted to enter password, then enter `yes` to confirm.
-
-> Note: The lock contract has imposed a minimum amount of 1020 and maximum 1,000,020 IOTX. Amount not in this range will automatically be rejected. The contract will charge 20 tokens as gas fee for each swap, so the minimum/maximum range is to help user make swap in an economical way.
-
-Due to this reason, do not transfer the total balance in the IoTeX address, that will be rejected (because that won't leave enough balance to cover the gas fee). We suggest leave about ~100 tokens in the IoTeX address so you will have enough balance to cover gas fee and use it next time.
-
-Please keep the transaction hash of your transfer for future reference, especially in the rare case that the ERC20 token transfer failed and you request for a re-issue.
-
-## Check Received ERC20 Token
-Each IoTeX address is by itself associated with an ETH address, which shares the same private key.
-
-Use the ioctl command line tool to get the ETH address associated with your IoTeX address, run the following command in terminal:
-
-```ioctl account ethaddr ${io_address|account_name}```
-
-For example, to get the ETH address of your account `my_primary_account`:
-
-```ioctl account ethaddr my_primary_account```
-
-You will find your IoTeX address and the corresponding ETH address in the output. Then you can check the ETH address on https://etherscan.io to verify the IoTeX Network ERC20 tokens you have received.
+We provide a service to swap the IoTeX mainnet coin to the [IoTeX Network ERC20 token](https://etherscan.io/token/0x6fb3e0a217407efff7ca062d46c26e5d60a14d69) via a lock contract **io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5**.
+```
+ioctl action invoke io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5 ${amountInIOTX} -s ${ioAddress|alias} -l 400000 -p 1 -b d0e30db0
+```
+We recommend that you use our [web portal](https://member.iotex.io/tools/iotex) to do the swap. Click [IoTeX Tube docs](https://github.com/iotexproject/iotex-bootstrap/blob/master/tube/tube.md) for detailed documentation of the tube service.
 
 ---
 
