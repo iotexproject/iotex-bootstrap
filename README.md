@@ -2,6 +2,7 @@
 
 ## News
 
+- `v0.7.3` is available. it's a compatible upgrade from `0.7.2`.
 - Please upgrade MainNet to v0.7.2. Delegates only need to restart the node with the docker image tagged `v0.7.2`.
 - TestNet is upgraded to v0.7.2. (2019-07-11)
 - TestNet is upgraded to v0.7.1 with a fix in API to sort actions on one address correctly. (2019-07-02)
@@ -21,7 +22,7 @@ You only need to load the up-to-date genesis file again (`curl https://raw.githu
 
 Here are the software versions we use:
 
-- MainNet: [v0.7.2](https://github.com/iotexproject/iotex-core/tree/909a087ce8a3aa1ae53e3f918f18d097226e11d2)
+- MainNet: [v0.7.3](https://github.com/iotexproject/iotex-core/tree/b3421b05b12da3b04e4e36d4d8c064b3eea25872)
 - TestNet: v0.7.2
 
 ## <a name="mainnet"/>Join MainNet Alpha
@@ -29,10 +30,10 @@ Here are the software versions we use:
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.7.2
+docker pull iotex/iotex-core:v0.7.3
 ```
 
-Please check if the docker image digest is `0ed123a65c24188e1c2497574d885658dce2b8977b5caed6031c9673055fd4d3`.
+Please check if the docker image digest is `5600873ecb9fa06567a13fab515148775ec8c2ca5d3d5aeb89724569b262014d`.
 
 2. Set the environment with the following commands:
 
@@ -71,7 +72,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.7.2 \
+        iotex/iotex-core:v0.7.3 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -90,7 +91,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.7.2 \
+        iotex/iotex-core:v0.7.3 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
