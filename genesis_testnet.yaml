@@ -6,6 +6,7 @@ account:
 blockchain:
   actionGasLimit: 5000000
   aleutianHeight: 294121
+  beringHeight: 699841
   blockGasLimit: 20000000
   blockInterval: 10s
   numCandidateDelegates: 36
