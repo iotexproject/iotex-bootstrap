@@ -123,7 +123,7 @@ setup their own endpoint, to be more decentralized, secured and performant.
 There are two approaches that we have experimented before and you could consider of:
 
 - Setup an Ethereum node (no need to mine) ([geth](https://github.com/ethereum/go-ethereum/wiki/Installing-Geth) and [parity](https://wiki.parity.io/Setup)) for your own, and expose the JSON-RPC endpoint.
-- Use [Infura](https://infura.io/) Ethereum blockchain infrasturcture: signing up an account and creating an project. The JSON-RPC endpoint would be https://mainnet.infura.io/v3/YOUR-PROJECT-ID.
+- Use [Infura](https://infura.io/) Ethereum blockchain infrasturcture: signing up an account and creating an project. The JSON-RPC endpoint would be https://mainnet.infura.io/v3/YOUR-PROJECT-ID. For more details of setting up Infura endpoint, please check [here](https://ethereumico.io/knowledge-base/infura-api-key-guide/).
 
 After getting your own JSON-RPC endpoint, you could add it into following place in `config.yaml` and restart your server. Then, your IoTeX server will read from this endpoint to get Ethereum data. You could also create and add multiple endpoints for the sake of robustness.
 
