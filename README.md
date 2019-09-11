@@ -2,6 +2,7 @@
 
 ## News
 
+- We have upgraded testnet to `v0.8.3`, which contains the new error code, and consensus improvement.
 - We have upgraded testnet to `v0.8.0`, which contains the upgrade of evm, so that developers are able to deploy
 the contract written in Solidity 0.5.0+. It's a hard fork that would happen at block height 699841. If people want
 to run the node for testnet, please pull the latest testnet genesis again, and restart the node with `v0.8.0` image.
@@ -22,7 +23,7 @@ to run the node for testnet, please pull the latest testnet genesis again, and r
 Here are the software versions we use:
 
 - MainNet: [v0.7.3](https://github.com/iotexproject/iotex-core/tree/b3421b05b12da3b04e4e36d4d8c064b3eea25872)
-- TestNet: v0.8.0
+- TestNet: v0.8.3
 
 ## <a name="mainnet"/>Join MainNet Alpha
 
@@ -110,7 +111,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genes
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
-In step 5, you need to replace the docker image tag in the command with `v0.8.0`.
+In step 5, you need to replace the docker image tag in the command with `v0.8.3`.
 
 ## <a name="ioctl"/>Interact with Blockchain
 
