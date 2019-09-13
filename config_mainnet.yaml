@@ -23,7 +23,7 @@ chain:
       - wss://us-west-1.iotex.world/ws
       - wss://sydney-1.iotex.world/ws
     numOfRetries: 20
-    paginationSize: 11
+    paginationSize: 101
     cacheSize: 1000
   gravityChainDB:
     dbPath: /var/data/poll.db
