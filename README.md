@@ -1,7 +1,7 @@
 # IoTeX Delegate Manual
 
 ## News
-
+- We have upgraded mainnet to `v0.8.3`. It contains breaking changes which will be activated on block height 1512001. Delegates must upgrade your node to the new version before that.
 - We have upgraded testnet to `v0.8.4`.
 - We have upgraded testnet to `v0.8.3`, which contains the new error code, and consensus improvement.
 
