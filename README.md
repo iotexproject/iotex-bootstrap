@@ -2,12 +2,8 @@
 
 ## News
 
+- We have upgraded testnet to `v0.8.4`.
 - We have upgraded testnet to `v0.8.3`, which contains the new error code, and consensus improvement.
-- We have upgraded testnet to `v0.8.0`, which contains the upgrade of evm, so that developers are able to deploy
-the contract written in Solidity 0.5.0+. It's a hard fork that would happen at block height 699841. If people want
-to run the node for testnet, please pull the latest testnet genesis again, and restart the node with `v0.8.0` image.
-- `v0.7.3` is available. it's a compatible upgrade from `0.7.2`.
-- Please upgrade MainNet to v0.7.2. Delegates only need to restart the node with the docker image tagged `v0.7.2`.
 
 ## Index
 
@@ -22,18 +18,16 @@ to run the node for testnet, please pull the latest testnet genesis again, and r
 
 Here are the software versions we use:
 
-- MainNet: [v0.7.3](https://github.com/iotexproject/iotex-core/tree/b3421b05b12da3b04e4e36d4d8c064b3eea25872)
-- TestNet: v0.8.3
+- MainNet: v0.8.3
+- TestNet: v0.8.4
 
 ## <a name="mainnet"/>Join MainNet Alpha
 
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.7.3
+docker pull iotex/iotex-core:v0.8.3
 ```
-
-Please check if the docker image digest is `5600873ecb9fa06567a13fab515148775ec8c2ca5d3d5aeb89724569b262014d`.
 
 2. Set the environment with the following commands:
 
@@ -72,7 +66,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.7.3 \
+        iotex/iotex-core:v0.8.3 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -91,7 +85,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.7.3 \
+        iotex/iotex-core:v0.8.3 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -111,7 +105,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genes
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
-In step 5, you need to replace the docker image tag in the command with `v0.8.3`.
+In step 5, you need to replace the docker image tag in the command with `v0.8.4`.
 
 ## <a name="ioctl"/>Interact with Blockchain
 
