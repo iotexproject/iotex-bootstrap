@@ -1,5 +1,7 @@
 # IoTeX 主网预演手册
 
+*最新版本请参考 https://github.com/iotexproject/iotex-bootstrap/blob/master/README.md*
+
 ## 更新
 
 节点现在可以将主网更新到 v0.5.1了。请确保你下载了最新的`genesis.yaml` 并且在重启节点之前覆盖现在的`genesis.yaml`
