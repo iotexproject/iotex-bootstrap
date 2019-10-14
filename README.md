@@ -1,6 +1,7 @@
 # IoTeX Delegate Manual
 
 ## News
+- We have reset testnet, and deployed `v0.8.3`, and finally upgraded it to `v0.9.0`. The genesis config file has been updated as well.
 - We have upgraded mainnet to `v0.8.3`. It contains breaking changes which will be activated on block height 1512001. Delegates must upgrade your node to the new version before that.
 - We have upgraded testnet to `v0.8.4`.
 - We have upgraded testnet to `v0.8.3`, which contains the new error code, and consensus improvement.
@@ -19,7 +20,7 @@
 Here are the software versions we use:
 
 - MainNet: v0.8.3
-- TestNet: v0.8.4
+- TestNet: v0.9.0
 
 ## <a name="mainnet"/>Join MainNet Alpha
 
@@ -105,7 +106,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genes
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
-In step 5, you need to replace the docker image tag in the command with `v0.8.4`.
+In step 5, you need to replace the docker image tag in the command with `v0.9.0`.
 
 ## <a name="ioctl"/>Interact with Blockchain
 
