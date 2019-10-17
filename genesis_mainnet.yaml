@@ -49,6 +49,7 @@ poll:
   selfStakingThreshold: "1200000000000000000000000"
   stakingContractAddress: 0x87c9dbff0016af23f5b1ab9b8e072124ab729193
   voteThreshold: "100000000000000000000"
+  nativeStakingContractAddress: io1xpq62aw85uqzrccg9y5hnryv8ld2nkpycc3gza
 rewarding:
   blockReward: "16000000000000000000"
   epochReward: "12500000000000000000000"
