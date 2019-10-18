@@ -2,8 +2,8 @@
 
 ##Setup  Iotex TestNet
 ##User $0 [$1]
-
-version=${1:-"v0.5.0-rc10"}   # if $1 ;then version=$1;else version="v0.5.0-rc8-hotfix2"
+lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "docker pull"|awk -F "[:]" '{print $2}')
+version=${1:-"$lastversion"}   # if $1 ;then version=$1;else version=last version
 echo ${version}
 #Pull the docker image
 docker pull iotex/iotex-core:${version}
