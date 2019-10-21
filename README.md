@@ -10,7 +10,7 @@
 ## Index
 
 - [Release Status](#status)
-- [Join MainNet Alpha](#mainnet)
+- [Join MainNet Beta](#mainnet)
 - [Join TestNet](#testnet)
 - [Interact with Blockchain](#ioctl)
 - [Operate Your Node](#ops)
@@ -23,7 +23,7 @@ Here are the software versions we use:
 - MainNet: v0.9.0
 - TestNet: v0.9.0
 
-## <a name="mainnet"/>Join MainNet Alpha
+## <a name="mainnet"/>Join MainNet Beta
 
 1. Pull the docker image:
 
