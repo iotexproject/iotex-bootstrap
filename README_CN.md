@@ -1,10 +1,14 @@
-# IoTeX 主网预演手册
+# IoTeX 节点候选人手册
 
 *最新版本请参考 https://github.com/iotexproject/iotex-bootstrap/blob/master/README.md*
 
-## 更新
-
-节点现在可以将主网更新到 v0.5.1了。请确保你下载了最新的`genesis.yaml` 并且在重启节点之前覆盖现在的`genesis.yaml`
+## 最新动态
+- 我们在v0.9.0中发现了一个错误，该错误可能导致节点在委托列表上不一致。我们已经推出了v0.9.1版来解决此问题。
+- v0.9.0已发布，因此委托节点应将其软件升级到此新版本。该分叉将发生在块高度1641601处。在使用v0.9.0 docker image重新启动之前，请首先重新获取最新的mainnet创世区块配置文件。这是此升级的必需步骤。此外，请注意，此升级将导致重新启动时迁移数据库，这可能需要30分钟到1个小时才能完成。因此，请在委托节点不在有效共识时期时进行升级。
+- 我们重置了测试网，并部署了v0.8.3，最后将其升级到v0.9.0。配置文件也已更新。
+- 我们已经将主网升级到v0.8.3。它包含一些重大更改，这些更改将在块高度1512001上激活。代表必须在此之前将您的节点升级到新版本。
+- 我们已经将testnet升级到v0.8.4。
+- 我们已将testnet升级到v0.8.3，其中包含新的错误代码和共识改进。
 
 ## 索引
 
@@ -15,18 +19,18 @@
 - [操作您的节点](#ops)
 
 
-## <a name="status"/>版本状态
+## 发行版本状态
 
-主网：[v0.5.1](https://github.com/iotexproject/iotex-core/tree/0810e5166d12c7ae06110cf6429f332c59585056)
-测试网：v0.5.1
+主网：v0.9.1
+测试网：v0.9.1
 
 
-## <a name="mainnet"/>加入主网内测
+## 加入主网内测
 
 1. 提取(pull) docker镜像
 
 ```
-docker pull iotex/iotex-core:v0.5.1
+docker pull iotex/iotex-core:v0.9.1
 ```
 请检查你的docker镜像的摘要是`ad495eee20a758402d2a7b01eee9e2fdb842be9a1786ba2fb67bf6d440c21625`。
 
@@ -55,11 +59,28 @@ curl -L https://t.iotex.me/data-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 
-我们将会每天更新一次snapshot
+我们将会每天更新一次snapshot，如果计划将节点作为网关运行，请使用带有索引数据的快照：https://t.iotex.me/mainnet-data-with-idx-latest.
 
 
 5. 运行以下命令以启动节点:
 
+```
+docker run -d --restart on-failure --name iotex \
+        -p 4689:4689 \
+        -p 8080:8080 \
+        -v=$IOTEX_HOME/data:/var/data:rw \
+        -v=$IOTEX_HOME/log:/var/log:rw \
+        -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
+        -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
+        iotex/iotex-core:v0.9.1 \
+        iotex-server \
+        -config-path=/etc/iotex/config_override.yaml \
+        -genesis-path=/etc/iotex/genesis.yaml \
+```
+
+现在您的节点应该已经被成功启动了
+
+如果您还希望使节点成为网关，可以处理用户的API请求，请改用以下命令：
 ```
 docker run -d --restart on-failure --name iotex \
         -p 4689:4689 \
@@ -69,20 +90,16 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.5.1 \
+        iotex/iotex-core:v0.9.1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
         -plugin=gateway
 ```
 
-现在您的节点应该已经被成功启动了
+6. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 8080（14014如果使用）已打开。
 
-请注意，上述命令同时也会让您的节点变成一个网关，可以处理来自用户的API请求。如果您不想启用此功能，可以从上面的命令中删除两行: `-p 14014:14014 \` 和 `-plugin=gateway`.
-
-6. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 14014, 8080已打开。
-
-## <a name="testnet"/>加入测试网络
+## 加入测试网络
 
 加入测试网络基本没有什么不同，只是在第二步，您需要使用以下的源文件：
 ```
@@ -90,12 +107,12 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/confi
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
-在第四步，您需要使用针对于测试网络的snapshot: https://t.iotex.me/data-testnet-latest。
+在第四步，您需要使用针对于测试网络的snapshot:  https://t.iotex.me/testnet-data-latest 和 https://t.iotex.me/testnet-data-with-idx-latest.
 
-在第五步，您需要将docker镜像的标签替换成``iotex/iotex-core:v0.5.1``。
+在第五步，您需要将docker镜像的标签替换成``v0.9.1``。
 
 
-## <a name="ioctl"/>与区块链交互
+## 与区块链交互
 
 
 你可以安装 ioctl (用于与IoTeX区块链交互的命令行界面)
@@ -131,9 +148,21 @@ ioctl node delegate
 
 参考 [CLI document](https://github.com/iotexproject/iotex-core/blob/master/cli/ioctl/README.md) 获得更多细节
 
-## <a name="ops"/>操作您的节点
+## 其他常用命令
+获取奖励:
+```
+ioctl action claim ${amountInIOTX} -l 10000 -p 1 -s ${ioAddress|alias}
+```
 
-### 检查节点记录
+通过Tube服务将IoTeX令牌交换到以太坊上的ERC20令牌:
+
+```
+ioctl action invoke io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5 ${amountInIOTX} -s ${ioAddress|alias} -l 400000 -p 1 -b d0e30db0
+```
+
+## 操作你的节点
+
+## 检查节点记录
 
 可以使用以下命令访问容器(container)日志。
 
