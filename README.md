@@ -1,7 +1,7 @@
 # IoTeX Delegate Manual
 
 ## News
-- We found a bug in `v0.9.0` which may cause the nodes not agree on the delegates list. We already pushed out a build `v0.9.1` to address this issue.
+- We found a bug in `v0.9.0` which may cause the nodes not agree on the delegates list. We already pushed out a build `v0.9.2` to address this issue.
 - `v0.9.0` is released, so that delegates should upgrade their softwares to this new version. The fork will happen at block height 1641601. Before restarting with `v0.9.0` docker image, please re-pull the up-to-date mainnet genesis config file first. It's a MUST step for this upgrade. In addtion, note that this upgrade will result in db migration upon restart which could takes 30min to 1hr to complete. Therefore, please upgrade when the delegate node is not in the active consensus epoch.
 - We have reset testnet, and deployed `v0.8.3`, and finally upgraded it to `v0.9.0`. The genesis config file has been updated as well.
 - We have upgraded mainnet to `v0.8.3`. It contains breaking changes which will be activated on block height 1512001. Delegates must upgrade your node to the new version before that.
@@ -21,15 +21,15 @@
 
 Here are the software versions we use:
 
-- MainNet: v0.9.1
-- TestNet: v0.9.1
+- MainNet: v0.9.2
+- TestNet: v0.9.2
 
 ## <a name="mainnet"/>Join MainNet Beta
 
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.9.1
+docker pull iotex/iotex-core:v0.9.2
 ```
 
 2. Set the environment with the following commands:
