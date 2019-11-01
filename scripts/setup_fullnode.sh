@@ -5,7 +5,7 @@
 
 
 ##Input Version
-if [ "$1" = "testnet" ];then
+if [ "$1"X = "testnet"X ];then
     lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- TestNet:"|awk '{print$3}')
     env=testnet
 
