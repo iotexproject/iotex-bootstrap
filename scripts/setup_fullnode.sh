@@ -1,11 +1,20 @@
 #!/bin/bash
 
-##Setup & Upgrade Iotex MainNet
-##User bash/sh $0
+##Setup & Upgrade Iotex MainNet / TestNet
+##User bash/sh $0 [$1=testnet]
+
 
 ##Input Version
-lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- MainNet:"|awk '{print$3}')
+if [ "$1" = "testnet" ];then
+    lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- TestNet:"|awk '{print$3}')
+    env=testnet
+
+else
+    lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- MainNet:"|awk '{print$3}')
+    env=mainnet
+fi
 defaultdatadir="$HOME/iotex-var"
+echo -e "Current operating environment: \033[41;36m $env \033[0m"
 read -p "Install or Upgrade Version [$lastversion]: " ver
 version=${ver:-"$lastversion"}   # if $ver ;then version=$ver;else version=$lastversion"
 
@@ -14,8 +23,8 @@ echo "The current user of the installation directory must have write permission!
 read -p "Install OR Upgrade Input your data dir [$defaultdatadir]: " inputdir
 datadir=${inputdir:-"$defaultdatadir"}
 
-echo "Confirm version: ${version}"
-echo "Confirm Data directory: ${datadir}"
+echo -e "Confirm version: \033[41;36m ${version} \033[0m"
+echo -e "Confirm Data directory: \033[41;36m ${datadir} \033[0m"
 read -p "Press any key to continue ... [Ctrl + c exit!] " key1
 export IOTEX_HOME=$datadir
 
@@ -24,7 +33,7 @@ runversion=$(docker ps -a |grep "iotex/iotex-core:v"|awk '{print$2}'|awk -F'[:]'
 
 if [ ${runversion} ];then
 
-    if [ $version = ${runversion} ];then
+    if [ "$version"X = "$runversion"X ];then
         echo "Not Upgrade!! current ${runversion} is latest version"
         exit 0
     else
@@ -47,8 +56,8 @@ else
     read -p ": " inputkey
     ip=${inputip:-$findip}
     PrivKey=${inputkey:-"96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8"}
-    echo "Confirm your externalHost: $ip"
-    echo "Confirm your producerPrivKey: $PrivKey"
+    echo -e "Confirm your externalHost: \033[41;36m $ip \033[0m"
+    echo -e "Confirm your producerPrivKey: \033[41;36m $PrivKey \033[0m"
     read -p "Press any key to continue ... [Ctrl + c exit!] " key2
     externalHost="externalHost: $ip"
     producerPrivKey="producerPrivKey: $PrivKey"
@@ -59,10 +68,10 @@ docker pull iotex/iotex-core:${version}
 #Set the environment with the following commands:
 
 #(Optional) If you prefer to start from a snapshot, run the following commands:
-#curl -LSs https://t.iotex.me/mainnet-data-latest > $IOTEX_HOME/data.tar.gz
+#curl -LSs https://t.iotex.me/${env}-data-latest > $IOTEX_HOME/data.tar.gz
 #cd ${IOTEX_HOME} && tar -xzf data.tar.gz
-curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_${env}.yaml > $IOTEX_HOME/etc/config.yaml
+curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_${env}.yaml > $IOTEX_HOME/etc/genesis.yaml
 
 
 echo "Update your externalHost,producerPrivKey to config.yaml"
