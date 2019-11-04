@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ##Setup & Upgrade Iotex MainNet / TestNet
-##User bash/sh $0 [$1=testnet]
-
+## User local: source/bash/sh $0 [$1=testnet]
+## If remote:  source/bash/sh <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) [$1=testnet]
 
 ##Input Version
 if [ "$1"X = "testnet"X ];then
@@ -70,9 +70,9 @@ docker pull iotex/iotex-core:${version}
 #(Optional) If you prefer to start from a snapshot, run the following commands:
 #curl -LSs https://t.iotex.me/${env}-data-latest > $IOTEX_HOME/data.tar.gz
 #cd ${IOTEX_HOME} && tar -xzf data.tar.gz
-curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_${env}.yaml > $IOTEX_HOME/etc/config.yaml
-curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_${env}.yaml > $IOTEX_HOME/etc/genesis.yaml
-
+curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/config_${env}.yaml > $IOTEX_HOME/etc/config.yaml
+curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/genesis_${env}.yaml > $IOTEX_HOME/etc/genesis.yaml
+# https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.9.2/config_mainnet.yaml
 
 echo "Update your externalHost,producerPrivKey to config.yaml"
 sed -i "/^network:/a\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
