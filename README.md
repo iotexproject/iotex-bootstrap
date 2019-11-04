@@ -15,6 +15,7 @@
 - [Join TestNet](#testnet)
 - [Interact with Blockchain](#ioctl)
 - [Operate Your Node](#ops)
+- [Upgrade Your Node](#upgrade)
 
 
 ## <a name="status"/>Release Status
@@ -191,4 +192,16 @@ Container can be "stopped" and "restarted" with:
 ```
 docker stop iotex
 docker start iotex
+```
+
+## <a name="upgrade"/>Upgrade Your Node
+Make sure you have `$IOTEX_HOME` set up already, and all the files are located in the right places. (Please refer to the join network part)
+To upgrade mainnet node, use following command. By default, it will upgrade to latest mainnet version
+```bash
+bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh)
+```
+
+To upgarde testnet node, just add `testnet` in the end of the command
+```bash
+bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) testnet
 ```
