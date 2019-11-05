@@ -1,6 +1,8 @@
 # IoTeX Delegate Manual
 
 ## News
+- We have upgraded mainnet to `v0.10.0`. It contains breaking changes which will be activated on block height 1816201. Delegates must upgrade your node to the new version before that.
+- We have upgraded testnet to `v0.10.0`. This version reduce block interval to 5s.
 - We found a bug in `v0.9.0` which may cause the nodes not agree on the delegates list. We already pushed out a build `v0.9.2` to address this issue.
 - `v0.9.0` is released, so that delegates should upgrade their softwares to this new version. The fork will happen at block height 1641601. Before restarting with `v0.9.0` docker image, please re-pull the up-to-date mainnet genesis config file first. It's a MUST step for this upgrade. In addtion, note that this upgrade will result in db migration upon restart which could takes 30min to 1hr to complete. Therefore, please upgrade when the delegate node is not in the active consensus epoch.
 - We have reset testnet, and deployed `v0.8.3`, and finally upgraded it to `v0.9.0`. The genesis config file has been updated as well.
@@ -22,15 +24,15 @@
 
 Here are the software versions we use:
 
-- MainNet: v0.9.2
-- TestNet: v0.9.2
+- MainNet: v0.10.0
+- TestNet: v0.10.0
 
 ## <a name="mainnet"/>Join MainNet Beta
 
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.9.2
+docker pull iotex/iotex-core:v0.10.0
 ```
 
 2. Set the environment with the following commands:
@@ -70,7 +72,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.9.2 \
+        iotex/iotex-core:v0.10.0 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -89,7 +91,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.9.2 \
+        iotex/iotex-core:v0.10.0 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -109,7 +111,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genes
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
-In step 5, you need to replace the docker image tag in the command with `v0.9.2`.
+In step 5, you need to replace the docker image tag in the command with `v0.10.0`.
 
 ## <a name="ioctl"/>Interact with Blockchain
 
