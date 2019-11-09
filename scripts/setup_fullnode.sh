@@ -4,6 +4,12 @@
 ## User local: source/bash/sh $0 [$1=testnet]
 ## If remote:  source/bash/sh <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) [$1=testnet]
 
+# Colour codes
+YELLOW='\033[0;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+
 ##Input Version
 if [ "$1"X = "testnet"X ];then
     lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- TestNet:"|awk '{print$3}')
@@ -14,19 +20,19 @@ else
     env=mainnet
 fi
 defaultdatadir="$HOME/iotex-var"
-echo -e "Current operating environment: \033[41;36m $env \033[0m"
-read -p "Install or Upgrade Version [$lastversion]: " ver
+echo -e "Current operating environment: ${YELLOW}  $env ${NC}"
+read -p "Install or Upgrade Version, if null the latest [$lastversion]: " ver
 version=${ver:-"$lastversion"}   # if $ver ;then version=$ver;else version=$lastversion"
 
 ##Input Data Dir
 echo "The current user of the installation directory must have write permission!!!"
-read -p "Install OR Upgrade Input your data dir [$defaultdatadir]: " inputdir
-datadir=${inputdir:-"$defaultdatadir"}
+read -p "Install OR Upgrade your \$IOTEX_HOME [e.g., $defaultdatadir]: " inputdir
+IOTEX_HOME=${inputdir:-"$defaultdatadir"}
 
-echo -e "Confirm version: \033[41;36m ${version} \033[0m"
-echo -e "Confirm Data directory: \033[41;36m ${datadir} \033[0m"
+echo -e "Confirm version: ${RED} ${version} ${NC}"
+echo -e "Confirm Data directory: ${RED} ${IOTEX_HOME} ${NC}"
 read -p "Press any key to continue ... [Ctrl + c exit!] " key1
-export IOTEX_HOME=$datadir
+
 
 ##check iotex-server exist and running
 runversion=$(docker ps -a |grep "iotex/iotex-core:v"|awk '{print$2}'|awk -F'[:]' '{print$2}')
@@ -39,16 +45,16 @@ if [ ${runversion} ];then
     else
         echo "Stop old iotex-core"
         docker stop iotex
-        echo "delete docker container"
+        echo "delete old iotex docker container"
         docker rm iotex
         #echo "delete iotex images"
         #docker rmi $(docker images iotex/iotex-core -q)
-        producerPrivKey=$(grep '^  producerPrivKey:' ${datadir}/etc/config.yaml|sed 's/^  //g')
-        externalHost=$(grep '^  externalHost:' ${datadir}/etc/config.yaml|sed 's/^  //g')
+        producerPrivKey=$(grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
+        externalHost=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
     fi
 
 else
-    mkdir -p ${datadir} && cd ${datadir} && mkdir data log etc
+    mkdir -p ${IOTEX_HOME} && cd ${IOTEX_HOME} && mkdir data log etc
     findip=$(curl -Ss ip.sb)
     read -p "SET YOUR EXTERNAL IP HERE [$findip]: " inputip
     echo "If you are a delegate, make sure producerPrivKey is the key for the operator address you have registered."
@@ -56,8 +62,8 @@ else
     read -p ": " inputkey
     ip=${inputip:-$findip}
     PrivKey=${inputkey:-"96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8"}
-    echo -e "Confirm your externalHost: \033[41;36m $ip \033[0m"
-    echo -e "Confirm your producerPrivKey: \033[41;36m $PrivKey \033[0m"
+    echo -e "Confirm your externalHost: ${YELLOW} $ip ${NC}"
+    echo -e "Confirm your producerPrivKey: ${RED} $PrivKey ${NC}"
     read -p "Press any key to continue ... [Ctrl + c exit!] " key2
     externalHost="externalHost: $ip"
     producerPrivKey="producerPrivKey: $PrivKey"
