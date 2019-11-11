@@ -9,6 +9,11 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
+docker ps > /dev/null
+if [ $? -eq 1 ];then
+   echo -e "your $RED [$USER] $NC not privilege docker; please run $RED [sudo bash] $NC first"
+   exit 1
+fi
 
 ##Input Version
 if [ "$1"X = "testnet"X ];then
