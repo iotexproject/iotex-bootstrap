@@ -18,6 +18,7 @@
 - [Interact with Blockchain](#ioctl)
 - [Operate Your Node](#ops)
 - [Upgrade Your Node（One Line Upgrader）](#upgrade)
+- [Q&A] (#qa)
 
 
 ## <a name="status"/>Release Status
@@ -210,3 +211,6 @@ To upgarde testnet node, just add `testnet` in the end of the command.
 # If you need privilege to run some docker commands, please run `sudo bash` first, before you run following command.
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) testnet
 ```
+
+## <a name="qa"/>Q&A
+Please refer [here](https://github.com/iotexproject/iotex-bootstrap/wiki/Q&A) for Q&A.
