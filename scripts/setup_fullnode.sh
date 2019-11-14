@@ -3,6 +3,9 @@
 ##Setup & Upgrade Iotex MainNet / TestNet
 ## User local: source/bash/sh $0 [$1=testnet]
 ## If remote:  source/bash/sh <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) [$1=testnet]
+producerPrivKey=""
+externalHost=""
+
 
 # Colour codes
 YELLOW='\033[0;33m'
@@ -10,8 +13,11 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 docker ps > /dev/null
-if [ $? -eq 1 ];then
-   echo -e "your $RED [$USER] $NC not privilege docker; please run $RED [sudo bash] $NC first"
+
+if [ $? = 1 ];then
+   echo -e "your $RED [$USER] $NC not privilege docker" 
+   echo -e "please run $RED [sudo bash] $NC first"
+   echo -e "Or docker not install "
    exit 1
 fi
 
@@ -35,6 +41,7 @@ runversion=$(docker ps -a |grep "iotex/iotex-core:v"|awk '{print$2}'|awk -F'[:]'
 
 if [ "$version"X = "$runversion"X ];then
     echo "Not Upgrade!! current ${runversion} is running....!"
+    docker start iotex
     exit 0
 fi
 ##Input Data Dir
@@ -69,16 +76,21 @@ else
     echo -e "${YELLOW} ****** Install Iotex Node  ***** ${NC}"
     echo -e "${YELLOW} if installed, Confirm Input IOTEX_HOME directory True ${NC};"
     read -p "[Ctrl + c exit!]; else Enter anykey ..." anykey
-
-
     mkdir -p ${IOTEX_HOME} && cd ${IOTEX_HOME} && mkdir data log etc
+fi
+
+if [ ! "${externalHost}" ];then
     findip=$(curl -Ss ip.sb)
     read -p "SET YOUR EXTERNAL IP HERE [$findip]: " inputip
+    ip=${inputip:-$findip}
+fi
+
+if [ ! "${producerPrivKey}" ]; then
     echo "If you are a delegate, make sure producerPrivKey is the key for the operator address you have registered."
     echo  "SET YOUR PRIVATE KEY HERE(e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)"
     read -p ": " inputkey
-    ip=${inputip:-$findip}
     PrivKey=${inputkey:-"96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8"}
+
     echo -e "Confirm your externalHost: ${YELLOW} $ip ${NC}"
     echo -e "Confirm your producerPrivKey: ${RED} $PrivKey ${NC}"
     read -p "Press any key to continue ... [Ctrl + c exit!] " key2
