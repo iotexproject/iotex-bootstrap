@@ -201,12 +201,12 @@ Make sure you have `$IOTEX_HOME` already set up, and all the files(configs, dbs 
 
 To upgrade mainnet node, use following command. By default, it will upgrade to latest mainnet version.
 ```bash
-# If you need privilege to run some docker commands, please run `sudo bash` first, before you run following command.
+sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh)
 ```
 
 To upgarde testnet node, just add `testnet` in the end of the command.
 ```bash
-# If you need privilege to run some docker commands, please run `sudo bash` first, before you run following command.
+sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) testnet
 ```
