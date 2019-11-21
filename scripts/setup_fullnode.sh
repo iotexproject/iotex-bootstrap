@@ -98,6 +98,8 @@ if [ ! "${producerPrivKey}" ]; then
     producerPrivKey="producerPrivKey: $PrivKey"
 fi
 
+echo -e "Do you want to monitor the status of the node?"
+read -p "Press 'Y/n' key to continue ... [Ctrl + c exit!] Default: No " wantmonitor
 
 echo "docker pull iotex-core ${version}"
 docker pull iotex/iotex-core:${version}
@@ -116,20 +118,41 @@ echo "Update your externalHost,producerPrivKey to config.yaml"
 sed -i "/^network:/a\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
 sed -i "/^chain:/a\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
 
-echo -e "docker run iotex: ${YELLOW} ${version} ${NC}"
-#Run the following command to start a node:
-docker run -d --restart on-failure --name iotex \
-        -p 4689:4689 \
-        -p 8080:8080 \
-        -v=$IOTEX_HOME/data:/var/data:rw \
-        -v=$IOTEX_HOME/log:/var/log:rw \
-        -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
-        -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:${version} \
-        iotex-server \
-        -config-path=/etc/iotex/config_override.yaml \
-        -genesis-path=/etc/iotex/genesis.yaml
+if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
+	 "${wantmonitor}"X = "yes"X -o "${wantmonitor}"X = "Yes"X ];then
+    echo "Download config files for monitor"
+    mkdir -p $IOTEX_HOME/monitor
+    IOTEX_MONITOR_HOME=$IOTEX_HOME/monitor
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/Dockerfile > $IOTEX_MONITOR_HOME/
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/IoTeX.json > $IOTEX_MONITOR_HOME/
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/dashboards.yaml > $IOTEX_MONITOR_HOME/
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/datasource.yaml > $IOTEX_MONITOR_HOME/
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/prometheus.yml > $IOTEX_MONITOR_HOME/
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/run.sh > $IOTEX_HOME/
 
-#check node running
-sleep 5
-docker ps | grep iotex-server
+    chmod +x $IOTEX_MONITOR_HOME/run.sh
+
+    echo -e "docker run iotex with monitor: ${YELLOW} ${version} ${NC}"
+    cd $IOTEX_MONITOR_HOME
+    docker-compose up -d --build
+else
+    echo -e "docker run iotex: ${YELLOW} ${version} ${NC}"
+    #Run the following command to start a node:
+    docker run -d --restart on-failure --name iotex \
+	   -p 4689:4689 \
+	   -p 8080:8080 \
+	   -v=$IOTEX_HOME/data:/var/data:rw \
+	   -v=$IOTEX_HOME/log:/var/log:rw \
+	   -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
+	   -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
+	   iotex/iotex-core:${version} \
+	   iotex-server \
+	   -config-path=/etc/iotex/config_override.yaml \
+	   -genesis-path=/etc/iotex/genesis.yaml
+
+    #check node running
+    sleep 5
+    docker ps | grep iotex-server
+fi
+

@@ -1,0 +1,25 @@
+version: '2'
+services:
+  iotex:
+    container_name: iotex
+    image: iotex/iotex-core:v0.10.0
+    restart: on-failure
+    ports:
+      - 8080:8080
+      - 4689:4689
+    volumes:
+      - $IOTEX_HOME/data:/var/data:rw
+      - $IOTEX_HOME/log:/var/log:rw
+      - $IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro
+      - $IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro
+    command: iotex-server -config-path=/etc/iotex/config_override.yaml -genesis-path=/etc/iotex/genesis.yaml
+
+  monitor:
+    container_name: iotex-monitor
+    build: .
+    image: iotex-monitor:v1
+    ports:
+      - 3000:3000
+      - 9090:9090
+    links:
+      - iotex
