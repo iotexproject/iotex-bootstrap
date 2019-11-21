@@ -134,8 +134,10 @@ if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
     chmod +x $IOTEX_MONITOR_HOME/run.sh
 
     echo -e "docker run iotex with monitor: ${YELLOW} ${version} ${NC}"
+    CUR_PWD=${PWD}
     cd $IOTEX_MONITOR_HOME
     docker-compose up -d --build
+    cd ${CUR_PWD}
 else
     echo -e "docker run iotex: ${YELLOW} ${version} ${NC}"
     #Run the following command to start a node:
