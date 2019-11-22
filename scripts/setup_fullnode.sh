@@ -98,8 +98,7 @@ if [ ! "${producerPrivKey}" ]; then
     producerPrivKey="producerPrivKey: $PrivKey"
 fi
 
-echo -e "Do you want to monitor the status of the node?"
-read -p "Press 'Y/n' key to continue ... [Ctrl + c exit!] Default: No " wantmonitor
+read -p "Do you want to monitor the status of the node [Y/N] (Default: N)? " wantmonitor
 
 echo "docker pull iotex-core ${version}"
 docker pull iotex/iotex-core:${version}
@@ -123,13 +122,13 @@ if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
     echo "Download config files for monitor"
     mkdir -p $IOTEX_HOME/monitor
     IOTEX_MONITOR_HOME=$IOTEX_HOME/monitor
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/Dockerfile > $IOTEX_MONITOR_HOME/
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/IoTeX.json > $IOTEX_MONITOR_HOME/
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/dashboards.yaml > $IOTEX_MONITOR_HOME/
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/datasource.yaml > $IOTEX_MONITOR_HOME/
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/prometheus.yml > $IOTEX_MONITOR_HOME/
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/run.sh > $IOTEX_HOME/
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/Dockerfile > $IOTEX_MONITOR_HOME/Dockerfile
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/IoTeX.json > $IOTEX_MONITOR_HOME/IoTeX.json
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/dashboards.yaml > $IOTEX_MONITOR_HOME/dashboards.yaml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/datasource.yaml > $IOTEX_MONITOR_HOME/datasource.yaml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/docker-compose.yml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/prometheus.yml > $IOTEX_MONITOR_HOME/prometheus.yml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/run.sh > $IOTEX_MONITOR_HOME/run.sh
 
     chmod +x $IOTEX_MONITOR_HOME/run.sh
 

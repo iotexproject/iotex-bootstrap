@@ -2,7 +2,7 @@
 apiVersion: 1
 
 providers:
- - name: 'Io teX'
+ - name: 'IoteX'
 #   orgId: 1
 #   folder: ''
 #   folderUid: ''
