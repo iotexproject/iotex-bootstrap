@@ -42,8 +42,16 @@ runversion=$(docker ps -a |grep "iotex/iotex-core:v"|awk '{print$2}'|awk -F'[:]'
 if [ "$version"X = "$runversion"X ];then
     echo "Not Upgrade!! current ${runversion} is running....!"
     docker start iotex
+    docker ps -a |grep "iotex-monitor"
+    if [ $? -eq 0 ];then
+	echo "Iotex-monitot is running....!"
+	docker start iotex-monitor
+	exit 0
+    fi
     exit 0
 fi
+
+
 ##Input Data Dir
 echo "The current user of the input directory must have write permission!!!"
 echo -e "${RED} If Upgrade ; input your old directory \$IOTEX_HOME !!! ${NC}"
@@ -133,9 +141,14 @@ if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
     chmod +x $IOTEX_MONITOR_HOME/run.sh
 
     echo -e "docker run iotex with monitor: ${YELLOW} ${version} ${NC}"
+    IOTEX_IMAGE=iotex/iotex-core:${version}
     CUR_PWD=${PWD}
     cd $IOTEX_MONITOR_HOME
+    export IOTEX_HOME IOTEX_MONITOR_HOME IOTEX_IMAGE
     docker-compose up -d --build
+    if [ $? -eq 0 ];then
+	echo -e "${YELLOW} You can access 'localhost:3000' to view node monitoring ${NC}" 
+    fi
     cd ${CUR_PWD}
 else
     echo -e "docker run iotex: ${YELLOW} ${version} ${NC}"

@@ -2,7 +2,7 @@ version: '2'
 services:
   iotex:
     container_name: iotex
-    image: iotex/iotex-core:v0.10.0
+    image: ${IOTEX_IMAGE}
     restart: on-failure
     ports:
       - 8080:8080
