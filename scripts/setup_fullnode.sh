@@ -148,7 +148,8 @@ if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
     export IOTEX_HOME IOTEX_MONITOR_HOME IOTEX_IMAGE
     docker-compose up -d --build
     if [ $? -eq 0 ];then
-	echo -e "${YELLOW} You can access 'localhost:3000' to view node monitoring ${NC}" 
+	echo -e "${YELLOW} You can access 'localhost:3000' to view node monitoring ${NC}"
+	echo -e "${YELLOW} Default User/Pass: admin/admin." 
     fi
     cd ${CUR_PWD}
 else
