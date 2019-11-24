@@ -158,20 +158,32 @@ if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
 else
     echo -e "docker run iotex: ${YELLOW} ${version} ${NC}"
     #Run the following command to start a node:
-    docker run -d --restart on-failure --name iotex \
-           -p 4689:4689 \
-           -p 8080:8080 \
-           -v=$IOTEX_HOME/data:/var/data:rw \
-           -v=$IOTEX_HOME/log:/var/log:rw \
-           -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
-           -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-           iotex/iotex-core:${version} \
-           iotex-server \
-           -config-path=/etc/iotex/config_override.yaml \
-           -genesis-path=/etc/iotex/genesis.yaml
-
+    
+    _DOCKER_RUN_CMD="docker run -d --restart on-failure --name iotex"
+    _DOCKER_RUN_CMD_PORTS="-p 4689:4689 -p 8080:8080"
+    _DOCKER_RUN_CMD_VOL="
+            -v=$IOTEX_HOME/data:/var/data:rw \
+            -v=$IOTEX_HOME/log:/var/log:rw \
+            -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
+            -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro"
+    _DOCKER_RUN_CMD_IMAGE="iotex/iotex-core:${version}"
+    _DOCKER_RUN_CMD_ENTRYPOINT="iotex-server \
+            -config-path=/etc/iotex/config_override.yaml \
+            -genesis-path=/etc/iotex/genesis.yaml"
+    
+    read -p  "Do you want to make your node be a gateway? [Y/N] (Default: N) ?" enableGateway
+    if [ "$enableGateway"X = "Y"X -o "$enableGateway"X = "y"X ];then
+        _DOCKER_RUN_CMD_PORTS="$_DOCKER_RUN_CMD_PORTS -p 14014:14014"
+        _DOCKER_RUN_CMD_ENTRYPOINT="$_DOCKER_RUN_CMD_ENTRYPOINT -plugin=gateway"
+    fi
+    
+    $_DOCKER_RUN_CMD $_DOCKER_RUN_CMD_PORTS \
+    		 $_DOCKER_RUN_CMD_VOL \
+    		 $_DOCKER_RUN_CMD_IMAGE \
+    		 $_DOCKER_RUN_CMD_ENTRYPOINT
+    
+    
     #check node running
     sleep 5
     docker ps | grep iotex-server
 fi
-
