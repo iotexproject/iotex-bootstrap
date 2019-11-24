@@ -22,5 +22,8 @@ services:
     ports:
       - 3000:3000
       - 9090:9090
+    volumes:
+      - $IOTEX_MONITOR_HOME/prometheus.yml:/prometheus/prometheus-2.14.0.linux-amd64/prometheus.yml:ro
+      - $IOTEX_MONITOR_HOME/alert.rules:/prometheus/prometheus-2.14.0.linux-amd64/alert.rules:ro
     links:
       - iotex

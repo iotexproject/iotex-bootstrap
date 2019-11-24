@@ -1,0 +1,20 @@
+templates:
+  - '/alertmanager/template/*.tmpl'
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 10m
+  receiver: 'email-receiver'
+
+receivers:
+- name: 'email-receiver'
+  email_configs:
+  - to: '_EMAIL_'
+    from: '_EMAIL_'
+    smarthost: '_SMTP_HOST_:_SMTP_PORT_'
+    auth_username: '_EMAIL_'
+    auth_password: '_PASSWORD_'
+    html: '{{ template "email.html" . }}'
+    headers: { Subject: "IOTEX NODE Alert" }
