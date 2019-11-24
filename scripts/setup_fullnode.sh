@@ -76,6 +76,15 @@ if [ -f "${IOTEX_HOME}/data/chain.db" ]; then
     docker rm iotex
         #echo "delete iotex images"
         #docker rmi $(docker images iotex/iotex-core -q)
+    if [ -f "${IOTEX_HOME}/data/poll.db.bolt" ];then
+	echo -e "${YELLOW} *** Found the old file poll.db.bolt ${NC}"
+	echo -e "${YELLOW} *** that was previously upgraded to poll.db, ${NC}"
+        echo -e "${YELLOW} *** now need to delete it. ${NC}"
+        read -p "Do you want to delete the ${IOTEX_HOME}/data/poll.db.bolt? [Y/N] (Default: Y)? " deletePollFile
+        if [ "$deletePollFile"X = "Y"X -o "$deletePollFile"X = ""X ];then
+            rm -f ${IOTEX_HOME}/data/poll.db.bolt
+        fi
+    fi
     producerPrivKey=$(grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
     externalHost=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
 
