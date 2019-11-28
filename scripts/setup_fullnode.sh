@@ -44,7 +44,7 @@ if [ "$version"X = "$runversion"X ];then
     docker start iotex
     docker ps -a |grep "iotex-monitor"
     if [ $? -eq 0 ];then
-	echo "Iotex-monitot is running....!"
+	echo "Iotex-monitor is running....!"
 	docker start iotex-monitor
 	exit 0
     fi
@@ -130,7 +130,6 @@ if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
     echo "Download config files for monitor"
     mkdir -p $IOTEX_HOME/monitor
     IOTEX_MONITOR_HOME=$IOTEX_HOME/monitor
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/Dockerfile > $IOTEX_MONITOR_HOME/Dockerfile
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/IoTeX.json > $IOTEX_MONITOR_HOME/IoTeX.json
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/dashboards.yaml > $IOTEX_MONITOR_HOME/dashboards.yaml
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/datasource.yaml > $IOTEX_MONITOR_HOME/datasource.yaml
@@ -146,7 +145,7 @@ if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
     CUR_PWD=${PWD}
     cd $IOTEX_MONITOR_HOME
     export IOTEX_HOME IOTEX_MONITOR_HOME IOTEX_IMAGE
-    docker-compose up -d --build
+    docker-compose up -d
     if [ $? -eq 0 ];then
 	echo -e "${YELLOW} You can access 'localhost:3000' to view node monitoring ${NC}"
 	echo -e "${YELLOW} Default User/Pass: admin/admin." 
