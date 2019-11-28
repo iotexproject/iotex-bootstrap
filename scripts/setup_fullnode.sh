@@ -14,8 +14,7 @@ NC='\033[0m' # No Color
 
 docker ps > /dev/null
 
-if [ $? = 1 ];then
-   echo -e "your $RED [$USER] $NC not privilege docker" 
+if [ $? = 1 ];thenecho -e "your $RED [$USER] $NC not privilege docker" 
    echo -e "please run $RED [sudo bash] $NC first"
    echo -e "Or docker not install "
    exit 1
@@ -44,9 +43,9 @@ if [ "$version"X = "$runversion"X ];then
     docker start iotex
     docker ps -a |grep "iotex-monitor"
     if [ $? -eq 0 ];then
-	echo "Iotex-monitor is running....!"
-	docker start iotex-monitor
-	exit 0
+        echo "Iotex-monitor is running....!"
+        docker start iotex-monitor
+        exit 0
     fi
     exit 0
 fi
@@ -126,7 +125,7 @@ sed -i "/^network:/a\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
 sed -i "/^chain:/a\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
 
 if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
-	 "${wantmonitor}"X = "yes"X -o "${wantmonitor}"X = "Yes"X ];then
+                     "${wantmonitor}"X = "yes"X -o "${wantmonitor}"X = "Yes"X ];then
     echo "Download config files for monitor"
     mkdir -p $IOTEX_HOME/monitor
     IOTEX_MONITOR_HOME=$IOTEX_HOME/monitor
@@ -147,24 +146,24 @@ if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
     export IOTEX_HOME IOTEX_MONITOR_HOME IOTEX_IMAGE
     docker-compose up -d
     if [ $? -eq 0 ];then
-	echo -e "${YELLOW} You can access 'localhost:3000' to view node monitoring ${NC}"
-	echo -e "${YELLOW} Default User/Pass: admin/admin." 
+        echo -e "${YELLOW} You can access 'localhost:3000' to view node monitoring ${NC}"
+        echo -e "${YELLOW} Default User/Pass: admin/admin." 
     fi
     cd ${CUR_PWD}
 else
     echo -e "docker run iotex: ${YELLOW} ${version} ${NC}"
     #Run the following command to start a node:
     docker run -d --restart on-failure --name iotex \
-	   -p 4689:4689 \
-	   -p 8080:8080 \
-	   -v=$IOTEX_HOME/data:/var/data:rw \
-	   -v=$IOTEX_HOME/log:/var/log:rw \
-	   -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
-	   -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-	   iotex/iotex-core:${version} \
-	   iotex-server \
-	   -config-path=/etc/iotex/config_override.yaml \
-	   -genesis-path=/etc/iotex/genesis.yaml
+           -p 4689:4689 \
+           -p 8080:8080 \
+           -v=$IOTEX_HOME/data:/var/data:rw \
+           -v=$IOTEX_HOME/log:/var/log:rw \
+           -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
+           -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
+           iotex/iotex-core:${version} \
+           iotex-server \
+           -config-path=/etc/iotex/config_override.yaml \
+           -genesis-path=/etc/iotex/genesis.yaml
 
     #check node running
     sleep 5
