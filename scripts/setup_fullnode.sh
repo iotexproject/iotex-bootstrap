@@ -14,8 +14,7 @@ NC='\033[0m' # No Color
 
 docker ps > /dev/null
 
-if [ $? = 1 ];then
-   echo -e "your $RED [$USER] $NC not privilege docker" 
+if [ $? = 1 ];thenecho -e "your $RED [$USER] $NC not privilege docker" 
    echo -e "please run $RED [sudo bash] $NC first"
    echo -e "Or docker not install "
    exit 1
@@ -42,8 +41,16 @@ runversion=$(docker ps -a |grep "iotex/iotex-core:v"|awk '{print$2}'|awk -F'[:]'
 if [ "$version"X = "$runversion"X ];then
     echo "Not Upgrade!! current ${runversion} is running....!"
     docker start iotex
+    docker ps -a |grep "iotex-monitor"
+    if [ $? -eq 0 ];then
+        echo "Iotex-monitor is running....!"
+        docker start iotex-monitor
+        exit 0
+    fi
     exit 0
 fi
+
+
 ##Input Data Dir
 echo "The current user of the input directory must have write permission!!!"
 echo -e "${RED} If Upgrade ; input your old directory \$IOTEX_HOME !!! ${NC}"
@@ -98,6 +105,7 @@ if [ ! "${producerPrivKey}" ]; then
     producerPrivKey="producerPrivKey: $PrivKey"
 fi
 
+read -p "Do you want to monitor the status of the node [Y/N] (Default: N)? " wantmonitor
 
 echo "docker pull iotex-core ${version}"
 docker pull iotex/iotex-core:${version}
@@ -116,20 +124,49 @@ echo "Update your externalHost,producerPrivKey to config.yaml"
 sed -i "/^network:/a\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
 sed -i "/^chain:/a\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
 
-echo -e "docker run iotex: ${YELLOW} ${version} ${NC}"
-#Run the following command to start a node:
-docker run -d --restart on-failure --name iotex \
-        -p 4689:4689 \
-        -p 8080:8080 \
-        -v=$IOTEX_HOME/data:/var/data:rw \
-        -v=$IOTEX_HOME/log:/var/log:rw \
-        -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
-        -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:${version} \
-        iotex-server \
-        -config-path=/etc/iotex/config_override.yaml \
-        -genesis-path=/etc/iotex/genesis.yaml
+if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
+                     "${wantmonitor}"X = "yes"X -o "${wantmonitor}"X = "Yes"X ];then
+    echo "Download config files for monitor"
+    mkdir -p $IOTEX_HOME/monitor
+    IOTEX_MONITOR_HOME=$IOTEX_HOME/monitor
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/IoTeX.json > $IOTEX_MONITOR_HOME/IoTeX.json
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/dashboards.yaml > $IOTEX_MONITOR_HOME/dashboards.yaml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/datasource.yaml > $IOTEX_MONITOR_HOME/datasource.yaml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/docker-compose.yml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/.env > $IOTEX_MONITOR_HOME/.env
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/prometheus.yml > $IOTEX_MONITOR_HOME/prometheus.yml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/run.sh > $IOTEX_MONITOR_HOME/run.sh
 
-#check node running
-sleep 5
-docker ps | grep iotex-server
+    chmod +x $IOTEX_MONITOR_HOME/run.sh
+
+    echo -e "docker run iotex with monitor: ${YELLOW} ${version} ${NC}"
+    IOTEX_IMAGE=iotex/iotex-core:${version}
+    CUR_PWD=${PWD}
+    cd $IOTEX_MONITOR_HOME
+    export IOTEX_HOME IOTEX_MONITOR_HOME IOTEX_IMAGE
+    docker-compose up -d
+    if [ $? -eq 0 ];then
+        echo -e "${YELLOW} You can access 'localhost:3000' to view node monitoring ${NC}"
+        echo -e "${YELLOW} Default User/Pass: admin/admin." 
+    fi
+    cd ${CUR_PWD}
+else
+    echo -e "docker run iotex: ${YELLOW} ${version} ${NC}"
+    #Run the following command to start a node:
+    docker run -d --restart on-failure --name iotex \
+           -p 4689:4689 \
+           -p 8080:8080 \
+           -v=$IOTEX_HOME/data:/var/data:rw \
+           -v=$IOTEX_HOME/log:/var/log:rw \
+           -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
+           -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
+           iotex/iotex-core:${version} \
+           iotex-server \
+           -config-path=/etc/iotex/config_override.yaml \
+           -genesis-path=/etc/iotex/genesis.yaml
+
+    #check node running
+    sleep 5
+    docker ps | grep iotex-server
+fi
+
