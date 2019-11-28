@@ -16,7 +16,7 @@ services:
 
   monitor:
     container_name: iotex-monitor
-    image: iotex-monitor:v1
+    image: iotex/iotex-monitor:v1
     ports:
       - 3000:3000
       - 9090:9090
