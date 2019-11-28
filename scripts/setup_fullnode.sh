@@ -3,6 +3,7 @@
 ##Setup & Upgrade Iotex MainNet / TestNet
 ## User local: source/bash/sh $0 [$1=testnet]
 ## If remote:  source/bash/sh <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) [$1=testnet]
+## If remote:  source/bash/sh <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) [$1=testnet $2=plugin=gateway]
 producerPrivKey=""
 externalHost=""
 
@@ -20,15 +21,29 @@ if [ $? = 1 ];thenecho -e "your $RED [$USER] $NC not privilege docker"
    exit 1
 fi
 
-##Input Version
-if [ "$1"X = "testnet"X ];then
-    lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- TestNet:"|awk '{print$3}')
-    env=testnet
-
-else
-    lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- MainNet:"|awk '{print$3}')
-    env=mainnet
+##Input Version, set plugin
+_ENV_=mainnet
+_GREP_STRING_=MainNet
+if [ $# -gt 0 ];then
+    if [ "$1"X = "testnet"X ];then
+	_ENV_=testnet
+	_GREP_STRING_=TestNet
+    elif [ "$1"X = "plugin=gateway"X ];then
+	_PLUGINS_=gateway
+    fi
 fi
+if [ $# -gt 1 ];then
+    if [ "$2"X = "testnet"X ];then
+        _ENV_=testnet
+        _GREP_STRING_=TestNet
+    elif [ "$2"X = "plugin=gateway"X ];then
+        _PLUGINS_=gateway
+    fi
+fi
+
+lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- $_GREP_STRING_:"|awk '{print$3}')
+env=$_ENV_
+
 defaultdatadir="$HOME/iotex-var"
 echo -e "Current operating environment: ${YELLOW}  $env ${NC}"
 #while True; do
