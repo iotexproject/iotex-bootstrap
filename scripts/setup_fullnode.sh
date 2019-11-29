@@ -61,6 +61,11 @@ IOTEX_HOME=${inputdir:-"$defaultdatadir"}
 
 #if [ "$IOTEX_HOME" ];
 
+# Delete old file.
+if [ -f "${IOTEX_HOME}/data/poll.db.bolt" ];then
+    rm -f ${IOTEX_HOME}/data/poll.db.bolt
+fi
+
 echo -e "Confirm version: ${RED} ${version} ${NC}"
 echo -e "Confirm IOTEX_HOME directory: ${RED} ${IOTEX_HOME} ${NC}"
 read -p "Press any key to continue ... [Ctrl + c exit!] " key1
