@@ -13,11 +13,12 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-docker ps > /dev/null
+docker-compose ps > /dev/null
 
-if [ $? = 1 ];thenecho -e "your $RED [$USER] $NC not privilege docker" 
-   echo -e "please run $RED [sudo bash] $NC first"
-   echo -e "Or docker not install "
+if [ $? = 1 ];then
+    echo -e "your $RED [$USER] $NC not privilege docker" 
+    echo -e "please run $RED [sudo bash] $NC first"
+    echo -e "Or docker-compose not install "
    exit 1
 fi
 
@@ -144,61 +145,49 @@ echo "Update your externalHost,producerPrivKey to config.yaml"
 sed -i "/^network:/a\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
 sed -i "/^chain:/a\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
 
+# set monitor home
+IOTEX_MONITOR_HOME=$IOTEX_HOME/monitor
+mkdir -p $IOTEX_MONITOR_HOME
+IOTEX_IMAGE=iotex/iotex-core:${version}
+CUR_PWD=${PWD}
+export IOTEX_HOME IOTEX_MONITOR_HOME IOTEX_IMAGE
+
+echo "Download config files for monitor"
+curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/IoTeX.json > $IOTEX_MONITOR_HOME/IoTeX.json
+curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/dashboards.yaml > $IOTEX_MONITOR_HOME/dashboards.yaml
+curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/datasource.yaml > $IOTEX_MONITOR_HOME/datasource.yaml
+curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/docker-compose.yml.gateway > $IOTEX_MONITOR_HOME/docker-compose.yml.gateway
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/docker-compose.yml.default > $IOTEX_MONITOR_HOME/docker-compose.yml.default
+curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/.env > $IOTEX_MONITOR_HOME/.env
+curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/prometheus.yml > $IOTEX_MONITOR_HOME/prometheus.yml
+curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/run.sh > $IOTEX_MONITOR_HOME/run.sh
+chmod +x $IOTEX_MONITOR_HOME/run.sh
+
+# Enter the workspace
+cd $IOTEX_MONITOR_HOME
+
+# Gateway plugin is not enabled by default
+\cp docker-compose.yml.default docker-compose.yml
+if [ $_PLUGINS_ ] && [ "$_PLUGINS_"X = "gateway"X ];then
+    \cp docker-compose.yml.gateway docker-compose.yml
+fi
+
 if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
                      "${wantmonitor}"X = "yes"X -o "${wantmonitor}"X = "Yes"X ];then
-    echo "Download config files for monitor"
-    mkdir -p $IOTEX_HOME/monitor
-    IOTEX_MONITOR_HOME=$IOTEX_HOME/monitor
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/IoTeX.json > $IOTEX_MONITOR_HOME/IoTeX.json
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/dashboards.yaml > $IOTEX_MONITOR_HOME/dashboards.yaml
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/datasource.yaml > $IOTEX_MONITOR_HOME/datasource.yaml
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/docker-compose.yml
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/.env > $IOTEX_MONITOR_HOME/.env
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/prometheus.yml > $IOTEX_MONITOR_HOME/prometheus.yml
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/run.sh > $IOTEX_MONITOR_HOME/run.sh
-
-    chmod +x $IOTEX_MONITOR_HOME/run.sh
-
-    echo -e "docker run iotex with monitor: ${YELLOW} ${version} ${NC}"
-    IOTEX_IMAGE=iotex/iotex-core:${version}
-    CUR_PWD=${PWD}
-    cd $IOTEX_MONITOR_HOME
-    export IOTEX_HOME IOTEX_MONITOR_HOME IOTEX_IMAGE
+    echo -e "Start iotex-server and monitor."
     docker-compose up -d
     if [ $? -eq 0 ];then
         echo -e "${YELLOW} You can access 'localhost:3000' to view node monitoring ${NC}"
         echo -e "${YELLOW} Default User/Pass: admin/admin." 
     fi
-    cd ${CUR_PWD}
 else
-    echo -e "docker run iotex: ${YELLOW} ${version} ${NC}"
-    #Run the following command to start a node:
-    
-    _DOCKER_RUN_CMD="docker run -d --restart on-failure --name iotex"
-    _DOCKER_RUN_CMD_PORTS="-p 4689:4689 -p 8080:8080"
-    _DOCKER_RUN_CMD_VOL="
-            -v=$IOTEX_HOME/data:/var/data:rw \
-            -v=$IOTEX_HOME/log:/var/log:rw \
-            -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
-            -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro"
-    _DOCKER_RUN_CMD_IMAGE="iotex/iotex-core:${version}"
-    _DOCKER_RUN_CMD_ENTRYPOINT="iotex-server \
-            -config-path=/etc/iotex/config_override.yaml \
-            -genesis-path=/etc/iotex/genesis.yaml"
-    
-    read -p  "Do you want to make your node be a gateway? [Y/N] (Default: N) ?" enableGateway
-    if [ "$enableGateway"X = "Y"X -o "$enableGateway"X = "y"X ];then
-        _DOCKER_RUN_CMD_PORTS="$_DOCKER_RUN_CMD_PORTS -p 14014:14014"
-        _DOCKER_RUN_CMD_ENTRYPOINT="$_DOCKER_RUN_CMD_ENTRYPOINT -plugin=gateway"
-    fi
-    
-    $_DOCKER_RUN_CMD $_DOCKER_RUN_CMD_PORTS \
-    		 $_DOCKER_RUN_CMD_VOL \
-    		 $_DOCKER_RUN_CMD_IMAGE \
-    		 $_DOCKER_RUN_CMD_ENTRYPOINT
-    
-    
-    #check node running
-    sleep 5
-    docker ps | grep iotex-server
+    echo -e "Start iotex-server."
+    docker-compose up -d iotex
 fi
+
+#check node running
+sleep 5
+docker-compose ps
+
+# Back to original directory
+cd ${CUR_PWD}
