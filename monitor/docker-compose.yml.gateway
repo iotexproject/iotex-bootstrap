@@ -6,9 +6,9 @@ services:
     image: ${IOTEX_IMAGE}
     restart: on-failure
     ports:
-        - 8080:8080
-        - 4689:4689
-        - 14014:14014
+      - 8080:8080
+      - 4689:4689
+      - 14014:14014
     volumes:
       - $IOTEX_HOME/data:/var/data:rw
       - $IOTEX_HOME/log:/var/log:rw
