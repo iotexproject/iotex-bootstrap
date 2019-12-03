@@ -100,6 +100,70 @@ docker run -d --restart on-failure --name iotex \
 
 6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
+## <a name="mainnet_native"/>Join MainNet Beta on Linux
+
+1. Set the environment with the following commands:
+
+```
+mkdir -p ~/iotex-var
+cd ~/iotex-var
+
+export IOTEX_HOME=$PWD
+
+mkdir -p /var/data
+mkdir -p /var/log
+mkdir -p $IOTEX_HOME/etc
+
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.0/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.0/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+```
+
+2. Build server binary:
+
+```
+git clone https://github.com/iotexproject/iotex-core.git
+cd iotex-core
+git checkout checkout v0.10.0
+
+// optional
+export GOPROXY=https://goproxy.io
+go mod download
+make clean build-all
+cp ./bin/server $IOTEX_HOME/iotex-server
+```
+
+3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key.
+
+4. (Optional) If you prefer to start from a snapshot, run the following commands:
+
+```
+curl -L https://t.iotex.me/mainnet-data-latest > $IOTEX_HOME/data.tar.gz
+tar -xzf data.tar.gz
+```
+We will update the snapshot once a day. If you plan to run your node as a gateway, please use the snapshot with index data:
+https://t.iotex.me/mainnet-data-with-idx-latest.
+
+5. Run the following command to start a node:
+
+```
+nohup $IOTEX_HOME/iotex-server \
+        -config-path=$IOTEX_HOME/etc/iotex/config.yaml \
+        -genesis-path=$IOTEX_HOME/etc/iotex/genesis.yaml &
+```
+
+Now your node should be started successfully.
+
+If you want to also make your node be a gateway, which could process API requests from users, use the following command instead:
+
+```
+nohup $IOTEX_HOME/iotex-server \
+        -config-path=$IOTEX_HOME/etc/iotex/config.yaml \
+        -genesis-path=$IOTEX_HOME/etc/iotex/genesis.yaml \
+        -plugin=gateway &
+```
+
+6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
+
 ## <a name="testnet"/>Join TestNet
 
 There's almost no difference to join TestNet, but in step 2, you need to use the config and genesis files for TestNet:
