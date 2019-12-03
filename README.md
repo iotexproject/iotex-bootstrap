@@ -14,6 +14,7 @@
 
 - [Release Status](#status)
 - [Join MainNet Beta](#mainnet)
+- [Join Mainnet Beta without using Docker](#mainnet_native)
 - [Join TestNet](#testnet)
 - [Interact with Blockchain](#ioctl)
 - [Operate Your Node](#ops)
@@ -96,6 +97,55 @@ docker run -d --restart on-failure --name iotex \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
         -plugin=gateway
+```
+
+6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
+
+## <a name="mainnet_native"/>Join Mainnet Beta without using Docker
+
+1. Set the environment with the following commands:
+
+Same as [Join MainNet Beta](#mainnet) step 2
+
+2. Build server binary:
+
+```
+git clone https://github.com/iotexproject/iotex-core.git
+cd iotex-core
+git checkout checkout v0.10.0
+
+// optional
+export GOPROXY=https://goproxy.io
+go mod download
+make clean build-all
+cp ./bin/server $IOTEX_HOME/iotex-server
+```
+
+3. Edit configs
+
+Same as [Join MainNet Beta](#mainnet) step 3
+
+4. (Optional) Start from a snapshot
+
+Same as [Join MainNet Beta](#mainnet) step 4
+
+5. Run the following command to start a node:
+
+```
+nohup $IOTEX_HOME/iotex-server \
+        -config-path=$IOTEX_HOME/etc/iotex/config.yaml \
+        -genesis-path=$IOTEX_HOME/etc/iotex/genesis.yaml &
+```
+
+Now your node should be started successfully.
+
+If you want to also make your node be a gateway, which could process API requests from users, use the following command instead:
+
+```
+nohup $IOTEX_HOME/iotex-server \
+        -config-path=$IOTEX_HOME/etc/iotex/config.yaml \
+        -genesis-path=$IOTEX_HOME/etc/iotex/genesis.yaml \
+        -plugin=gateway &
 ```
 
 6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
