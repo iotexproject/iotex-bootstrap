@@ -14,6 +14,7 @@
 
 - [Release Status](#status)
 - [Join MainNet Beta](#mainnet)
+- [Join Mainnet Beta without using Docker](#mainnet_native)
 - [Join TestNet](#testnet)
 - [Interact with Blockchain](#ioctl)
 - [Operate Your Node](#ops)
@@ -100,23 +101,11 @@ docker run -d --restart on-failure --name iotex \
 
 6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
-## <a name="mainnet_native"/>Join MainNet Beta on Linux
+## <a name="mainnet_native"/>Join Mainnet Beta without using Docker
 
 1. Set the environment with the following commands:
 
-```
-mkdir -p ~/iotex-var
-cd ~/iotex-var
-
-export IOTEX_HOME=$PWD
-
-mkdir -p /var/data
-mkdir -p /var/log
-mkdir -p $IOTEX_HOME/etc
-
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.0/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.0/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
-```
+Same as [Join MainNet Beta](#mainnet) step 2
 
 2. Build server binary:
 
@@ -132,16 +121,13 @@ make clean build-all
 cp ./bin/server $IOTEX_HOME/iotex-server
 ```
 
-3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key.
+3. Edit configs
 
-4. (Optional) If you prefer to start from a snapshot, run the following commands:
+Same as [Join MainNet Beta](#mainnet) step 3
 
-```
-curl -L https://t.iotex.me/mainnet-data-latest > $IOTEX_HOME/data.tar.gz
-tar -xzf data.tar.gz
-```
-We will update the snapshot once a day. If you plan to run your node as a gateway, please use the snapshot with index data:
-https://t.iotex.me/mainnet-data-with-idx-latest.
+4. (Optional) Start from a snapshot
+
+Same as [Join MainNet Beta](#mainnet) step 4
 
 5. Run the following command to start a node:
 
