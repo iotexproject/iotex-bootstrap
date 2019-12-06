@@ -32,10 +32,10 @@ function processParam() {
     _ENV_=mainnet
     if [ $# -gt 0 ];then
         if [ "$1"X = "testnet"X ];then
-    	_ENV_=testnet
-    	_GREP_STRING_=TestNet
+            _ENV_=testnet
+            _GREP_STRING_=TestNet
         elif [ "$1"X = "plugin=gateway"X ];then
-    	_PLUGINS_=gateway
+            _PLUGINS_=gateway
         fi
     fi
     if [ $# -gt 1 ];then
@@ -58,7 +58,7 @@ function determinePluginIsChanged() {
     else
         docker ps|grep 14014 > /dev/null
         if [ $? -eq 0 ];then
-    	_PLUGINS_CHANGE_=1
+            _PLUGINS_CHANGE_=1
         fi
     fi
 }
