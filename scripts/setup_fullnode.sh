@@ -9,6 +9,16 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
+function sedCheck() {
+    sed --version > /dev/null 2>&1
+    if [ $? -eq 0 ];then
+        sed --version|grep 'GNU sed' > /dev/null 2>&1
+        if [ $? -eq 0 ];then
+            SED_IS_GNU=1
+        fi
+    fi
+}
+
 function checkDockerPermissions() {
     docker ps > /dev/null
     if [ $? = 1 ];then
@@ -180,10 +190,19 @@ function downloadConfig() {
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/config_${env}.yaml > $IOTEX_HOME/etc/config.yaml
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/genesis_${env}.yaml > $IOTEX_HOME/etc/genesis.yaml
     # https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.9.2/config_mainnet.yaml
-    
+
+    SED_IS_GNU=0
+    sedCheck
     echo "Update your externalHost,producerPrivKey to config.yaml"
-    sed -i "/^network:/a\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
-    sed -i "/^chain:/a\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
+    if [ $SED_IS_GNU -eq 1 ];then
+        sed -i "/^network:/a\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
+        sed -i "/^chain:/a\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
+    else
+        sed -i '' "/^network:/a\ 
+\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
+        sed -i '' "/^chain:/a\ 
+\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
+    fi
 }
 
 function enableGateway() {
