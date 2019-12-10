@@ -255,6 +255,12 @@ sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh)
 ```
 
+To enable gateway on mainnet
+```bash
+sudo bash # If your docker requires root privilege
+bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) plugin=gateway
+```
+
 To upgarde testnet node, just add `testnet` in the end of the command.
 ```bash
 sudo bash # If your docker requires root privilege
