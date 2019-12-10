@@ -199,9 +199,11 @@ function downloadConfig() {
         sed -i "/^chain:/a\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
     else
         sed -i '' "/^network:/a\ 
-\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
+\ \ $externalHost
+" $IOTEX_HOME/etc/config.yaml
         sed -i '' "/^chain:/a\ 
-\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
+\ \ $producerPrivKey
+" $IOTEX_HOME/etc/config.yaml
     fi
 }
 
