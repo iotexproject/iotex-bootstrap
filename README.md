@@ -19,7 +19,7 @@
 - [Interact with Blockchain](#ioctl)
 - [Operate Your Node](#ops)
 - [Upgrade Your Node（One Line Upgrader）](#upgrade)
-- [Q&A] (#qa)
+- [Q&A](#qa)
 
 
 ## <a name="status"/>Release Status
@@ -30,6 +30,7 @@ Here are the software versions we use:
 - TestNet: v0.10.0
 
 ## <a name="mainnet"/>Join MainNet Beta
+This is the recommended way to start an IoTeX node
 
 1. Pull the docker image:
 
@@ -103,6 +104,7 @@ docker run -d --restart on-failure --name iotex \
 6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
 ## <a name="mainnet_native"/>Join Mainnet Beta without using Docker
+This is not the preferred way to start an IoTeX node
 
 1. Set the environment with the following commands:
 
