@@ -1,0 +1,11 @@
+groups:
+  - name: Block chain height
+    rules:
+      - alert: Block chain height is abnormal
+        expr: avg(delta(iotex_heartbeat_status{status_type="blockchainHeight"}[5m])) < 5  and avg(avg_over_time(iotex_heartbeat_status{status_type="blockchainHeight"}[1m])) > 0
+        for: 1m
+        labels:
+          status_type: blockchainHeight
+        annotations:
+          summary: "Instance {{ $labels.instance }} Block chain height is abnormal"
+          description: "{{ $labels.instance }} of job {{ $labels.job }} block chain height is {{ $value }}."

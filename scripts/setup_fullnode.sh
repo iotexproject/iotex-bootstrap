@@ -103,17 +103,15 @@ function preDockerCompose() {
 
     export IOTEX_HOME IOTEX_MONITOR_HOME IOTEX_IMAGE
 
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/docker-compose.yml.gateway > $IOTEX_MONITOR_HOME/docker-compose.yml.gateway
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/docker-compose.yml
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/.env > $IOTEX_MONITOR_HOME/.env
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml.gateway > $IOTEX_MONITOR_HOME/docker-compose.yml.gateway
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/docker-compose.yml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/.env > $IOTEX_MONITOR_HOME/.env
 }
 
 function enableMonitor() {
     echo "Download config files for monitor"
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/IoTeX.json > $IOTEX_MONITOR_HOME/IoTeX.json
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/dashboards.yaml > $IOTEX_MONITOR_HOME/dashboards.yaml
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/datasource.yaml > $IOTEX_MONITOR_HOME/datasource.yaml
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/monitor/prometheus.yml > $IOTEX_MONITOR_HOME/prometheus.yml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/prometheus.yml > $IOTEX_MONITOR_HOME/prometheus.yml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/alert.rules > $IOTEX_MONITOR_HOME/alert.rules
 }
 
 function procssNotUpdate() {
