@@ -131,7 +131,7 @@ function procssNotUpdate() {
             docker-compose up -d --no-deps monitor
             if [ $? -eq 0 ];then
                 echo -e "${YELLOW} You can access 'localhost:3000' to view node monitoring ${NC}"
-                echo -e "${YELLOW} Default User/Pass: admin/admin." 
+                echo -e "${YELLOW} Default User/Pass: admin/admin. ${NC}"
             fi
             cd $CUR_PWD
         fi
