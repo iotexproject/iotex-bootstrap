@@ -59,6 +59,7 @@ function check-monitor() {
 
 function make-workspace() {
     $MKDIR ${IOTEX_ALERT_HOME}/{etc,template}
+    chown 777 ${IOTEX_ALERT_HOME} -R
 }
 
 function download-files() {
