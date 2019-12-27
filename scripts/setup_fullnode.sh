@@ -29,6 +29,15 @@ function checkDockerPermissions() {
     fi
 }
 
+function checkDockerCompose() {
+    docker-compose --version > /dev/null 2>&1
+    if [ $? -eq 127 ];then
+        echo -e "$RED docker-compose command not found $NC"
+        echo -e "Please install it first"
+        exit 1
+    fi
+}
+
 function setVar() {
     CUR_PWD=${PWD}
     producerPrivKey=""
@@ -257,7 +266,8 @@ function startupNode() {
 
 function main() {
     checkDockerPermissions
-
+    checkDockerCompose
+    
     _GREP_STRING_=MainNet
     setVar $@
     lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- $_GREP_STRING_:"|awk '{print $3}')
