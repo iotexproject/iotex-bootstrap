@@ -13,6 +13,7 @@ chain:
   maxCacheSize: 1000
   committee:
     gravityChainAPIs:
+      # please change the infura key to your key (e.g., https://mainnet.infura.io/v3/YOUR_KEY)
       - https://mainnet.infura.io/v3/dc9a1597c278426aa65da3ad4fa637dc
     numOfRetries: 20
     paginationSize: 255

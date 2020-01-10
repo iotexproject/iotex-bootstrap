@@ -54,7 +54,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.0/conf
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.0/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
-3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key.
+3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. You also need to replace the `gravityChainAPIs` to use your own infura project key. And make sure you enabled archive data access if you need to access Ethereum archive node data.
 
 4. (Optional) If you prefer to start from a snapshot, run the following commands:
 
