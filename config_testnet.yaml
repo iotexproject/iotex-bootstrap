@@ -9,7 +9,6 @@ chain:
   # producerPrivKey: SET YOUR PRIVATE KEY HERE (e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)
   chainDBPath: /var/data/chain.db
   trieDBPath: /var/data/trie.db
-  indexDBPath: /var/data/index.db
   maxCacheSize: 1000
   committee:
     gravityChainAPIs:
