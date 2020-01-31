@@ -1,6 +1,8 @@
 # IoTeX Delegate Manual
 
 ## News
+- We have upgraded mainnet to `v0.10.2`. It contains breaking changes which will be activated on block height 3238921. Delegates must upgrade your node to the new version before that.
+- We have upgraded testnet to `v0.10.2`. This version correct a gas limit issue for reading native vote bucket.
 - We have upgraded mainnet to `v0.10.0`. It contains breaking changes which will be activated on block height 1816201. Delegates must upgrade your node to the new version before that.
 - We have upgraded testnet to `v0.10.0`. This version reduce block interval to 5s.
 - We found a bug in `v0.9.0` which may cause the nodes not agree on the delegates list. We already pushed out a build `v0.9.2` to address this issue.
@@ -26,8 +28,8 @@
 
 Here are the software versions we use:
 
-- MainNet: v0.10.0
-- TestNet: v0.10.0
+- MainNet: v0.10.2
+- TestNet: v0.10.2
 
 ## <a name="mainnet"/>Join MainNet Beta
 This is the recommended way to start an IoTeX node
@@ -35,7 +37,7 @@ This is the recommended way to start an IoTeX node
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v0.10.0
+docker pull iotex/iotex-core:v0.10.2
 ```
 
 2. Set the environment with the following commands:
@@ -50,8 +52,8 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.0/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.0/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.2/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.2/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. You also need to replace the `gravityChainAPIs` to use your own infura project key. And make sure you enabled archive data access if you need to access Ethereum archive node data.
@@ -75,7 +77,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.10.0 \
+        iotex/iotex-core:v0.10.2 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -94,7 +96,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v0.10.0 \
+        iotex/iotex-core:v0.10.2 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -115,7 +117,7 @@ Same as [Join MainNet Beta](#mainnet) step 2
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout checkout v0.10.0
+git checkout checkout v0.10.2
 
 // optional
 export GOPROXY=https://goproxy.io
@@ -158,13 +160,13 @@ nohup $IOTEX_HOME/iotex-server \
 There's almost no difference to join TestNet, but in step 2, you need to use the config and genesis files for TestNet:
 
 ```
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.0/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.0/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.2/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.10.2/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
 
-In step 5, you need to replace the docker image tag in the command with `v0.10.0`.
+In step 5, you need to replace the docker image tag in the command with `v0.10.2`.
 
 ## <a name="ioctl"/>Interact with Blockchain
 
