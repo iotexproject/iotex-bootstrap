@@ -29,6 +29,7 @@ func update() {
 }
 
 func main() {
+	fmt.Println("Auto-update is running...")
 	// start scheduler
 	gocron.Every(1).Week().At("01:30").Do(update)
 	//gocron.Every(1).Second().Do(update)
