@@ -294,12 +294,17 @@ function startupNode() {
 function startAutoUpdate() {
     # Download auto-update command
     mkdir -p $IOTEX_HOME/bin
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/tools/auto-update/auto-update > $IOTEX_HOME/bin/auto-update || exit 1
+    if [ "$(uname)"X = "Darwin"X ];then
+        curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/tools/auto-update/auto-update_darwin-amd64 > $IOTEX_HOME/bin/auto-update || exit 1
+    else
+        curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/tools/auto-update/auto-update_linux-amd64 > $IOTEX_HOME/bin/auto-update || exit 1
+    fi
+
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/update_silence.sh > $IOTEX_HOME/bin/update_silence.sh || exit 1
     chmod +x $IOTEX_HOME/bin/auto-update $IOTEX_HOME/bin/update_silence.sh
 
     # Run background
-    nohup $IOTEX_HOME/bin/auto-update > $IOTEX_HOME/log/update.log &
+    nohup $IOTEX_HOME/bin/auto-update > $IOTEX_HOME/log/update.log 2>&1 &
     echo -e "${YELLOW} Auto-update is on. it will auto update every week at 1:30. ${NC}"
 }
 
