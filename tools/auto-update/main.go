@@ -32,8 +32,6 @@ func main() {
 	fmt.Println("Auto-update is running...")
 	// start scheduler
 	gocron.Every(3).Days().Do(update)
-	//gocron.Every(1).Second().Do(update)
-	//gocron.Every(5).Minutes().Do(func(sig chan interface{}) { sig <- 1 }, sig)
 
 	<-gocron.Start()
 	// block main func
