@@ -53,15 +53,12 @@ function setVar() {
 function processParam() {
     _ENV_=mainnet
     _GREP_STRING_=MainNet
-    _AUTO_UPDATE_="off"
     if [ $# -gt 0 ];then
         if [ "$1"X = "testnet"X ];then
             _ENV_=testnet
             _GREP_STRING_=TestNet
         elif [ "$1"X = "plugin=gateway"X ];then
             _PLUGINS_=gateway
-        elif [ "$1"X = "auto-update=on"X ];then
-            _AUTO_UPDATE_="on"
         fi
     fi
     if [ $# -gt 1 ];then
@@ -70,18 +67,6 @@ function processParam() {
             _GREP_STRING_=TestNet
         elif [ "$2"X = "plugin=gateway"X ];then
             _PLUGINS_=gateway
-        elif [ "$2"X = "auto-update=on"X ];then
-            _AUTO_UPDATE_="on"
-        fi
-    fi
-    if [ $# -gt 2 ];then
-        if [ "$3"X = "testnet"X ];then
-            _ENV_=testnet
-            _GREP_STRING_=TestNet
-        elif [ "$3"X = "plugin=gateway"X ];then
-            _PLUGINS_=gateway
-        elif [ "$3"X = "auto-update=on"X ];then
-            _AUTO_UPDATE_="on"
         fi
     fi
     env=$_ENV_
@@ -292,13 +277,6 @@ function startupNode() {
 }
 
 function startAutoUpdate() {
-    # stop auto-updatem, if it is running.
-    ps -ef | grep "$IOTEX_HOME/bin/bauto-update" > /dev/null
-    if [ $? -eq 0 ];then
-        pid=$(ps -ef | grep "$IOTEX_HOME/bin/auto-update" | grep -v grep | awk '{print $2}')
-        kill -9 $pid
-    fi
-
     # Download auto-update command
     mkdir -p $IOTEX_HOME/bin
     if [ "$(uname)"X = "Darwin"X ];then
@@ -337,6 +315,8 @@ function main() {
     determinIotexHome
     confirmEnvironmentVariable
 
+    read -p "Do you want to auto update the node [Y/N] (Default: Y)? " _AUTO_UPDATE_
+    
     deleteOldFile
     
     if [ "$version"X = "$runversion"X ] && [ $_PLUGINS_CHANGE_ -eq 0 ];then
@@ -374,7 +354,14 @@ function main() {
 
     startupNode
 
-    if [ "$_AUTO_UPDATE_"X = "on"X ];then
+    # stop auto-updatem, if it is running.
+    ps -ef | grep "$IOTEX_HOME/bin/bauto-update" > /dev/null
+    if [ $? -eq 0 ];then
+        pid=$(ps -ef | grep "$IOTEX_HOME/bin/auto-update" | grep -v grep | awk '{print $2}')
+        kill -9 $pid
+    fi
+
+    if [ "$_AUTO_UPDATE_"X != "N"X ];then
         startAutoUpdate
     fi
 }
