@@ -312,7 +312,7 @@ function startAutoUpdate() {
 
     # Run background
     nohup $IOTEX_HOME/bin/auto-update > $IOTEX_HOME/log/update.log 2>&1 &
-    echo -e "${YELLOW} Auto-update is on. it will auto update every week at 1:30. ${NC}"
+    echo -e "${YELLOW} Auto-update is on. it will auto update every 3 days. ${NC}"
 }
 
 function main() {
