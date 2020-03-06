@@ -292,6 +292,13 @@ function startupNode() {
 }
 
 function startAutoUpdate() {
+    # stop auto-updatem, if it is running.
+    ps -ef | grep "$IOTEX_HOME/bin/bauto-update" > /dev/null
+    if [ $? -eq 0 ];then
+        pid=$(ps -ef | grep "$IOTEX_HOME/bin/auto-update" | grep -v grep | awk '{print $2}')
+        kill -9 $pid
+    fi
+
     # Download auto-update command
     mkdir -p $IOTEX_HOME/bin
     if [ "$(uname)"X = "Darwin"X ];then
