@@ -1,8 +1,11 @@
 #!/bin/bash
 ##Setup & Upgrade Iotex MainNet / TestNet
 ## User local: source/bash/sh $0 [$1=testnet]
+## User local: source/bash/sh $0 [$1=testnet $2=plugin=gateway]
+## User local: source/bash/sh $0 [$1=testnet $2=plugin=gateway $3=auto-update=on]
 ## If remote:  source/bash/sh <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) [$1=testnet]
 ## If remote:  source/bash/sh <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) [$1=testnet $2=plugin=gateway]
+## If remote:  source/bash/sh <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) [$1=testnet $2=plugin=gateway $3=auto-update=on]
 
 # Colour codes
 YELLOW='\033[0;33m'
@@ -49,6 +52,7 @@ function setVar() {
 
 function processParam() {
     _ENV_=mainnet
+    _GREP_STRING_=MainNet
     if [ $# -gt 0 ];then
         if [ "$1"X = "testnet"X ];then
             _ENV_=testnet
@@ -66,6 +70,9 @@ function processParam() {
         fi
     fi
     env=$_ENV_
+
+    # Use for auto-update
+    export _GREP_STRING_ _ENV_
 }
 
 function determinePluginIsChanged() {
@@ -113,7 +120,7 @@ function preDockerCompose() {
     export IOTEX_HOME IOTEX_MONITOR_HOME IOTEX_IMAGE
 
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml.gateway > $IOTEX_MONITOR_HOME/docker-compose.yml.gateway
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/docker-compose.yml
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/docker-compose.yml.default
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/.env > $IOTEX_MONITOR_HOME/.env
 }
 
@@ -216,8 +223,13 @@ function downloadConfig() {
 
 function enableGateway() {
     cd $IOTEX_MONITOR_HOME
-    \cp docker-compose.yml docker-compose.yml.bak
     \cp docker-compose.yml.gateway docker-compose.yml
+    cd $CUR_PWD
+}
+
+function disableGateway() {
+    cd $IOTEX_MONITOR_HOME                            
+    \cp docker-compose.yml.default docker-compose.yml
     cd $CUR_PWD
 }
 
@@ -227,7 +239,7 @@ function startupWithMonitor() {
     docker-compose up -d --no-recreate
     if [ $? -eq 0 ];then
         echo -e "${YELLOW} If you first create monitor, you can access 'localhost:3000' to view node monitoring ${NC}"
-        echo -e "${YELLOW} Default User/Pass: admin/admin." 
+        echo -e "${YELLOW} Default User/Pass: admin/admin. ${NC}" 
     fi
     cd $CUR_PWD
 }
@@ -264,11 +276,27 @@ function startupNode() {
 
 }
 
+function startAutoUpdate() {
+    # Download auto-update command
+    mkdir -p $IOTEX_HOME/bin
+    if [ "$(uname)"X = "Darwin"X ];then
+        curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/tools/auto-update/auto-update_darwin-amd64 > $IOTEX_HOME/bin/auto-update || exit 1
+    else
+        curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/tools/auto-update/auto-update_linux-amd64 > $IOTEX_HOME/bin/auto-update || exit 1
+    fi
+
+    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/update_silence.sh > $IOTEX_HOME/bin/update_silence.sh || exit 1
+    chmod +x $IOTEX_HOME/bin/auto-update $IOTEX_HOME/bin/update_silence.sh
+
+    # Run background
+    nohup $IOTEX_HOME/bin/auto-update > $IOTEX_HOME/log/update.log 2>&1 &
+    echo -e "${YELLOW} Auto-update is on. it will auto update every 3 days. ${NC}"
+}
+
 function main() {
     checkDockerPermissions
     checkDockerCompose
     
-    _GREP_STRING_=MainNet
     setVar $@
     lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- $_GREP_STRING_:"|awk '{print $3}')
 
@@ -287,10 +315,15 @@ function main() {
     determinIotexHome
     confirmEnvironmentVariable
 
+    read -p "Do you want to auto update the node [Y/N] (Default: Y)? " _AUTO_UPDATE_
+    
     deleteOldFile
     
     if [ "$version"X = "$runversion"X ] && [ $_PLUGINS_CHANGE_ -eq 0 ];then
         procssNotUpdate
+        if [ "$_AUTO_UPDATE_"X = "on"X ];then
+            startAutoUpdate
+        fi
         exit 0
     fi
 
@@ -315,15 +348,21 @@ function main() {
     preDockerCompose
     if [ $_PLUGINS_ ] && [ "$_PLUGINS_"X = "gateway"X ];then
         enableGateway
+    else
+        disableGateway
     fi
 
     startupNode
 
-    # restore file docker-compose.yml
-    if [ $_PLUGINS_ ] && [ "$_PLUGINS_"X = "gateway"X ];then
-        cd $IOTEX_MONITOR_HOME
-        mv docker-compose.yml.bak docker-compose.yml
-        cd ${CUR_PWD}
+    # stop auto-updatem, if it is running.
+    ps -ef | grep "$IOTEX_HOME/bin/bauto-update" > /dev/null
+    if [ $? -eq 0 ];then
+        pid=$(ps -ef | grep "$IOTEX_HOME/bin/auto-update" | grep -v grep | awk '{print $2}')
+        kill -9 $pid
+    fi
+
+    if [ "$_AUTO_UPDATE_"X != "N"X ];then
+        startAutoUpdate
     fi
 }
 
