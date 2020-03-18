@@ -1,0 +1,35 @@
+---
+Postmortem ID: 5
+Title: Reward Pool Drained
+Author: Raullen Chai <raullen@iotex.com>
+Status: Mitigated
+Created: 2020-03-17
+Updated: 2020-03-17
+---
+
+
+# Abstract
+
+Starting epoch 7871, action to grant rewards to delegates begin to fail with status = 0 and empty log.
+
+# Cause
+
+The reward pool has run out of the initial balance of 200,000,000 IOTX.
+
+# Solution
+
+The reward pool has been refilled with 100,020,000 IOTX accounts for 10% of the total supply.
+
+# Impact
+
+The problem was identified, and mitigated before people steal tokens from the test accounts, so that there was no economic damage happened. The transfer actions that we burned these extra tokens will be permanently recorded on the blockchain.
+
+
+# What Went Well
+
+- This issue has been identified and throughly fixed within a hour.
+- The communication of the core members was effective.
+
+# What Does Not Went Well
+
+- Lack of an alerting mechanism when reward pool has a low balance. 
