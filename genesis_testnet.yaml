@@ -11,6 +11,7 @@ blockchain:
   blockInterval: 10s
   cookHeight: 1801
   dardanellesHeight: 100081
+  daytonaBlockHeight: 1713601
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
