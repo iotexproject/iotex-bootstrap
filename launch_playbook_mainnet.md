@@ -23,9 +23,9 @@ For launching the mainnet, **top 18 candidates should be participated**; **top 1
 Recommended Hardware:
 ```  
 Server: primary server and backup server
-• Memory: 32 GB of RAM
-• Local Storage: 1 TB SSD with 1000+ IOPS
-• Processor: 8 cores (2.4 GHz each)
+• Memory: 16 GB of RAM
+• Local Storage: 200 GB SSD with 1000+ IOPS
+• Processor: 4 cores (2.4 GHz each)
 • Network: 100 Mb/sec
 ```
 
