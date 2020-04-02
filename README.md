@@ -1,6 +1,7 @@
 # IoTeX Delegate Manual
 
 ## News
+- We have upgraded testnet to `v0.11.0-rc`. This version introduces probation.
 - We added auto upgrade feature in our upgrader. Auto upgrade will check if there is an avilable upgrade every 3 days and automactilly doing the upgrade.
 - We have upgraded testnet and mainnet to `v0.10.3`. This version improve stability on reading native staking buckets.
 - We have upgraded mainnet to `v0.10.2`. It contains breaking changes which will be activated on block height 3238921. Delegates must upgrade your node to the new version before that.
@@ -31,7 +32,7 @@
 Here are the software versions we use:
 
 - MainNet: v0.10.3
-- TestNet: v0.10.3
+- TestNet: v0.11.0-rc
 
 ## <a name="mainnet"/>Join MainNet Beta
 This is the recommended way to start an IoTeX node
