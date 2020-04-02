@@ -13,7 +13,7 @@ chain:
   committee:
     gravityChainAPIs:
       # please change the infura key to your key (e.g., https://mainnet.infura.io/v3/YOUR_KEY)
-      - https://mainnet.infura.io/v3/dc9a1597c278426aa65da3ad4fa637dc
+      - https://mainnet.infura.io/v3/b355cae6fafc4302b106b937ee6c15af
     numOfRetries: 20
     paginationSize: 255
     cacheSize: 1000
@@ -39,10 +39,6 @@ blockSync:
   bufferSize: 400
   maxRepeat: 3
   repeatDecayStep: 3
-
-db:
-  splitDBHeight: 900000
-  splitDBSizeMB: 640
 
 log:
   zap:
