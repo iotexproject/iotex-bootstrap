@@ -1,6 +1,7 @@
 # IoTeX Delegate Manual
 
 ## News
+- We added auto upgrade feature in our upgrader. Auto upgrade will check if there is an avilable upgrade every 3 days and automactilly doing the upgrade.
 - We have upgraded testnet and mainnet to `v0.10.3`. This version improve stability on reading native staking buckets.
 - We have upgraded mainnet to `v0.10.2`. It contains breaking changes which will be activated on block height 3238921. Delegates must upgrade your node to the new version before that.
 - We have upgraded testnet to `v0.10.2`. This version correct a gas limit issue for reading native vote bucket.
@@ -271,6 +272,17 @@ To upgarde testnet node, just add `testnet` in the end of the command.
 ```bash
 sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) testnet
+```
+
+Currently, auto upgrade is turned on by default. To disable this feature, enter `N` when asked following question:
+```bash
+Do you want to auto update the node [Y/N] (Default: Y)? N
+```
+
+To stop auto upgdrade cron job and iotex server program, you can run
+```bash
+sudo bash # If your docker requires root privilege
+bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/stop_fullnode.sh)
 ```
 
 ## <a name="qa"/>Q&A
