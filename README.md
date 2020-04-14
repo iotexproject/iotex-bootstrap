@@ -1,7 +1,7 @@
 # IoTeX Delegate Manual
 
 ## News
-- We have upgraded testnet and mainnet to `v0.111.0`. This version introduces probation. It contains breaking changes which will be activated on mainnet at block height 4478761. 
+- We have upgraded testnet and mainnet to `v0.11.0`. This version introduces delegates probation. It contains breaking changes which will be activated on mainnet at block height 4478761. 
 - We have upgraded testnet to `v0.11.0-rc`. This version introduces probation.
 - We added auto upgrade feature in our upgrader. Auto upgrade will check if there is an avilable upgrade every 3 days and automactilly doing the upgrade.
 - We have upgraded testnet and mainnet to `v0.10.3`. This version improve stability on reading native staking buckets.
