@@ -20,7 +20,7 @@ Optionally, please follow [this guide](../monitoring/README.md) to setup the das
 
 # 2. Interact with IoTeX Full Nodes
 
-Once the full nodes are fully synced, one can communicate with them on the [gRPC](https://grpc.io/) port specified in the configuration file. The details of APIs are specified in https://docs.iotex.io/#api-2-0, and the corresponding proto files are located at https://github.com/iotexproject/iotex-core/tree/master/proto/api.
+Once the full nodes are fully synced, one can communicate with them via [gRPC](https://grpc.io/) service specified in the configuration file. The details of APIs are specified in https://docs.iotex.io/#api-2-0, and the corresponding proto files are located at https://github.com/iotexproject/iotex-core/tree/master/proto/api.
 
 # 3. Common Integration Patterns
 
@@ -32,39 +32,38 @@ Use gRPC endpoint to create new account is not supported for the time being.
 If you have not installed the latest Command-line interface tool, please follow the [instructions](https://docs.iotex.io/#cli-command-line-interface) for ioctl installation. Once installed, one can create a new account which contains a public key, a private key, and an IoTeX address. An example is given [here](https://docs.iotex.io/#create-account-s).
 
 ## Send IOTX
-One can evoke `/APIService/SendAction` endpoint with a signed action. An example is given [here](https://github.com/iotexproject/iotex-docs#sendaction).
+One can invoke `/APIService/SendAction` endpoint to send a signed action. An example is given [here](https://docs.iotex.io/#sendaction).
 
-One can use ioctl to [send IOTX from an address to another](https://docs.iotex.io/#transfer-tokens).
+One can also use ioctl commandline tool to [send IOTX from an address to another](https://docs.iotex.io/#transfer-tokens).
 
-**Note that once a withdraw is succeeded, the exchange needs to validate the receipt to make sure the status is 1.**
+**Note that after a transaction (either user deposit or withdraw) is sent and recorded on the blockchain, for safety and auditing reason the exchange needs to retrieve the transaction and validate that:** 
+1. the status of the receipt equals 1
+2. action type is transfer
+3. the amount equals to the deposit or withdraw amount
+4. the sender and recipient equals to intended parties
+5. timestamp of the transaction roughly equals (within 5~10 seconds range) the actual time of sending the raw transaction to blockchain
 
-## Retrieve Transfers
+Here's an [example](https://iotexscan.io/action/355bd7b93dadc18c2d2689cd400272d28ad28df8e6a1555086233c4b619adfee) 
 
-One can retrieve confirmed transfers as well as pending (unconfirmed) transfers by using `/APIService/GetActions` endpoint. Examples are given below:
+## Retrieve transactions
+One can retrieve confirmed transactions as well as pending (unconfirmed) transactions by using `/APIService/GetActions` endpoint. Examples are given below:
 1. [Get action by action hash](https://docs.iotex.io/#getactions-2) 
 2. [Get confirmed actions by address](https://docs.iotex.io/#getactions-3) 
 3. [Get unconfirmed actions by address](https://docs.iotex.io/#getactions-4)
 4. [Get actions by block](https://docs.iotex.io/#getactions-5)
 
-One can use ioctl to [query an action by hash](https://docs.iotex.io/#query-action).
-
-**Note that to validate if a user's deposit is succeeded, one needs to validate the following against the action:**
-- action type is transfer
-- amount equals to the deposit amount 
-- recipient equals to deposit address
-- timestamp of this action is recent enough
-
+One can also use ioctl commandline tool to [query an action by hash](https://docs.iotex.io/#query-action).
 
 ## Retrieve Blocks
 One can retrieve blocks that contain the target transfers by using `/APIService/GetBlockMetas` endpoint. Examples are given below:
 1. [Get block metadata by index](https://docs.iotex.io/#getblockmetas)
 2. [Get block metadata by block hash](https://docs.iotex.io/#getblockmetas-2)
 
-One can use ioctl to [query a block by height or hash](https://docs.iotex.io/#query-block).
+One can also use ioctl commandline tool to [query a block by height or hash](https://docs.iotex.io/#query-block).
 
 # 4. Testing
 
-Once you've fully integrated with the network, please test on both the testnet and the mainnet. All states on IoTeX blockchain can be queried through either the command line tool [ioctl](https://docs.iotex.io/#cli-command-line-interface) or the explorer ([Mainnet](https://iotexscan.io), [Testnet](https://testnet.iotexscan.io)).
+Once you've fully integrated with the IoTeX blockchain, please test on both the testnet and the mainnet. All states on IoTeX blockchain can be queried through either the command line tool [ioctl](https://docs.iotex.io/#cli-command-line-interface) or the explorer ([Mainnet](https://iotexscan.io), [Testnet](https://testnet.iotexscan.io)).
 
 Please reach to IoTeX Team if you have any question.
 
