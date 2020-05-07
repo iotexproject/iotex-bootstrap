@@ -1,6 +1,7 @@
 # IoTeX Delegate Manual
 
 ## News
+- We have upgraded testnet to `v1.0.0-rc`. This version introduces native staking on IoTeX chain.
 - We have upgraded testnet and mainnet to `v0.11.1`. A blocker indexer racing issue is fixed. The breaking changes which will  still be activated on mainnet at block height 4478761. 
 - We have upgraded testnet and mainnet to `v0.11.0`. This version introduces delegates probation. It contains breaking changes which will be activated on mainnet at block height 4478761. 
 - We have upgraded testnet to `v0.11.0-rc`. This version introduces probation.
@@ -34,7 +35,7 @@
 Here are the software versions we use:
 
 - MainNet: v0.11.1
-- TestNet: v0.11.1
+- TestNet: v1.0.0-rc
 
 ## <a name="mainnet"/>Join MainNet Beta
 This is the recommended way to start an IoTeX node

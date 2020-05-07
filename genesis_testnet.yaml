@@ -13,6 +13,8 @@ blockchain:
   dardanellesHeight: 100081
   daytonaBlockHeight: 1713601
   easterHeight: 2696401
+  fbkMigrationHeight: 3250081
+  fairbankHeight: 3252241
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
@@ -24,6 +26,7 @@ poll:
   enableGravityChainVoting: true
   gravityChainHeightInterval: 100
   gravityChainStartHeight: 8740900
+  gravityChainCeilingHeight: 10022000
   nativeStakingContractAddress: io1w97pslyg7qdayp8mfnffxkjkpapaf83wmmll2l
   registerContractAddress: 0x92adef0e5e0c2b4f64a1ac79823f7ad3bc1662c4
   scoreThreshold: "2000000000000000000000000"
