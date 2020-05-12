@@ -33,6 +33,8 @@ poll:
   selfStakingThreshold: "1200000000000000000000000"
   stakingContractAddress: 0x3bbe2346c40d34fc3f66ab059f75a6caece2c3b3
   voteThreshold: "100000000000000000000"
+staking:
+  withdrawWaitingPeriod: "336h"
 rewarding:
   aleutianEpochReward: "15000000000000000000000"
   blockReward: "16000000000000000000"
