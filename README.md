@@ -22,8 +22,8 @@
 ## Index
 
 - [Release Status](#status)
-- [Join MainNet Beta](#mainnet)
-- [Join Mainnet Beta without using Docker](#mainnet_native)
+- [Join MainNet](#mainnet)
+- [Join Mainnet without using Docker](#mainnet_native)
 - [Join TestNet](#testnet)
 - [Interact with Blockchain](#ioctl)
 - [Operate Your Node](#ops)
@@ -38,7 +38,7 @@ Here are the software versions we use:
 - MainNet: v1.0.0
 - TestNet: v1.0.0
 
-## <a name="mainnet"/>Join MainNet Beta
+## <a name="mainnet"/>Join MainNet
 This is the recommended way to start an IoTeX node
 
 1. Pull the docker image:
@@ -112,12 +112,12 @@ docker run -d --restart on-failure --name iotex \
 
 6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
-## <a name="mainnet_native"/>Join Mainnet Beta without using Docker
+## <a name="mainnet_native"/>Join Mainnet without using Docker
 This is not the preferred way to start an IoTeX node
 
 1. Set the environment with the following commands:
 
-Same as [Join MainNet Beta](#mainnet) step 2
+Same as [Join MainNet](#mainnet) step 2
 
 2. Build server binary:
 
@@ -135,11 +135,11 @@ cp ./bin/server $IOTEX_HOME/iotex-server
 
 3. Edit configs
 
-Same as [Join MainNet Beta](#mainnet) step 3
+Same as [Join MainNet](#mainnet) step 3
 
 4. (Optional) Start from a snapshot
 
-Same as [Join MainNet Beta](#mainnet) step 4
+Same as [Join MainNet](#mainnet) step 4
 
 5. Run the following command to start a node:
 
@@ -259,7 +259,7 @@ docker start iotex
 ```
 
 ## <a name="upgrade"/>Upgrade Your Node(One Line Upgrader)
-Make sure you have `$IOTEX_HOME` already set up, and all the files(configs, dbs etc) are placed in the right locations (Please refer to the Join MainNet Beta section).
+Make sure you have `$IOTEX_HOME` already set up, and all the files(configs, dbs etc) are placed in the right locations (Please refer to the Join MainNet section).
 
 To upgrade mainnet node, use following command. By default, it will upgrade to latest mainnet version.
 ```bash
