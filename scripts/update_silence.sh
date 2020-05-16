@@ -73,7 +73,6 @@ function cleanOldVersion() {
     echo -e "${YELLOW} ******  Upgrade Iotex Node ******* ${NC}"
     echo -e "${YELLOW} ***  Will stop, delete old iotex container; ${NC}"
     echo -e "${YELLOW} *** download new config and recover your externalHost producerPrivKey ${NC}"
-    read -p "******* Press any key to continue ... [Ctrl + c exit!] " upgreadekey
     echo "Stop old iotex-core"
     docker stop iotex
     echo "delete old iotex docker container"
@@ -144,6 +143,8 @@ function main() {
     fi
 
     echo -e "${YELLOW} Current runing version ( $runversion ) need update ( latest $version ), ${NC}"
+
+    cleanOldVersion
 
     IOTEX_IMAGE=iotex/iotex-core:${version}
     export IOTEX_IMAGE

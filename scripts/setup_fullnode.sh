@@ -355,7 +355,7 @@ function main() {
     startupNode
 
     # stop auto-updatem, if it is running.
-    ps -ef | grep "$IOTEX_HOME/bin/bauto-update" > /dev/null
+    ps -ef | grep "$IOTEX_HOME/bin/auto-update" > /dev/null
     if [ $? -eq 0 ];then
         pid=$(ps -ef | grep "$IOTEX_HOME/bin/auto-update" | grep -v grep | awk '{print $2}')
         kill -9 $pid
