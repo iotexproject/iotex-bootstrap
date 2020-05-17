@@ -12,6 +12,18 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
+_AUTO_UPDATE_=N
+_NEED_INSTALL_=0
+_PLUGINS_CHANGE_=0
+
+pushd () {
+    command pushd "$@" > /dev/null
+}
+
+popd () {
+    command popd "$@" > /dev/null
+}
+
 function sedCheck() {
     sed --version > /dev/null 2>&1
     if [ $? -eq 0 ];then
@@ -23,7 +35,7 @@ function sedCheck() {
 }
 
 function checkDockerPermissions() {
-    docker ps > /dev/null
+    docker ps > /dev/null 2>&1
     if [ $? = 1 ];then
         echo -e "your $RED [$USER] $NC not privilege docker" 
         echo -e "please run $RED [sudo bash] $NC first"
@@ -42,7 +54,6 @@ function checkDockerCompose() {
 }
 
 function setVar() {
-    CUR_PWD=${PWD}
     producerPrivKey=""
     externalHost=""
     defaultdatadir="$HOME/iotex-var"
@@ -77,12 +88,12 @@ function processParam() {
 
 function determinePluginIsChanged() {
     if [ $_PLUGINS_ ] && [ "$_PLUGINS_"X = "gateway"X ];then
-        docker ps|grep 14014 > /dev/null
+        docker ps|grep 14014 > /dev/null 2>&1
         if [ $? -ne 0 ];then
             _PLUGINS_CHANGE_=1
         fi
     else
-        docker ps|grep 14014 > /dev/null
+        docker ps|grep 14014 > /dev/null 2>&1
         if [ $? -eq 0 ];then
             _PLUGINS_CHANGE_=1
         fi
@@ -99,15 +110,9 @@ function determinIotexHome() {
     IOTEX_HOME=${inputdir:-"$defaultdatadir"}
 }
 
-function confirmEnvironmentVariable() {
-    echo -e "Confirm version: ${RED} ${version} ${NC}"
-    echo -e "Confirm IOTEX_HOME directory: ${RED} ${IOTEX_HOME} ${NC}"
-    read -p "Press any key to continue ... [Ctrl + c exit!] " key1
-}
-
 function deleteOldFile() {
     if [ -f "${IOTEX_HOME}/data/poll.db.bolt" ];then
-        rm -f ${IOTEX_HOME}/data/poll.db.bolt
+        rm -f ${IOTEX_HOME}/data/poll.db.bolt > /dev/null 2>&1
     fi
 }
 
@@ -130,6 +135,16 @@ function enableMonitor() {
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/alert.rules > $IOTEX_MONITOR_HOME/alert.rules
 }
 
+function checkPrivateKey() {
+    if [ -f ${IOTEX_HOME}/etc/config.yaml ];then
+        grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml > /dev/null
+        if [ $? -ne 0 ];then
+            _NEED_INSTALL_=1
+        fi
+    fi
+}
+
+
 function procssNotUpdate() {
     echo "Not Upgrade!! current plugin is not changed, current ${runversion} is running....!"
     docker start iotex
@@ -137,23 +152,23 @@ function procssNotUpdate() {
                          "${wantmonitor}"X = "yes"X -o "${wantmonitor}"X = "Yes"X ];then
         preDockerCompose
 
-        docker ps -a |grep "iotex-monitor" > /dev/null
+        docker ps -a |grep "iotex-monitor" > /dev/null 2>&1
         if [ $? -eq 0 ];then
             echo "Iotex-monitor is running....!"
             docker start iotex-monitor
         else
             enableMonitor
-            cd $IOTEX_MONITOR_HOME
+            pushd $IOTEX_MONITOR_HOME
             docker-compose up -d --no-deps monitor
             if [ $? -eq 0 ];then
                 echo -e "${YELLOW} You can access 'localhost:3000' to view node monitoring ${NC}"
                 echo -e "${YELLOW} Default User/Pass: admin/admin. ${NC}"
             fi
-            cd $CUR_PWD
+            popd
         fi
     else
         echo "Iotex-monitor is stopping....!"
-        docker ps -a |grep "iotex-monitor" > /dev/null
+        docker ps -a |grep "iotex-monitor" > /dev/null 2>&1
         if [ $? -eq 0 ];then
             docker stop iotex-monitor
         fi
@@ -161,39 +176,39 @@ function procssNotUpdate() {
 }
 
 function cleanOldVersion() {
-    echo -e "${YELLOW} ******  Upgrade Iotex Node ******* ${NC}"
-    echo -e "${YELLOW} ***  Will stop, delete old iotex container; ${NC}"
-    echo -e "${YELLOW} *** download new config and recover your externalHost producerPrivKey ${NC}"
-    read -p "******* Press any key to continue ... [Ctrl + c exit!] " upgreadekey
     echo "Stop old iotex-core"
     docker stop iotex
     echo "delete old iotex docker container"
     docker rm iotex
-    producerPrivKey=$(grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
-    externalHost=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
-}
+    if [ $_NEED_INSTALL_ -eq 0 ];then
+        echo -e "${YELLOW} ******  Upgrade Iotex Node ******* ${NC}"
+        echo -e "${YELLOW} ***  Will stop, delete old iotex container; ${NC}"
+        echo -e "${YELLOW} *** download new config and recover your externalHost producerPrivKey ${NC}"
+        read -p "******* Press any key to continue ... [Ctrl + c exit!] " upgreadekey
 
-function determineExtIp() {
-    if [ ! "${externalHost}" ];then
-        findip=$(curl -Ss ip.sb)
-        read -p "SET YOUR EXTERNAL IP HERE [$findip]: " inputip
-        ip=${inputip:-$findip}
+        # Has old producerPrivKey and externalHost
+        producerPrivKey=$(grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
+        externalHost=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
+    else
+        # No old producerPrivKey and externalHost
+        determineExtIp
+        determinPrivKey
     fi
 }
 
+function determineExtIp() {
+    findip=$(curl -Ss ip.sb)
+    read -p "SET YOUR EXTERNAL IP HERE [$findip]: " inputip
+    ip=${inputip:-$findip}
+    externalHost="externalHost: $ip"
+}
+
 function determinPrivKey() {
-    if [ ! "${producerPrivKey}" ]; then
-        echo "If you are a delegate, make sure producerPrivKey is the key for the operator address you have registered."
-        echo  "SET YOUR PRIVATE KEY HERE(e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)"
-        read -p ": " inputkey
-        PrivKey=${inputkey:-"96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8"}
-    
-        echo -e "Confirm your externalHost: ${YELLOW} $ip ${NC}"
-        echo -e "Confirm your producerPrivKey: ${RED} $PrivKey ${NC}"
-        read -p "Press any key to continue ... [Ctrl + c exit!] " key2
-        externalHost="externalHost: $ip"
-        producerPrivKey="producerPrivKey: $PrivKey"
-    fi 
+    echo "If you are a delegate, make sure producerPrivKey is the key for the operator address you have registered."
+    echo  "SET YOUR PRIVATE KEY HERE(e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)"
+    read -p ": " inputkey
+    privKey=${inputkey:-"96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8"}
+    producerPrivKey="producerPrivKey: $privKey"
 }
 
 function downloadConfig() {
@@ -222,37 +237,37 @@ function downloadConfig() {
 }
 
 function enableGateway() {
-    cd $IOTEX_MONITOR_HOME
+    pushd $IOTEX_MONITOR_HOME
     \cp docker-compose.yml.gateway docker-compose.yml
-    cd $CUR_PWD
+    popd
 }
 
 function disableGateway() {
-    cd $IOTEX_MONITOR_HOME                            
+    pushd $IOTEX_MONITOR_HOME
     \cp docker-compose.yml.default docker-compose.yml
-    cd $CUR_PWD
+    popd
 }
 
 function startupWithMonitor() {
     echo -e "Start iotex-server and monitor."
-    cd $IOTEX_MONITOR_HOME
+    pushd $IOTEX_MONITOR_HOME
     docker-compose up -d --no-recreate
     if [ $? -eq 0 ];then
         echo -e "${YELLOW} If you first create monitor, you can access 'localhost:3000' to view node monitoring ${NC}"
         echo -e "${YELLOW} Default User/Pass: admin/admin. ${NC}" 
     fi
-    cd $CUR_PWD
+    popd
 }
 
 function startup() {
     echo -e "Start iotex-server."
-    cd $IOTEX_MONITOR_HOME
+    pushd $IOTEX_MONITOR_HOME
     docker-compose up -d iotex
-    docker ps | grep iotex-monitor > /dev/null
+    docker ps | grep iotex-monitor|grep -v grep > /dev/null 2>&1
     if [ $? -eq 0 ];then
         docker stop iotex-monitor
     fi
-    cd $CUR_PWD
+    popd
 }
 
 function startupNode() {
@@ -262,18 +277,28 @@ function startupNode() {
         startupWithMonitor
         #check node running
         sleep 5
-        cd $IOTEX_MONITOR_HOME
+        pushd $IOTEX_MONITOR_HOME
         docker-compose ps
-        cd ${CUR_PWD}
+        popd
     else
         startup
         #check node running
         sleep 5
-        cd $IOTEX_MONITOR_HOME
+        pushd $IOTEX_MONITOR_HOME
         docker-compose ps iotex
-        cd ${CUR_PWD}
+        popd
     fi
 
+}
+
+function checkAndCleanAutoUpdate() {
+    ps -ef | grep "$IOTEX_HOME/bin/auto-update"| grep -v grep > /dev/null 2>&1
+    if [ $? -eq 0 ];then
+        pid=$(ps -ef | grep "$IOTEX_HOME/bin/auto-update" | grep -v grep | awk '{print $2}')
+        kill -9 $pid > /dev/null 2>&1
+        rm -f $IOTEX_HOME/bin/auto-update $IOTEX_HOME/bin/update_silence.sh
+        _AUTO_UPDATE_=Y
+    fi
 }
 
 function startAutoUpdate() {
@@ -294,50 +319,81 @@ function startAutoUpdate() {
 }
 
 function main() {
-    checkDockerPermissions
-    checkDockerCompose
+    # Check and clean
+    checkDockerPermissions     # Determine the current user can run docker
+    checkDockerCompose         # Determin the docker-compose is installed
+    setVar $@                  # Set global variable
+    determinIotexHome          # Determine the $IOTEX_HOME
+    checkPrivateKey            # Determine the producerPrivKey in the config file is exist.
+    checkAndCleanAutoUpdate    # Check if auto-update is installed, then kill and clean it.
+
+    deleteOldFile              # Clean up historical legacy files
     
-    setVar $@
+    # Interactive setup phase
+    read -p "Do you want to monitor the status of the node [Y/N] (Default: N)? " wantmonitor
+    if [ "${_AUTO_UPDATE_}X" != "YX" ];then
+        read -p "Do you want to auto update the node [Y/N] (Default: Y)? " _AUTO_UPDATE_
+        # To upper
+        if [ "${_AUTO_UPDATE_}X" = "nX" ];then
+            _AUTO_UPDATE_=N
+        fi
+          if [ "${_AUTO_UPDATE_}X" = "yX" ];then
+            _AUTO_UPDATE_=Y
+        fi
+    fi
+
+    # Get the latest version.
     lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- $_GREP_STRING_:"|awk '{print $3}')
 
     echo -e "Current operating environment: ${YELLOW}  $env ${NC}"
-
     read -p "Install or Upgrade Version; if null the latest [$lastversion]: " ver
     version=${ver:-"$lastversion"}   # if $ver ;then version=$ver;else version=$lastversion"
 
-    runversion=$(docker ps -a |grep "iotex/iotex-core:v"|awk '{print$2}'|awk -F'[:]' '{print$2}')
-    
-    _PLUGINS_CHANGE_=0
-    determinePluginIsChanged
-
-    read -p "Do you want to monitor the status of the node [Y/N] (Default: N)? " wantmonitor
-
-    determinIotexHome
-    confirmEnvironmentVariable
-
-    read -p "Do you want to auto update the node [Y/N] (Default: Y)? " _AUTO_UPDATE_
-    
-    deleteOldFile
-    
-    if [ "$version"X = "$runversion"X ] && [ $_PLUGINS_CHANGE_ -eq 0 ];then
-        procssNotUpdate
-        if [ "$_AUTO_UPDATE_"X = "on"X ];then
-            startAutoUpdate
-        fi
-        exit 0
+    # Get the running version.
+    docker ps -a |grep "iotex/iotex-core:v" > /dev/null 2>&1
+    if [ $? -eq 0 ];then
+        runversion=$(docker ps -a |grep "iotex/iotex-core:v"|awk '{print$2}'|awk -F'[:]' '{print$2}')
     fi
 
-    if [ -f "${IOTEX_HOME}/data/chain.db" ]; then
+    # Determine is need to update or install or do nothing.
+    if [ $_NEED_INSTALL_ -eq 0 ];then
+        # the producerPrivKey in the config file is exist. Normal
+        # Check if the plugin needs to be changed
+        determinePluginIsChanged
+
+        if [ "$version"X = "$runversion"X ] && [ $_PLUGINS_CHANGE_ -eq 0 ];then
+            # Do nothing
+            procssNotUpdate
+            if [ "$_AUTO_UPDATE_"X = "Y"X ];then
+                # Need set auto-update
+                echo -e "${YELLOW} Restarting auto-update..."
+                startAutoUpdate
+            fi
+            exit 0
+        fi
+    fi
+
+    # Need update or install
+    if [ -f "${IOTEX_HOME}/data/chain.db" ];then
+        # Clean old version.
         cleanOldVersion
     else
+        determineExtIp
+        determinPrivKey
+
         echo -e "${YELLOW} ****** Install Iotex Node  ***** ${NC}"
-        echo -e "${YELLOW} if installed, Confirm Input IOTEX_HOME directory True ${NC};"
+        echo -e "${YELLOW} if installed, Confirm Input IOTEX_HOME directory $IOTEX_HOME True ${NC};"
         read -p "[Ctrl + c exit!]; else Enter anykey ..." anykey
-        mkdir -p ${IOTEX_HOME} && cd ${IOTEX_HOME} && mkdir data log etc
+        
+        mkdir -p ${IOTEX_HOME}
+        pushd ${IOTEX_HOME}
+        mkdir data log etc > /dev/null 2>&1
+        popd
     fi
 
-    determineExtIp
-    determinPrivKey
+    echo -e "Confirm your externalHost: ${YELLOW} $ip ${NC}"
+    echo -e "Confirm your producerPrivKey: ${RED} $privKey ${NC}"
+    read -p "Press any key to continue ... [Ctrl + c exit!] " key2
 
     echo "docker pull iotex-core ${version}"
     docker pull iotex/iotex-core:${version}
@@ -353,13 +409,6 @@ function main() {
     fi
 
     startupNode
-
-    # stop auto-updatem, if it is running.
-    ps -ef | grep "$IOTEX_HOME/bin/auto-update" > /dev/null
-    if [ $? -eq 0 ];then
-        pid=$(ps -ef | grep "$IOTEX_HOME/bin/auto-update" | grep -v grep | awk '{print $2}')
-        kill -9 $pid
-    fi
 
     if [ "$_AUTO_UPDATE_"X != "N"X ];then
         startAutoUpdate
