@@ -212,9 +212,6 @@ function determinPrivKey() {
 }
 
 function downloadConfig() {
-    #(Optional) If you prefer to start from a snapshot, run the following commands:
-    #curl -LSs https://t.iotex.me/${env}-data-latest > $IOTEX_HOME/data.tar.gz
-    #cd ${IOTEX_HOME} && tar -xzf data.tar.gz
     echo "download new config"
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/config_${env}.yaml > $IOTEX_HOME/etc/config.yaml
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/genesis_${env}.yaml > $IOTEX_HOME/etc/genesis.yaml
@@ -246,6 +243,37 @@ function disableGateway() {
     pushd $IOTEX_MONITOR_HOME
     \cp docker-compose.yml.default docker-compose.yml
     popd
+}
+
+function donwloadBlockDataFile() {
+    NODE_GATEWAY_MAINNET_DATA_URL=https://t.iotex.me/mainnet-data-with-idx-latest
+    NODE_GATEWAY_TESTNET_DATA_URL=https://t.iotex.me/testnet-data-with-idx-latest
+    NODE_MAINNET_DATA_URL=https://t.iotex.me/mainnet-data-latest
+    NODE_TESTNET_DATA_URL=https://t.iotex.me/testnet-data-latest
+
+    SAVE_DIR=$IOTEX_HOME/tmp
+    mkdir -p $SAVE_DIR
+    DATA_FILE_PATH=$SAVE_DIR/data.tar.gz
+
+    UNZIP_FILE_CMD="tar xvf $SAVE_DIR/data.tar.gz -C $IOTEX_HOME"
+
+    echo -e "${YELLOW} Downloading the db file from a snapshot...${NC}"
+    if [ "${_PLUGINS_}X" = "gatewayX" ];then
+        if [ "${_ENV_}X" = "mainnetX" ];then
+            curl -sSL $NODE_GATEWAY_MAINNET_DATA_URL > $DATA_FILE_PATH
+        else
+            curl -sSL $NODE_GATEWAY_TESTNET_DATA_URL > $DATA_FILE_PATH
+        fi
+    else
+        if [ "${_ENV_}X" = "mainnetX" ];then
+            curl -sSL $NODE_MAINNET_DATA_URL > $DATA_FILE_PATH
+        else
+            curl -sSL $NODE_TESTNET_DATA_URL > $DATA_FILE_PATH
+        fi
+    fi
+    echo -e "${YELLOW} Unzipping...${NC}"
+    $UNZIP_FILE_CMD
+    echo -e "${YELLOW} Done.${NC}"
 }
 
 function startupWithMonitor() {
@@ -389,6 +417,13 @@ function main() {
         pushd ${IOTEX_HOME}
         mkdir data log etc > /dev/null 2>&1
         popd
+
+        wantdownload=N
+        read -p "Do you prefer to start from a snapshot, Download the db file. [Y/N] (Default: N)? " wantdownload
+        if [ "${wantdownload}X" = "YX" ] || [ "${wantdownload}X" = "yX" ];then
+            # Download db file
+            donwloadBlockDataFile
+        fi
     fi
 
     echo -e "Confirm your externalHost: ${YELLOW} $ip ${NC}"
