@@ -189,6 +189,8 @@ function cleanOldVersion() {
         # Has old producerPrivKey and externalHost
         producerPrivKey=$(grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
         externalHost=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
+        privKey=$(echo $producerPrivKey|awk -F':' '{print$2}')
+        ip=$(echo $externalHost|awk -F':' '{print$2}')
     else
         # No old producerPrivKey and externalHost
         determineExtIp
