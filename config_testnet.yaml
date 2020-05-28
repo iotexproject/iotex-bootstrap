@@ -7,8 +7,10 @@ network:
 
 chain:
   # producerPrivKey: SET YOUR PRIVATE KEY HERE (e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)
-  chainDBPath: /var/data/chain.db
-  trieDBPath: /var/data/trie.db
+  chainDBPath: "/var/data/chain.db"
+  trieDBPath: "/var/data/trie.db"
+  indexDBPath: "/var/data/index.db"
+  candidateIndexDBPath: "/var/data/candidate.index.db"
   maxCacheSize: 1000
   committee:
     gravityChainAPIs:
@@ -18,7 +20,7 @@ chain:
     paginationSize: 255
     cacheSize: 1000
   gravityChainDB:
-    dbPath: /var/data/poll.db
+    dbPath: "/var/data/poll.db"
     numRetries: 8
 
 actPool:
@@ -34,6 +36,7 @@ consensus:
       acceptProposalEndorsementTTL: 2s
       acceptLockEndorsementTTL: 2s
     delay: 10s
+    consensusDBPath: "/var/data/consensus.db"
 
 blockSync:
   bufferSize: 400
