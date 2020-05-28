@@ -135,7 +135,7 @@ cp ./bin/server $IOTEX_HOME/iotex-server
 
 3. Edit configs
 
-Same as [Join MainNet](#mainnet) step 3
+Same as [Join MainNet](#mainnet) step 3. Also make sure you update all db paths in config.yaml to correct location if you don't put them under `/var/data/`
 
 4. (Optional) Start from a snapshot
 
