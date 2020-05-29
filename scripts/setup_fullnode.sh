@@ -1,5 +1,5 @@
 #!/bin/bash
-##Setup & Upgrade Iotex MainNet / TestNet
+##Setup & Upgrade IoTeX MainNet / TestNet
 ## User local: source/bash/sh $0 [$1=testnet]
 ## User local: source/bash/sh $0 [$1=testnet $2=plugin=gateway]
 ## User local: source/bash/sh $0 [$1=testnet $2=plugin=gateway $3=auto-update=on]
@@ -154,7 +154,7 @@ function procssNotUpdate() {
 
         docker ps -a |grep "iotex-monitor" > /dev/null 2>&1
         if [ $? -eq 0 ];then
-            echo "Iotex-monitor is running....!"
+            echo "iotex-monitor is running....!"
             docker start iotex-monitor
         else
             enableMonitor
@@ -167,7 +167,7 @@ function procssNotUpdate() {
             popd
         fi
     else
-        echo "Iotex-monitor is stopping....!"
+        echo "iotex-monitor is stopping....!"
         docker ps -a |grep "iotex-monitor" > /dev/null 2>&1
         if [ $? -eq 0 ];then
             docker stop iotex-monitor
@@ -181,7 +181,7 @@ function cleanOldVersion() {
     echo "delete old iotex docker container"
     docker rm iotex
     if [ $_NEED_INSTALL_ -eq 0 ];then
-        echo -e "${YELLOW} ******  Upgrade Iotex Node ******* ${NC}"
+        echo -e "${YELLOW} ******  Upgrade IoTeX Node ******* ${NC}"
         echo -e "${YELLOW} ***  Will stop, delete old iotex container; ${NC}"
         echo -e "${YELLOW} *** download new config and recover your externalHost producerPrivKey ${NC}"
         read -p "******* Press any key to continue ... [Ctrl + c exit!] " upgreadekey
@@ -411,7 +411,7 @@ function main() {
         determineExtIp
         determinPrivKey
 
-        echo -e "${YELLOW} ****** Install Iotex Node  ***** ${NC}"
+        echo -e "${YELLOW} ****** Install IoTeX Node  ***** ${NC}"
         echo -e "${YELLOW} if installed, Confirm Input IOTEX_HOME directory $IOTEX_HOME True ${NC};"
         read -p "[Ctrl + c exit!]; else Enter anykey ..." anykey
         
