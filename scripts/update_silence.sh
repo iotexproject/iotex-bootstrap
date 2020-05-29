@@ -70,7 +70,7 @@ function isNotRunning() {
 }
 
 function cleanOldVersion() {
-    echo -e "${YELLOW} ******  Upgrade Iotex Node ******* ${NC}"
+    echo -e "${YELLOW} ******  Upgrade IoTeX Node ******* ${NC}"
     echo -e "${YELLOW} ***  Will stop, delete old iotex container; ${NC}"
     echo -e "${YELLOW} *** download new config and recover your externalHost producerPrivKey ${NC}"
     echo "Stop old iotex-core"
