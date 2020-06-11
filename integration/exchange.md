@@ -54,6 +54,13 @@ One can retrieve confirmed transactions as well as pending (unconfirmed) transac
 
 One can also use ioctl commandline tool to [query an action by hash](https://docs.iotex.io/#query-action).
 
+## Retrieve transactions via contracts
+One can retrieve confirmed transactions via contracts by using `/APIService/GetEVMTransfersByBlockHeight` and `/APIService/GetEVMTransfersByActionHash` endpoints. Examples are given below:
+1. [Get EVM transfers by action hash](https://docs.iotex.io/docs/api.html#getevmtransfersbyactionhash)
+2. [Get EVM transfers by block height](https://docs.iotex.io/docs/api.html#getevmtransfersbyblockheight) 
+
+**Note that you need to turn on [System Action Log](../README.md#gateway) feature if you run your own node as gateway.
+
 ## Retrieve Blocks
 One can retrieve blocks that contain the target transfers by using `/APIService/GetBlockMetas` endpoint. Examples are given below:
 1. [Get block metadata by index](https://docs.iotex.io/#getblockmetas)
