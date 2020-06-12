@@ -71,7 +71,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.0.0/genes
 curl -L https://t.iotex.me/mainnet-data-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
-We will update the snapshot once a day. If you plan to run your node as a gateway, please use the snapshot with index data:
+We will update the snapshot once a day. If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
 https://t.iotex.me/mainnet-data-with-idx-latest.
 
 (Optional) If you want to sync the chain from 0 height, please change the `gravityChainAPIs` in config.yaml to use your infura key with archieve mode supported or change the API endpoint to an Ethereum node with archieve data which you can access.
@@ -94,7 +94,7 @@ docker run -d --restart on-failure --name iotex \
 
 Now your node should be started successfully.
 
-If you want to also make your node be a gateway, which could process API requests from users, use the following command instead:
+If you want to also make your node be a [gateway](#gateway), which could process API requests from users, use the following command instead:
 
 ```
 docker run -d --restart on-failure --name iotex \
@@ -153,7 +153,7 @@ nohup $IOTEX_HOME/iotex-server \
 
 Now your node should be started successfully.
 
-If you want to also make your node be a gateway, which could process API requests from users, use the following command instead:
+If you want to also make your node be a [gateway](#gateway), which could process API requests from users, use the following command instead:
 
 ```
 nohup $IOTEX_HOME/iotex-server \
@@ -186,7 +186,7 @@ You can install `ioctl` (a command-line interface for interacting with IoTeX blo
 curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cli.sh | sh
 ```
 
-You can point `ioctl` to your node (if you enable the gateway plugin):
+You can point `ioctl` to your node (if you enable the [gateway](#gateway) plugin):
 
 ```
 ioctl config set endpoint localhost:14014 --insecure
@@ -269,7 +269,7 @@ sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh)
 ```
 
-To enable gateway on mainnet
+To enable [gateway](#gateway) on mainnet
 ```bash
 sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) plugin=gateway
@@ -291,6 +291,11 @@ To stop auto upgdrade cron job and iotex server program, you can run
 sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/stop_fullnode.sh)
 ```
+## <a name="gateway"/> Gateway Plugin
+Node with gateway plugin enabled will perform extra indexing to serve API requests of more detail chain information, such as number of actions in a block or query actions by hash.
+
+### Enable indexing of system level action logs
+System level action logs is a feature to trace the transactions via contracts. To turn on this indexing, please change the value of `enableSystemLog` to true in `$IOTEX_HOME/etc/config.yaml`.
 
 ## <a name="qa"/>Q&A
 Please refer [here](https://github.com/iotexproject/iotex-bootstrap/wiki/Q&A) for Q&A.
