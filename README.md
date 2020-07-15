@@ -44,7 +44,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.0.0/confi
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.0.0/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
-3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. You also need to replace the `gravityChainAPIs` to use your own infura project key. And make sure you enabled archive data access if you need to access Ethereum archive node data.
+3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
 
 4. Start from a snapshot, run the following commands:
 
@@ -60,7 +60,7 @@ https://t.iotex.me/mainnet-data-with-idx-latest.
 curl -L https://storage.googleapis.com/blockchain-golden/poll.mainnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
 
-(Optional) If you want to sync the chain from 0 height and also fetching legacy delegate election data from Ethererum, please change the `gravityChainAPIs` in config.yaml to use your infura key with archieve mode supported or change the API endpoint to an Ethereum node with archieve data which you can access.
+(Optional) If you want to sync the chain from 0 height and also fetching legacy delegate election data from Ethereum, please change the `gravityChainAPIs` in config.yaml to use your infura key with Ethereum archive mode supported or change the API endpoint to an Ethereum archive node which you can access.
 
 5. Run the following command to start a node:
 
