@@ -1,24 +1,5 @@
 # IoTeX Delegate Manual
 
-## News
-- We have upgraded testnet and mainnet to `v1.0.0`. The breaking changes which will be activated on mainnet at block height 5157001.
-- We have upgraded testnet to `v1.0.0-rc`. This version introduces native staking on IoTeX chain.
-- We have upgraded testnet and mainnet to `v0.11.1`. A blocker indexer racing issue is fixed. The breaking changes which will still be activated on mainnet at block height 4478761. 
-- We have upgraded testnet and mainnet to `v0.11.0`. This version introduces delegates probation. It contains breaking changes which will be activated on mainnet at block height 4478761. 
-- We have upgraded testnet to `v0.11.0-rc`. This version introduces probation.
-- We added auto upgrade feature in our upgrader. Auto upgrade will check if there is an avilable upgrade every 3 days and automactilly doing the upgrade.
-- We have upgraded testnet and mainnet to `v0.10.3`. This version improve stability on reading native staking buckets.
-- We have upgraded mainnet to `v0.10.2`. It contains breaking changes which will be activated on block height 3238921. Delegates must upgrade your node to the new version before that.
-- We have upgraded testnet to `v0.10.2`. This version correct a gas limit issue for reading native vote bucket.
-- We have upgraded mainnet to `v0.10.0`. It contains breaking changes which will be activated on block height 1816201. Delegates must upgrade your node to the new version before that.
-- We have upgraded testnet to `v0.10.0`. This version reduce block interval to 5s.
-- We found a bug in `v0.9.0` which may cause the nodes not agree on the delegates list. We already pushed out a build `v0.9.2` to address this issue.
-- `v0.9.0` is released, so that delegates should upgrade their softwares to this new version. The fork will happen at block height 1641601. Before restarting with `v0.9.0` docker image, please re-pull the up-to-date mainnet genesis config file first. It's a MUST step for this upgrade. In addtion, note that this upgrade will result in db migration upon restart which could takes 30min to 1hr to complete. Therefore, please upgrade when the delegate node is not in the active consensus epoch.
-- We have reset testnet, and deployed `v0.8.3`, and finally upgraded it to `v0.9.0`. The genesis config file has been updated as well.
-- We have upgraded mainnet to `v0.8.3`. It contains breaking changes which will be activated on block height 1512001. Delegates must upgrade your node to the new version before that.
-- We have upgraded testnet to `v0.8.4`.
-- We have upgraded testnet to `v0.8.3`, which contains the new error code, and consensus improvement.
-
 ## Index
 
 - [Release Status](#status)
@@ -63,7 +44,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.0.0/confi
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.0.0/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
-3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. You also need to replace the `gravityChainAPIs` to use your own infura project key. And make sure you enabled archive data access if you need to access Ethereum archive node data.
+3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
 
 4. Start from a snapshot, run the following commands:
 
@@ -74,7 +55,12 @@ tar -xzf data.tar.gz
 We will update the snapshot once a day. If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
 https://t.iotex.me/mainnet-data-with-idx-latest.
 
-(Optional) If you want to sync the chain from 0 height, please change the `gravityChainAPIs` in config.yaml to use your infura key with archieve mode supported or change the API endpoint to an Ethereum node with archieve data which you can access.
+(Optional) If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegat election data with following command:
+```bash
+curl -L https://storage.googleapis.com/blockchain-golden/poll.mainnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
+```
+
+(Optional) If you want to sync the chain from 0 height and also fetching legacy delegate election data from Ethereum, please change the `gravityChainAPIs` in config.yaml to use your infura key with Ethereum archive mode supported or change the API endpoint to an Ethereum archive node which you can access.
 
 5. Run the following command to start a node:
 
@@ -173,7 +159,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.0.0/confi
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.0.0/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
-In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. 
+In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. If you need legacy delegate election data(poll.db) for TestNet, you can download it here: https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz
 
 In step 5, you need to replace the docker image tag in the command with `v1.0.0`.
 
