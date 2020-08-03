@@ -4,7 +4,7 @@ services:
   iotex:
     container_name: iotex
     image: ${IOTEX_IMAGE}
-    restart: on-failure
+    restart: unless-stopped
     ports:
       - 8080:8080
       - 4689:4689
