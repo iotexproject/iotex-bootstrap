@@ -1,3 +1,4 @@
+- We have upgraded testnet and mainnet to `v1.1.0`. The breaking changes which will be activated on mainnet at block height 6544441.
 - We have upgraded testnet and mainnet to `v1.0.0`. The breaking changes which will be activated on mainnet at block height 5157001.
 - We have upgraded testnet to `v1.0.0-rc`. This version introduces native staking on IoTeX chain.
 - We have upgraded testnet and mainnet to `v0.11.1`. A blocker indexer racing issue is fixed. The breaking changes which will still be activated on mainnet at block height 4478761.
