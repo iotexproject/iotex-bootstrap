@@ -55,7 +55,7 @@ tar -xzf data.tar.gz
 We will update the snapshot once a day. If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
 https://t.iotex.me/mainnet-data-with-idx-latest.
 
-(Optional) If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegat election data with following command:
+(Optional) If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegate election data with following command:
 ```bash
 curl -L https://storage.googleapis.com/blockchain-golden/poll.mainnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
