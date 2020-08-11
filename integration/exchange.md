@@ -68,7 +68,17 @@ One can retrieve blocks that contain the target transfers by using `/APIService/
 
 One can also use ioctl commandline tool to [query a block by height or hash](https://docs.iotex.io/#query-block).
 
-# 4. Testing
+## Retrieve Transaction Log
+One can retrieve transaction log that contain the target transfers by using `/APIService/GetTransactionLogByBlockHeight` and `/APIService/GetTransactionLogByActionHash` endpoints. Examples are given below:
+1. [Get transaction logs by block hash](https://docs.iotex.io/docs/api.html#gettransactionlogbyblockheight)
+2. [Get transaction log by action hash](https://docs.iotex.io/docs/api.html#gettransactionlogbyactionhash)
+
+If you got an unimplemented error code with message like `feature not supported` when you try to call transaction log APIs with your own IoTeX gateway endpoint, please resync your node from 0 or download our latest snapshot with index. Gateway node setup and snapshot download guide can be found here: https://github.com/iotexproject/iotex-bootstrap#mainnet
+
+# 4. Rosetta API Support
+One can deploy rosetta gateway with Iotex mainnet node to use rosetta API. We currently support Data API and Construction API is coming very soon. IoTeX Rosetta gateway and setup guide can be found here: https://github.com/iotexproject/iotex-core-rosetta-gateway
+
+# 5. Testing
 
 Once you've fully integrated with the IoTeX blockchain, please test on both the testnet and the mainnet. All states on IoTeX blockchain can be queried through either the command line tool [ioctl](https://docs.iotex.io/#cli-command-line-interface) or the explorer ([Mainnet](https://iotexscan.io), [Testnet](https://testnet.iotexscan.io)).
 
