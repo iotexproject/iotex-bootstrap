@@ -3,6 +3,7 @@
 ## Index
 
 - [Release Status](#status)
+- [Minimum Requirements](#requirements)
 - [Join MainNet](#mainnet)
 - [Join Mainnet without using Docker](#mainnet_native)
 - [Join TestNet](#testnet)
@@ -18,6 +19,21 @@ Here are the software versions we use:
 
 - MainNet: v1.1.0
 - TestNet: v1.1.0
+
+## Minimum Requirements
+The following minimum requirements must be meet by the full node to become a Delegate Candidate in the IoTeX Network
+
+### [Mandatory] Minimum Stakes & Votes
+1. Self-stake 1,200,000 IOTX 
+2. Receive at least 2,000,000 total votes
+
+### Minimum Hardware
+
+- Memory: 8GB of RAM (16 GB preferred)
+- Storage: 100GB SSD (500GB NVME preferred) 
+- CPU: 2 cores 2.4GHz each (4 cores preferred)
+- Architecture: 64-bit
+- Network: 100 Mb/sec
 
 ## <a name="mainnet"/>Join MainNet
 This is the recommended way to start an IoTeX node
