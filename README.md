@@ -29,11 +29,19 @@ The following minimum requirements must be meet by the full node to become a Del
 
 ### Minimum Hardware
 
+- Server: 1 primary server and 1 backup server
 - Memory: 8GB of RAM (16 GB preferred)
 - Storage: 100GB SSD (500GB NVME preferred) 
 - CPU: 2 cores 2.4GHz each (4 cores preferred)
 - Architecture: 64-bit
 - Network: 100 Mb/sec
+
+### Operations
+- Node monitoring and on-call support
+- 99.9% server uptime, with failover and
+- Data backup across geolocations
+- Preventative measures for security
+- Support frequent software updates
 
 ## <a name="mainnet"/>Join MainNet
 This is the recommended way to start an IoTeX node
