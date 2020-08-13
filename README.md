@@ -20,10 +20,10 @@ Here are the software versions we use:
 - MainNet: v1.1.0
 - TestNet: v1.1.0
 
-## Minimum Requirements
+## <a name="requirements"/>Minimum Requirements
 The following minimum requirements must be meet by the full node to become a Delegate Candidate in the IoTeX Network
 
-### [Mandatory] Minimum Stakes & Votes
+### [Mandatory] Minimum Stakes & Votes
 1. Self-stake 1,200,000 IOTX 
 2. Receive at least 2,000,000 total votes
 
