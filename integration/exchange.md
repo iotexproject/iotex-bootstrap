@@ -76,7 +76,7 @@ One can retrieve transaction log that contain the target transfers by using `/AP
 If you got an unimplemented error code with message like `feature not supported` when you try to call transaction log APIs with your own IoTeX gateway endpoint, please resync your node from 0 or download our latest snapshot with index. Gateway node setup and snapshot download guide can be found here: https://github.com/iotexproject/iotex-bootstrap#mainnet
 
 # 4. Rosetta API Support
-One can deploy rosetta gateway with Iotex mainnet node to use rosetta API. We currently support Data API and Construction API is coming very soon. IoTeX Rosetta gateway and setup guide can be found here: https://github.com/iotexproject/iotex-core-rosetta-gateway
+One can deploy rosetta gateway with Iotex mainnet node to use [Rosetta API](https://www.rosetta-api.org/). We support both Data API and Construction API for Rosetta@v1.4.2. IoTeX Rosetta gateway and setup guide can be found here: https://github.com/iotexproject/iotex-core-rosetta-gateway
 
 # 5. Testing
 
