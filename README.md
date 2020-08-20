@@ -132,7 +132,8 @@ Same as [Join MainNet](#mainnet) step 4
 5. Run the following command to start a node:
 
 ```
-nohup $IOTEX_HOME/iotex-server \
+
+$IOTEX_HOME/iotex-server \
         -config-path=$IOTEX_HOME/etc/iotex/config.yaml \
         -genesis-path=$IOTEX_HOME/etc/iotex/genesis.yaml &
 ```
@@ -143,8 +144,8 @@ If you want to also make your node be a [gateway](#gateway), which could process
 
 ```
 nohup $IOTEX_HOME/iotex-server \
-        -config-path=$IOTEX_HOME/etc/iotex/config.yaml \
-        -genesis-path=$IOTEX_HOME/etc/iotex/genesis.yaml \
+        -config-path=$IOTEX_HOME/etc/config.yaml \
+        -genesis-path=$IOTEX_HOME/etc/genesis.yaml \
         -plugin=gateway &
 ```
 
