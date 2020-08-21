@@ -1,3 +1,4 @@
+- We have upgraded testnet and mainnet to `v1.1.1`. A improvement to blocksync request handling is introduced. That version doesn't have a activation height.
 - We have upgraded testnet and mainnet to `v1.1.0`. The breaking changes which will be activated on mainnet at block height 6544441.
 - We have upgraded testnet and mainnet to `v1.0.0`. The breaking changes which will be activated on mainnet at block height 5157001.
 - We have upgraded testnet to `v1.0.0-rc`. This version introduces native staking on IoTeX chain.
