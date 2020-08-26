@@ -280,8 +280,6 @@ bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/ma
 ## <a name="gateway"/> Gateway Plugin
 Node with gateway plugin enabled will perform extra indexing to serve API requests of more detail chain information, such as number of actions in a block or query actions by hash.
 
-### Enable indexing of system level action logs
-System level action logs is a feature to trace the transactions via contracts. To turn on this indexing, please change the value of `enableSystemLog` to true in `$IOTEX_HOME/etc/config.yaml`.
 
 ## <a name="qa"/>Q&A
 Please refer [here](https://github.com/iotexproject/iotex-bootstrap/wiki/Q&A) for Q&A.
