@@ -15,6 +15,7 @@ blockchain:
   easterHeight: 2696401
   fbkMigrationHeight: 3250081
   fairbankHeight: 3252241
+  greenlandHeight: 4794481
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
