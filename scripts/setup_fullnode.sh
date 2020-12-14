@@ -262,15 +262,15 @@ function donwloadBlockDataFile() {
     echo -e "${YELLOW} Downloading the db file from a snapshot...${NC}"
     if [ "${_PLUGINS_}X" = "gatewayX" ];then
         if [ "${_ENV_}X" = "mainnetX" ];then
-            curl -sSL $NODE_GATEWAY_MAINNET_DATA_URL > $DATA_FILE_PATH
+            curl -L -o $DATA_FILE_PATH $NODE_GATEWAY_MAINNET_DATA_URL
         else
-            curl -sSL $NODE_GATEWAY_TESTNET_DATA_URL > $DATA_FILE_PATH
+            curl -L -o $DATA_FILE_PATH $NODE_GATEWAY_TESTNET_DATA_URL
         fi
     else
         if [ "${_ENV_}X" = "mainnetX" ];then
-            curl -sSL $NODE_MAINNET_DATA_URL > $DATA_FILE_PATH
+            curl -L -o $DATA_FILE_PATH $NODE_MAINNET_DATA_URL
         else
-            curl -sSL $NODE_TESTNET_DATA_URL > $DATA_FILE_PATH
+            curl -L -o $DATA_FILE_PATH $NODE_TESTNET_DATA_URL
         fi
     fi
     echo -e "${YELLOW} Unzipping...${NC}"
