@@ -42,6 +42,7 @@ consensus:
     consensusDBPath: "/var/data/consensus.db"
 
 blockSync:
+  interval: 10s
   bufferSize: 400
   maxRepeat: 3
   repeatDecayStep: 3
