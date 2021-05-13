@@ -423,14 +423,12 @@ function main() {
 
     wantdownload=Y
     if [ "$_PLUGINS_"X = "gateway"X ];then
-        read -p "Do you prefer to start from a snapshot, This will overwrite existing data。Download the db file. [Y/N] (Default: Y)? " wantdownload
-        if [[ "$runversion" == "v1.1"* && "$version" == "v1.2"* ]];then
-            if [ "$wantdownload"X = "N"X ] || [ "$wantdownload"X = "n"X ];then
-                read -p "Confirm that the current bloomfilter.index.db file will be deleted to be forward-compatible." dbf
-                pushd ${IOTEX_HOME}
-                rm -f data/bloomfilter.index.db || echo 'Not exist bloomfilter.index.db.'
-                popd
-            fi
+        read -p "Do you prefer to start from a snapshot, This will overwrite existing data. Download the db file. [Y/N] (Default: Y)? " wantdownload
+        if [[ "$runversion" == "v1.1"* && "$version" == "v1.2"* ]] && ([ "$wantdownload"X = "N"X ] || [ "$wantdownload"X = "n"X ]);then
+            read -p "Confirm that the current bloomfilter.index.db file will be deleted to be forward-compatible." dbf
+            pushd ${IOTEX_HOME}
+            rm -f data/bloomfilter.index.db || echo 'Not exist bloomfilter.index.db.'
+            popd
         fi
     fi
     
