@@ -419,14 +419,25 @@ function main() {
         pushd ${IOTEX_HOME}
         mkdir data log etc > /dev/null 2>&1
         popd
+    fi
 
-        wantdownload=N
-        read -p "Do you prefer to start from a snapshot, Download the db file. [Y/N] (Default: N)? " wantdownload
-        if [ "${wantdownload}X" = "YX" ] || [ "${wantdownload}X" = "yX" ];then
-            # Download db file
-            donwloadBlockDataFile
+    wantdownload=Y
+    read -p "Do you prefer to start from a snapshot, This will overwrite existing data. Download the db file. [Y/N] (Default: Y)? " wantdownload
+    if [ "$_PLUGINS_"X = "gateway"X ];then
+
+        if [[ "$runversion" == "v1.1"* && "$version" == "v1.2"* ]] && ([ "$wantdownload"X = "N"X ] || [ "$wantdownload"X = "n"X ]);then
+            read -p "Confirm that the current bloomfilter.index.db file will be deleted to be forward-compatible." dbf
+            pushd ${IOTEX_HOME}
+            rm -f data/bloomfilter.index.db || echo 'Not exist bloomfilter.index.db.'
+            popd
         fi
     fi
+    
+    if [ "${wantdownload}X" = "YX" ] || [ "${wantdownload}X" = "yX" ];then
+        # Download db file
+        donwloadBlockDataFile
+    fi
+
 
     echo -e "Confirm your externalHost: ${YELLOW} $ip ${NC}"
     echo -e "Confirm your producerPrivKey: ${RED} $privKey ${NC}"
