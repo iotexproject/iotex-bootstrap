@@ -58,6 +58,11 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genes
 curl -L https://t.iotex.me/data-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
+或者 请运行以下命令
+```
+curl -L https://storage.googleapis.com/blockchain-archive/mainnet-data-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+tar -xzf data.tar.gz
+```
 
 我们将会每天更新一次snapshot，如果计划将节点作为网关运行，请使用带有索引数据的快照：https://t.iotex.me/mainnet-data-with-idx-latest.
 

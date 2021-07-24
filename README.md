@@ -52,6 +52,13 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.3.0/genes
 curl -L https://t.iotex.me/mainnet-data-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
+
+or run the following commands
+```
+curl -L https://storage.googleapis.com/blockchain-archive/mainnet-data-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+tar -xzf data.tar.gz
+```
+
 **We will update the snapshot once a day**. For advanced users, there are three options to consider:
 
 - Option 1: If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
