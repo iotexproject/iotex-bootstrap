@@ -48,24 +48,24 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.3.0/confi
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.3.0/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
-3. 编辑 `$IOTEX_HOME/etc/config.yaml`, 查找 `externalHost` and `producerPrivKey`, 取消注释行并填写您的外部 IP 和私钥。如果`producerPrivKey`放空，你的节点将被分配一个随机密钥。
+3. 编辑 `$IOTEX_HOME/etc/config.yaml`, 查找 `externalHost` 和 `producerPrivKey`, 取消注释行并填写您的外部 IP 和私钥。如果`producerPrivKey`放空，你的节点将被分配一个随机密钥。
 
-4. 从snapshot启动, 请运行以下命令:
+4. 从数据快照启动, 请运行以下命令:
 ```
 curl -L https://t.iotex.me/mainnet-data-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 
-**我们将会每天更新一次snapshot**。对于高级用户，可以考虑以下三个选项：
+**我们将会每天更新一次数据快照**。对于高级用户，可以考虑以下三个选项：
 
 - 选项1：如果计划将节点作为[网关](#gateway)运行，请使用带有索引数据的快照：https://t.iotex.me/mainnet-data-with-idx-latest.
 
-- 选择2：如果计划从 0 区块高度开始同步链上数据而不中继来自以太坊旧的节点代表数据，建议使用以下命令设置旧的节点代表数据：
+- 选择2：如果计划从 0 区块高度开始同步链上数据而不使用来自以太坊旧的节点代表数据，执行以下命令设置旧的节点代表数据：
 ```
 curl -L https://storage.googleapis.com/blockchain-golden/poll.mainnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
 
-- 选择3：如果计划从 0 区块高度开始同步链并从以太坊获取旧的节点代表数据，请更改 config.yaml 中的 `gravityChainAPIs`并在支持以太坊存档模式的情况下使用您的 infura 密钥，或将 API 端点更改为您可以访问的以太坊存档的节点。
+- 选择3：如果计划从 0 区块高度开始同步链并从以太坊获取旧的节点代表数据，请更改 config.yaml 中的 `gravityChainAPIs`并在支持以太坊存档模式的情况下使用您的 infura 密钥，或将 API 端点更改为您有权限访问的以太坊存档节点。
 
 5. 运行以下命令以启动节点:
 
@@ -102,7 +102,7 @@ docker run -d --restart on-failure --name iotex \
         -plugin=gateway
 ```
 
-6. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 8080（14014如果使用）已打开。
+6. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 8080（14014如果节点启用了网关）已打开。
 
 ## <a name="mainnet_native"/>不使用Docker加入主网
 
@@ -127,7 +127,7 @@ cp ./bin/server $IOTEX_HOME/iotex-server
 3. 编辑配置
 与[加入主网](#mainnet)的步骤 3 相同。如果不将它们放在 `/var/data/` 下，请确保将 config.yaml 中的所有数据库路径更新到正确的位置
 
-4. 从snapshot启动
+4. 从数据快照启动
 与[加入主网](#mainnet)的步骤 4 相同
 
 5. 运行以下命令以启动节点:
@@ -146,7 +146,7 @@ nohup $IOTEX_HOME/iotex-server \
         -plugin=gateway &
 ```
 
-6. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 8080（14014如果使用）已打开。
+6. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 8080（14014如果节点启用了网关）已打开。
 
 ## <a name="testnet"/>加入测试网络
 
@@ -156,14 +156,14 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.3.0/confi
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.3.0/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
-在步骤四中，您需要使用针对于测试网络的snapshot:  https://t.iotex.me/testnet-data-latest 和 https://t.iotex.me/testnet-data-with-idx-latest. 如果您需要使用测试网中旧的节点代表数据（poll.db），可以在此处下载:  https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz
+在步骤四中，您需要使用针对于测试网络的数据快照:  https://t.iotex.me/testnet-data-latest 和 https://t.iotex.me/testnet-data-with-idx-latest （如果节点启用了网关）. 如果您需要使用测试网中旧的节点代表数据（poll.db），可以在此处下载:  https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz
 
 在步骤五，您需要将docker镜像的标签替换成``v1.3.0``。
 
 
 ## <a name="ioctl"/>与区块链交互
 
-你可以安装 `ioctl` (用于与IoTeX区块链交互的命令行界面)
+你可以安装 `ioctl` (用于与IoTeX区块链交互的命令行工具)
 
 ```
 curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cli.sh | sh
