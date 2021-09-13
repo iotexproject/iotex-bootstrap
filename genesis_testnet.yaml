@@ -17,6 +17,8 @@ blockchain:
   fairbankHeight: 3252241
   greenlandHeight: 4794481
   hawaiiHeight: 8613361
+  icelandHeight: 9291601
+  jutlandHeight: 10649521
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
