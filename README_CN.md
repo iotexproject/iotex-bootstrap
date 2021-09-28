@@ -19,8 +19,8 @@
 
 以下是当前我们使用的软件版本：
 
-- 主网：v1.3.0
-- 测试网：v1.3.0
+- 主网：v1.4.0
+- 测试网：v1.4.0
 
 ## <a name="mainnet"/>加入主网
 
@@ -29,7 +29,7 @@
 1. 提取(pull) docker镜像
 
 ```
-docker pull iotex/iotex-core:v1.3.0
+docker pull iotex/iotex-core:v1.4.0
 ```
 
 2. 使用以下命令设置运行环境
@@ -44,8 +44,8 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.3.0/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.3.0/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.4.0/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.4.0/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 3. 编辑 `$IOTEX_HOME/etc/config.yaml`, 查找 `externalHost` 和 `producerPrivKey`, 取消注释行并填写您的外部 IP 和私钥。如果`producerPrivKey`放空，你的节点将被分配一个随机密钥。
@@ -82,7 +82,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v1.3.0 \
+        iotex/iotex-core:v1.4.0 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -100,7 +100,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v1.3.0 \
+        iotex/iotex-core:v1.4.0 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -120,7 +120,7 @@ docker run -d --restart on-failure --name iotex \
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout checkout v1.3.0
+git checkout checkout v1.4.0
 
 // optional
 export GOPROXY=https://goproxy.io
@@ -157,13 +157,13 @@ nohup $IOTEX_HOME/iotex-server \
 
 加入测试网络基本没有什么不同，只是在第二步，您需要使用以下的源文件：
 ```
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.3.0/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.3.0/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.4.0/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.4.0/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 在步骤四中，您需要使用针对于测试网络的数据快照:  https://t.iotex.me/testnet-data-latest 和 https://t.iotex.me/testnet-data-with-idx-latest （如果节点启用了网关）. 如果您需要使用测试网中旧的节点代表数据（poll.db），可以在此处下载:  https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz
 
-在步骤五，您需要将docker镜像的标签替换成``v1.3.0``。
+在步骤五，您需要将docker镜像的标签替换成``v1.4.0``。
 
 
 ## <a name="ioctl"/>与区块链交互
