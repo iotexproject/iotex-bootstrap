@@ -173,8 +173,6 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.5.0/genes
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. If you need legacy delegate election data(poll.db) for TestNet, you can download it here: https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz
 
-In step 5, you need to replace the docker image tag in the command with `v1.5.0`.
-
 ## <a name="ioctl"/>Interact with Blockchain
 
 
