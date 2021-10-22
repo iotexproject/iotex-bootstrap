@@ -19,6 +19,7 @@ blockchain:
   hawaiiHeight: 8613361
   icelandHeight: 9291601
   jutlandHeight: 10649521
+  kamchatkaHeight: 10928881
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
