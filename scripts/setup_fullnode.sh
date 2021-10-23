@@ -421,7 +421,7 @@ function main() {
         popd
     fi
 
-    wantdownload=Y
+    wantdownload=N
     read -p "Do you prefer to start from a snapshot, This will overwrite existing data. Download the db file. [Y/N] (Default: Y)? " wantdownload
     if [ "$_PLUGINS_"X = "gateway"X ];then
 
