@@ -29,6 +29,11 @@ chain:
 actPool:
   minGasPrice: "1000000000000"
 
+api:
+  tracer:
+    serviceName: testnet-server-tracer
+    endpoint: http://tracer.iotex.me/api/traces
+
 consensus:
   scheme: ROLLDPOS
   rollDPoS:
