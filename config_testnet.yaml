@@ -31,7 +31,7 @@ actPool:
 
 api:
   tracer:
-    serviceName: mainnet-server-tracer
+    serviceName: testnet-server-tracer
     endpoint: http://tracer.iotex.me/api/traces
 
 consensus:
