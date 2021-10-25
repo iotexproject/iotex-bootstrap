@@ -217,7 +217,12 @@ function downloadConfig() {
     echo "download new config"
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/config_${env}.yaml > $IOTEX_HOME/etc/config.yaml
     curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/genesis_${env}.yaml > $IOTEX_HOME/etc/genesis.yaml
-    # https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.9.2/config_mainnet.yaml
+
+    #Download patch file
+    if [ "${_ENV_}X" = "mainnetX" ];then
+        echo -e "Downloading the patch file"
+        curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+    fi
 
     SED_IS_GNU=0
     sedCheck
