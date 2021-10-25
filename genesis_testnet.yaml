@@ -20,6 +20,7 @@ blockchain:
   icelandHeight: 9291601
   jutlandHeight: 10649521
   kamchatkaHeight: 10928881
+  lordHoweHeight: 11052721
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
