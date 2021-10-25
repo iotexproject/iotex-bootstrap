@@ -403,6 +403,11 @@ function main() {
         fi
     fi
 
+    if [ $version == "v1.6"* ] ;then
+        echo -e "Downloading trie db path "
+        curl -C - https://storage.googleapis.com/blockchain-archive/trie.db.patch > $IOTEX_HOME/data//trie.db.patch
+    fi
+
     # Need update or install
     if [ -f "${IOTEX_HOME}/data/chain.db" ];then
         # Clean old version.
