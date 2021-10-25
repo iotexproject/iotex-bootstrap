@@ -404,8 +404,10 @@ function main() {
     fi
 
     #Download patch file
-    echo -e "Downloading the patch file"
-    curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+    if [ ${env} == "mainnet" ];then
+        echo -e "Downloading the patch file"
+        curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+    fi
 
     # Need update or install
     if [ -f "${IOTEX_HOME}/data/chain.db" ];then
