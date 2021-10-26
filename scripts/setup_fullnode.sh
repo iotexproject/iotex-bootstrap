@@ -427,7 +427,7 @@ function main() {
     fi
 
     wantdownload=N
-    read -p "Do you prefer to start from a snapshot, This will overwrite existing data. Download the db file. [Y/N] (Default: Y)? " wantdownload
+    read -p "Do you prefer to start from a snapshot, This will overwrite existing data. Download the db file. [Y/N] (Default: N)? " wantdownload
     if [ "$_PLUGINS_"X = "gateway"X ];then
 
         if [[ "$runversion" == "v1.1"* && "$version" == "v1.2"* ]] && ([ "$wantdownload"X = "N"X ] || [ "$wantdownload"X = "n"X ]);then
