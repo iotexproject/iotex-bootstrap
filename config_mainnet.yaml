@@ -36,9 +36,6 @@ actPool:
 api:
   gasStation:
     defaultGas: 1000000000000
-  tracer:
-    serviceName: mainnet-server-tracer
-    endpoint: http://tracer.iotex.me/api/traces
 
 consensus:
   scheme: ROLLDPOS
