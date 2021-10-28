@@ -172,6 +172,13 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.0/confi
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.0/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
+**Special note:** we have recently adjusted the chainID config for testnet, so need to download latest `config_testnet.yaml` 
+instead of v1.6.0. Use the following command to replace the above one:
+```
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+```
+the `genesis_testnet.yaml` file can continue to use v1.6.0
+
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. If you need legacy delegate election data(poll.db) for TestNet, you can download it here: https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz
 
 ## <a name="ioctl"/>Interact with Blockchain
