@@ -161,6 +161,11 @@ nohup $IOTEX_HOME/iotex-server \
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.0/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.0/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
+**特别通知**我们最近调整了 testnet的 chainID设置，您需要使用最新版本的 `config_testnet.yaml`文件，用如下这个命令替换上面第一个下载命令：
+```
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+```
+`genesis_testnet.yaml`可以继续使用 v1.6.0版本
 
 在步骤四中，您需要使用针对于测试网络的数据快照:  https://t.iotex.me/testnet-data-latest 和 https://t.iotex.me/testnet-data-with-idx-latest （如果节点启用了网关）. 如果您需要使用测试网中旧的节点代表数据（poll.db），可以在此处下载:  https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz
 
