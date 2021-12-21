@@ -125,7 +125,7 @@ Same as [Join MainNet](#mainnet) step 2
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout checkout v1.6.1
+git checkout v1.6.1
 
 // optional
 export GOPROXY=https://goproxy.io
