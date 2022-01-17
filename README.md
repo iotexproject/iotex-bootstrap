@@ -10,6 +10,7 @@
 - [Join Mainnet without using Docker](#mainnet_native)
 - [Join TestNet](#testnet)
 - [Interact with Blockchain](#ioctl)
+- [Enable Logrotate](#log)
 - [Operate Your Node](#ops)
 - [Upgrade Your Node（One Line Upgrader）](#upgrade)
 - [Q&A](#qa)
@@ -222,6 +223,10 @@ Exchange IoTeX native token to ERC20 token on Ethereum via Tube service:
 ioctl action invoke io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5 ${amountInIOTX} -s ${ioAddress|alias} -l 400000 -p 1 -b d0e30db0
 ```
 Click [IoTeX Tube docs](https://github.com/iotexproject/iotex-bootstrap/blob/master/tube/tube.md) for detailed documentation of the tube service.
+
+## <a name="log"/>Enable Logrotate
+`logrotate` is pre-installed when building the image. But `crond` (daemon to execute scheduled commands) doesn't automatically start when the docker contaiter starts in alpine linux. 
+To enable log logrotation, `docker exec -it <container> crond -b` is expected to be run after the container starts
 
 ## <a name="ops"/>Operate Your Node
 
