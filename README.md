@@ -226,6 +226,7 @@ Click [IoTeX Tube docs](https://github.com/iotexproject/iotex-bootstrap/blob/mas
 
 ## <a name="log"/>Enable Logrotate
 `logrotate` is pre-installed when building the image. But `crond` (daemon to execute scheduled commands) doesn't automatically start when the docker contaiter starts in alpine linux. 
+
 To enable log logrotation, `docker exec -it <container> crond -b` is expected to be run after the container starts
 
 ## <a name="ops"/>Operate Your Node
