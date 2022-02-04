@@ -10,6 +10,7 @@
 - [Join Mainnet without using Docker](#mainnet_native)
 - [Join TestNet](#testnet)
 - [Interact with Blockchain](#ioctl)
+- [Enable Logrotate](#log)
 - [Operate Your Node](#ops)
 - [Upgrade Your Node（One Line Upgrader）](#upgrade)
 - [Q&A](#qa)
@@ -269,6 +270,10 @@ Here is the method list we currently support:
 
 Additional method support could be requested [here](https://github.com/iotexproject/iotex-core/issues).
 
+## <a name="log"/>Enable Logrotate
+`logrotate` is pre-installed when building the image. But `crond` (daemon to execute scheduled commands) doesn't automatically start when the docker contaiter starts in alpine linux. 
+
+To enable log logrotation, `docker exec -it <container> crond -b` is expected to be run after the container starts
 
 ## <a name="ops"/>Operate Your Node
 
