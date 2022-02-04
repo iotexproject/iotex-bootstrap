@@ -227,7 +227,7 @@ ioctl action invoke io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5 ${amountInIOTX} -s
 ```
 Click [IoTeX Tube docs](https://github.com/iotexproject/iotex-bootstrap/blob/master/tube/tube.md) for detailed documentation of the tube service.
 
-### JSON RPC API
+### JSON RPC API(Babel service)
 
 Our node supports most of methods of [ethereum's JRPC protocol](https://eth.wiki/json-rpc/API). The service could be accessed via `localhost:15014`.
 
@@ -269,6 +269,7 @@ Here is the method list we currently support:
 - [x] web3_clientVersion
 
 Additional method support could be requested [here](https://github.com/iotexproject/iotex-core/issues).
+
 
 ## <a name="log"/>Enable Logrotate
 `logrotate` is pre-installed when building the image. But `crond` (daemon to execute scheduled commands) doesn't automatically start when the docker contaiter starts in alpine linux. 
