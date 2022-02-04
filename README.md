@@ -99,6 +99,7 @@ If you want to also make your node be a [gateway](#gateway), which could process
 docker run -d --restart on-failure --name iotex \
         -p 4689:4689 \
         -p 14014:14014 \
+        -p 15014:15014 \
         -p 8080:8080 \
         -v=$IOTEX_HOME/data:/var/data:rw \
         -v=$IOTEX_HOME/log:/var/log:rw \
@@ -177,6 +178,8 @@ In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-
 ## <a name="ioctl"/>Interact with Blockchain
 
 
+### ioctl
+
 You can install `ioctl` (a command-line interface for interacting with IoTeX blockchain)
 
 ```
@@ -210,7 +213,7 @@ ioctl node delegate
 
 Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/ioctl/README.md) for more details.
 
-### Other Commonly Used Commands
+#### Other Commonly Used Commands
 
 Claim reward:
 ```
@@ -222,6 +225,50 @@ Exchange IoTeX native token to ERC20 token on Ethereum via Tube service:
 ioctl action invoke io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5 ${amountInIOTX} -s ${ioAddress|alias} -l 400000 -p 1 -b d0e30db0
 ```
 Click [IoTeX Tube docs](https://github.com/iotexproject/iotex-bootstrap/blob/master/tube/tube.md) for detailed documentation of the tube service.
+
+### JSON RPC API
+
+Our node supports most of methods of [ethereum's JRPC protocol](https://eth.wiki/json-rpc/API). The service could be accessed via `localhost:15014`.
+
+Here is the method list we currently support:
+
+
+- [x] eth_accounts
+- [x] eth_blockNumber
+- [x] eth_call 
+- [x] eth_chainId 
+- [x] eth_estimateGas 
+- [x] eth_gasPrice 
+- [x] eth_getBalance 
+- [x] eth_getBlockByHash 
+- [x] eth_getBlockByNumber 
+- [x] eth_getBlockTransactionCountByHash 
+- [x] eth_getBlockTransactionCountByNumber 
+- [x] eth_getCode 
+- [x] eth_getFilterChanges 
+- [x] eth_getFilterLogs 
+- [x] eth_getLogs 
+- [x] eth_getStorageAt 
+- [x] eth_getTransactionByBlockHashAndIndex 
+- [x] eth_getTransactionByBlockNumberAndIndex 
+- [x] eth_getTransactionByHash 
+- [x] eth_getTransactionCount 
+- [x] eth_getTransactionReceipt 
+- [x] eth_hashrate 
+- [x] eth_mining 
+- [x] eth_newBlockFilter 
+- [x] eth_newFilter 
+- [x] eth_protocolVersion 
+- [x] eth_sendRawTransaction 
+- [x] eth_syncing 
+- [x] eth_uninstallFilter 
+- [x] net_listening 
+- [x] net_peerCount 
+- [x] net_version 
+- [x] web3_clientVersion
+
+Additional method support could be requested [here](https://github.com/iotexproject/iotex-core/issues).
+
 
 ## <a name="ops"/>Operate Your Node
 
