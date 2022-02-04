@@ -229,44 +229,7 @@ Click [IoTeX Tube docs](https://github.com/iotexproject/iotex-bootstrap/blob/mas
 
 ### JSON RPC API(Babel service)
 
-Our node supports most of methods of [ethereum's JRPC protocol](https://eth.wiki/json-rpc/API). The service could be accessed via `localhost:15014`.
-
-Here is the method list we currently support:
-
-
-- [x] eth_accounts
-- [x] eth_blockNumber
-- [x] eth_call 
-- [x] eth_chainId 
-- [x] eth_estimateGas 
-- [x] eth_gasPrice 
-- [x] eth_getBalance 
-- [x] eth_getBlockByHash 
-- [x] eth_getBlockByNumber 
-- [x] eth_getBlockTransactionCountByHash 
-- [x] eth_getBlockTransactionCountByNumber 
-- [x] eth_getCode 
-- [x] eth_getFilterChanges 
-- [x] eth_getFilterLogs 
-- [x] eth_getLogs 
-- [x] eth_getStorageAt 
-- [x] eth_getTransactionByBlockHashAndIndex 
-- [x] eth_getTransactionByBlockNumberAndIndex 
-- [x] eth_getTransactionByHash 
-- [x] eth_getTransactionCount 
-- [x] eth_getTransactionReceipt 
-- [x] eth_hashrate 
-- [x] eth_mining 
-- [x] eth_newBlockFilter 
-- [x] eth_newFilter 
-- [x] eth_protocolVersion 
-- [x] eth_sendRawTransaction 
-- [x] eth_syncing 
-- [x] eth_uninstallFilter 
-- [x] net_listening 
-- [x] net_peerCount 
-- [x] net_version 
-- [x] web3_clientVersion
+Our node supports most of methods of [ethereum's JRPC protocol](https://eth.wiki/json-rpc/API). The local endpoint of babal service is `localhost:15014` on the gateway node.
 
 Additional method support could be requested [here](https://github.com/iotexproject/iotex-core/issues).
 
