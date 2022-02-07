@@ -20,8 +20,8 @@
 
 Here are the software versions we use:
 
-- MainNet: v1.6.1
-- TestNet: v1.6.1
+- MainNet: v1.6.3
+- TestNet: v1.6.3
 
 ## <a name="mainnet"/>Join MainNet
 This is the recommended way to start an IoTeX node
@@ -29,7 +29,7 @@ This is the recommended way to start an IoTeX node
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v1.6.1
+docker pull iotex/iotex-core:v1.6.3
 ```
 
 2. Set the environment with the following commands:
@@ -44,9 +44,9 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.1/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.1/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.1/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.3/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.3/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.3/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 ```
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
@@ -86,7 +86,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v1.6.1 \
+        iotex/iotex-core:v1.6.3 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -105,7 +105,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v1.6.1 \
+        iotex/iotex-core:v1.6.3 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -126,7 +126,7 @@ Same as [Join MainNet](#mainnet) step 2
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v1.6.1
+git checkout v1.6.3
 
 // optional
 export GOPROXY=https://goproxy.io
@@ -169,8 +169,8 @@ nohup $IOTEX_HOME/iotex-server \
 There's almost no difference to join TestNet, but in step 2, you need to use the config and genesis files for TestNet:
 
 ```
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.1/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.1/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.3/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.3/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. If you need legacy delegate election data(poll.db) for TestNet, you can download it here: https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz
