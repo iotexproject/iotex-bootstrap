@@ -229,7 +229,7 @@ Click [IoTeX Tube docs](https://github.com/iotexproject/iotex-bootstrap/blob/mas
 
 ### JSON RPC API(Babel service)
 
-Our node supports most of methods of [ethereum's JRPC protocol](https://eth.wiki/json-rpc/API). The local endpoint of babal service is `localhost:15014` on the gateway node.
+Our node supports most of methods of [Ethereum's JSON-RPC protocol](https://eth.wiki/json-rpc/API). The local endpoint of babal service is `localhost:15014` on the gateway node.
 
 Additional method support could be requested [here](https://github.com/iotexproject/iotex-core/issues).
 
