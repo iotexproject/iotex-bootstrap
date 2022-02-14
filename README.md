@@ -100,6 +100,7 @@ If you want to also make your node be a [gateway](#gateway), which could process
 docker run -d --restart on-failure --name iotex \
         -p 4689:4689 \
         -p 14014:14014 \
+        -p 15014:15014 \
         -p 8080:8080 \
         -v=$IOTEX_HOME/data:/var/data:rw \
         -v=$IOTEX_HOME/log:/var/log:rw \
@@ -178,6 +179,8 @@ In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-
 ## <a name="ioctl"/>Interact with Blockchain
 
 
+### ioctl
+
 You can install `ioctl` (a command-line interface for interacting with IoTeX blockchain)
 
 ```
@@ -211,7 +214,7 @@ ioctl node delegate
 
 Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/ioctl/README.md) for more details.
 
-### Other Commonly Used Commands
+#### Other Commonly Used Commands
 
 Claim reward:
 ```
@@ -223,6 +226,13 @@ Exchange IoTeX native token to ERC20 token on Ethereum via Tube service:
 ioctl action invoke io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5 ${amountInIOTX} -s ${ioAddress|alias} -l 400000 -p 1 -b d0e30db0
 ```
 Click [IoTeX Tube docs](https://github.com/iotexproject/iotex-bootstrap/blob/master/tube/tube.md) for detailed documentation of the tube service.
+
+### JSON RPC API(Babel service)
+
+Our node supports most of methods of [Ethereum's JSON-RPC protocol](https://eth.wiki/json-rpc/API). The local endpoint of babal service is `localhost:15014` on the gateway node.
+
+Additional method support could be requested [here](https://github.com/iotexproject/iotex-core/issues).
+
 
 ## <a name="log"/>Enable Logrotate
 `logrotate` is pre-installed when building the image. But `crond` (daemon to execute scheduled commands) doesn't automatically start when the docker contaiter starts in alpine linux. 
