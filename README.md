@@ -10,6 +10,7 @@
 - [Join Mainnet without using Docker](#mainnet_native)
 - [Join TestNet](#testnet)
 - [Interact with Blockchain](#ioctl)
+- [Enable Logrotate](#log)
 - [Operate Your Node](#ops)
 - [Upgrade Your Node（One Line Upgrader）](#upgrade)
 - [Q&A](#qa)
@@ -19,8 +20,8 @@
 
 Here are the software versions we use:
 
-- MainNet: v1.6.0
-- TestNet: v1.6.0
+- MainNet: v1.7.1
+- TestNet: v1.7.1
 
 ## <a name="mainnet"/>Join MainNet
 This is the recommended way to start an IoTeX node
@@ -28,7 +29,7 @@ This is the recommended way to start an IoTeX node
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v1.6.0
+docker pull iotex/iotex-core:v1.7.1
 ```
 
 2. Set the environment with the following commands:
@@ -43,9 +44,9 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.0/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.0/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.0/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.7.1/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.7.1/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.7.1/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 ```
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
@@ -85,7 +86,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v1.6.0 \
+        iotex/iotex-core:v1.7.1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -99,12 +100,13 @@ If you want to also make your node be a [gateway](#gateway), which could process
 docker run -d --restart on-failure --name iotex \
         -p 4689:4689 \
         -p 14014:14014 \
+        -p 15014:15014 \
         -p 8080:8080 \
         -v=$IOTEX_HOME/data:/var/data:rw \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v1.6.0 \
+        iotex/iotex-core:v1.7.1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -125,7 +127,7 @@ Same as [Join MainNet](#mainnet) step 2
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout checkout v1.6.0
+git checkout v1.7.1
 
 // optional
 export GOPROXY=https://goproxy.io
@@ -168,14 +170,16 @@ nohup $IOTEX_HOME/iotex-server \
 There's almost no difference to join TestNet, but in step 2, you need to use the config and genesis files for TestNet:
 
 ```
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.0/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.6.0/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.7.1/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.7.1/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. If you need legacy delegate election data(poll.db) for TestNet, you can download it here: https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz
 
 ## <a name="ioctl"/>Interact with Blockchain
 
+
+### ioctl
 
 You can install `ioctl` (a command-line interface for interacting with IoTeX blockchain)
 
@@ -210,7 +214,7 @@ ioctl node delegate
 
 Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/ioctl/README.md) for more details.
 
-### Other Commonly Used Commands
+#### Other Commonly Used Commands
 
 Claim reward:
 ```
@@ -222,6 +226,18 @@ Exchange IoTeX native token to ERC20 token on Ethereum via Tube service:
 ioctl action invoke io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5 ${amountInIOTX} -s ${ioAddress|alias} -l 400000 -p 1 -b d0e30db0
 ```
 Click [IoTeX Tube docs](https://github.com/iotexproject/iotex-bootstrap/blob/master/tube/tube.md) for detailed documentation of the tube service.
+
+### JSON RPC API(Babel service)
+
+Our node supports most of methods of [Ethereum's JSON-RPC protocol](https://eth.wiki/json-rpc/API). The local endpoint of babal service is `localhost:15014` on the gateway node.
+
+Additional method support could be requested [here](https://github.com/iotexproject/iotex-core/issues).
+
+
+## <a name="log"/>Enable Logrotate
+`logrotate` is pre-installed when building the image. But `crond` (daemon to execute scheduled commands) doesn't automatically start when the docker contaiter starts in alpine linux. 
+
+To enable log logrotation, `docker exec -it <container> crond -b` is expected to be run after the container starts
 
 ## <a name="ops"/>Operate Your Node
 
