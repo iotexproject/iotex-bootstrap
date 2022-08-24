@@ -39,7 +39,7 @@ function checkDockerPermissions() {
     if [ $? = 1 ];then
         echo -e "your $RED [$USER] $NC not privilege docker" 
         echo -e "please run $RED [sudo bash] $NC first"
-        echo -e "Or docker not install "
+        echo -e "Or docker is not installed "
         exit 1
     fi
 }
@@ -367,7 +367,7 @@ function main() {
     # Interactive setup phase
     read -p "Do you want to monitor the status of the node [Y/N] (Default: N)? " wantmonitor
     if [ "${_AUTO_UPDATE_}X" != "YX" ];then
-        read -p "Do you want to auto update the node [Y/N] (Default: Y)? " _AUTO_UPDATE_
+        read -p "Do you want to auto update the node [Y/N] (Default: N)? " _AUTO_UPDATE_
         # To upper
         if [ "${_AUTO_UPDATE_}X" = "nX" ];then
             _AUTO_UPDATE_=N
