@@ -39,7 +39,7 @@ function checkDockerPermissions() {
     if [ $? = 1 ];then
         echo -e "your $RED [$USER] $NC not privilege docker" 
         echo -e "please run $RED [sudo bash] $NC first"
-        echo -e "Or docker is not installed "
+        echo -e "Or docker not install "
         exit 1
     fi
 }
@@ -124,9 +124,39 @@ function preDockerCompose() {
 
     export IOTEX_HOME IOTEX_MONITOR_HOME IOTEX_IMAGE
 
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml.gateway > $IOTEX_MONITOR_HOME/docker-compose.yml.gateway
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/docker-compose.yml.default
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/.env > $IOTEX_MONITOR_HOME/.env
+    curl -Ss --connect-timeout 10 \
+        --max-time 10 \
+        --retry 10 \
+        --retry-delay 0 \
+        --retry-max-time 40 \
+        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml.gateway > $IOTEX_MONITOR_HOME/docker-compose.yml.gateway
+    response=$?
+    if test "$response" != "0"; then
+        echo -e "${RED} Download of gateway configuration failed with: $response"
+        exit 1
+    fi
+    curl -Ss --connect-timeout 10 \
+        --max-time 10 \
+        --retry 10 \
+        --retry-delay 0 \
+        --retry-max-time 40 \
+        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/docker-compose.yml.default
+    response=$?
+    if test "$response" != "0"; then
+        echo -e "${RED} Download of default configuration failed with: $response"
+        exit 1
+    fi
+    curl -Ss --connect-timeout 10 \
+        --max-time 10 \
+        --retry 10 \
+        --retry-delay 0 \
+        --retry-max-time 40 \
+        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/.env > $IOTEX_MONITOR_HOME/.env
+    response=$?
+    if test "$response" != "0"; then
+        echo -e "${RED} Download of environment configuration failed with: $response"
+        exit 1
+    fi
 }
 
 function enableMonitor() {
@@ -367,7 +397,7 @@ function main() {
     # Interactive setup phase
     read -p "Do you want to monitor the status of the node [Y/N] (Default: N)? " wantmonitor
     if [ "${_AUTO_UPDATE_}X" != "YX" ];then
-        read -p "Do you want to auto update the node [Y/N] (Default: N)? " _AUTO_UPDATE_
+        read -p "Do you want to auto update the node [Y/N] (Default: Y)? " _AUTO_UPDATE_
         # To upper
         if [ "${_AUTO_UPDATE_}X" = "nX" ];then
             _AUTO_UPDATE_=N
