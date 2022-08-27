@@ -86,8 +86,31 @@ function downloadConfig() {
     #curl -LSs https://t.iotex.me/${env}-data-latest > $IOTEX_HOME/data.tar.gz
     #cd ${IOTEX_HOME} && tar -xzf data.tar.gz
     echo "download new config"
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/config_${_ENV_}.yaml > $IOTEX_HOME/etc/config.yaml
-    curl -Ss https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/genesis_${_ENV_}.yaml > $IOTEX_HOME/etc/genesis.yaml
+    curl -Ss --connect-timeout 10 \
+        --max-time 10 \
+        --retry 10 \
+        --retry-delay 0 \
+        --retry-max-time 40 \
+        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/config_${_ENV_}.yaml > $IOTEX_HOME/etc/config.yaml
+
+    response=$?
+    if test "$response" != "0"; then
+        echo -e "${RED} Download of default configuration failed with: $response"
+        exit 1
+    fi
+
+    curl -Ss --connect-timeout 10 \
+        --max-time 10 \
+        --retry 10 \
+        --retry-delay 0 \
+        --retry-max-time 40 \
+        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/genesis_${_ENV_}.yaml > $IOTEX_HOME/etc/genesis.yaml
+
+    response=$?
+    if test "$response" != "0"; then
+        echo -e "${RED} Download of genesis configuration failed with: $response"
+        exit 1
+    fi
     # https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v0.9.2/config_mainnet.yaml
 
     SED_IS_GNU=0
