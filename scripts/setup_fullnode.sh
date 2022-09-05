@@ -116,6 +116,22 @@ function deleteOldFile() {
     fi
 }
 
+function downloadFile()
+{
+    echo "Downloading file: $1"
+    curl -Ss --connect-timeout 10 \
+        --max-time 10 \
+        --retry 10 \
+        --retry-delay 0 \
+        --retry-max-time 180 \
+        $1 > $2
+    response=$?
+    if test "$response" != "0"; then
+        echo -e "${RED} Download of configuration failed with following: $response"
+        exit 1
+    fi
+}
+
 function preDockerCompose() {
     # set monitor home
     IOTEX_MONITOR_HOME=$IOTEX_HOME/monitor
@@ -124,67 +140,15 @@ function preDockerCompose() {
 
     export IOTEX_HOME IOTEX_MONITOR_HOME IOTEX_IMAGE
 
-    curl -Ss --connect-timeout 10 \
-        --max-time 10 \
-        --retry 10 \
-        --retry-delay 0 \
-        --retry-max-time 180 \
-        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml.gateway > $IOTEX_MONITOR_HOME/docker-compose.yml.gateway
-    response=$?
-    if test "$response" != "0"; then
-        echo -e "${RED} Download of gateway configuration failed with: $response"
-        exit 1
-    fi
-    
-    curl -Ss --connect-timeout 10 \
-        --max-time 10 \
-        --retry 10 \
-        --retry-delay 0 \
-        --retry-max-time 180 \
-        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml > $IOTEX_MONITOR_HOME/docker-compose.yml.default
-    response=$?
-    if test "$response" != "0"; then
-        echo -e "${RED} Download of default configuration failed with: $response"
-        exit 1
-    fi
-    
-    curl -Ss --connect-timeout 10 \
-        --max-time 10 \
-        --retry 10 \
-        --retry-delay 0 \
-        --retry-max-time 180 \
-        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/.env > $IOTEX_MONITOR_HOME/.env
-    response=$?    
-    if test "$response" != "0"; then
-        echo -e "${RED} Download of environment configuration failed with: $response"
-        exit 1
-    fi
+    downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml.gateway" "$IOTEX_MONITOR_HOME/docker-compose.yml.gateway"
+    downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml" "$IOTEX_MONITOR_HOME/docker-compose.yml.default"
+    downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/.env" "$IOTEX_MONITOR_HOME/.env"
 }
 
 function enableMonitor() {
     echo "Download config files for monitor"
-    curl -Ss --connect-timeout 10 \
-        --max-time 10 \
-        --retry 10 \
-        --retry-delay 0 \
-        --retry-max-time 180 \
-        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/prometheus.yml > $IOTEX_MONITOR_HOME/prometheus.yml
-    response=$?   
-    if test "$response" != "0"; then
-        echo -e "${RED} Download of prometheus configuration failed with: $response"
-        exit 1
-    fi
-    curl -Ss --connect-timeout 10 \
-        --max-time 10 \
-        --retry 10 \
-        --retry-delay 0 \
-        --retry-max-time 180 \
-        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/alert.rules > $IOTEX_MONITOR_HOME/alert.rules
-    response=$?   
-    if test "$response" != "0"; then
-        echo -e "${RED} Download of alert rules failed with: $response"
-        exit 1
-    fi
+    downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/prometheus.yml" "$IOTEX_MONITOR_HOME/prometheus.yml"
+    downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/alert.rules" "$IOTEX_MONITOR_HOME/alert.rules"
 }
 
 function checkPrivateKey() {
@@ -267,44 +231,13 @@ function determinPrivKey() {
 
 function downloadConfig() {
     echo "download new config"
-    curl -Ss --connect-timeout 10 \
-        --max-time 10 \
-        --retry 10 \
-        --retry-delay 0 \
-        --retry-max-time 180 \
-        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/config_${env}.yaml > $IOTEX_HOME/etc/config.yaml
-    response=$?   
-    if test "$response" != "0"; then
-        echo -e "${RED} Download of config failed with: $response"
-        exit 1
-    fi
-
-    curl -Ss --connect-timeout 10 \
-        --max-time 10 \
-        --retry 10 \
-        --retry-delay 0 \
-        --retry-max-time 180 \
-        https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/genesis_${env}.yaml > $IOTEX_HOME/etc/genesis.yaml
-    response=$?   
-    if test "$response" != "0"; then
-        echo -e "${RED} Download of genesis failed with: $response"
-        exit 1
-    fi
+    downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/config_${env}.yaml" "$IOTEX_HOME/etc/config.yaml"
+    downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/genesis_${env}.yaml" "$IOTEX_HOME/etc/genesis.yaml"
 
     #Download patch file
     if [ "${_ENV_}X" = "mainnetX" ];then
         echo -e "Downloading the patch file"
-        curl --connect-timeout 10 \
-            --max-time 10 \
-            --retry 10 \
-            --retry-delay 0 \
-            --retry-max-time 180 \
-            https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
-        response=$?   
-        if test "$response" != "0"; then
-            echo -e "${RED} Download of alert rules failed with: $response"
-            exit 1
-        fi
+        downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/${version}/trie.db.patch" "$IOTEX_HOME/data/trie.db.patch"
     fi
 
     SED_IS_GNU=0
@@ -423,27 +356,12 @@ function startAutoUpdate() {
     # Download auto-update command
     mkdir -p $IOTEX_HOME/bin
     if [ "$(uname)"X = "Darwin"X ];then
-        curl -Ss --connect-timeout 10 \
-            --max-time 10 \
-            --retry 10 \
-            --retry-delay 0 \
-            --retry-max-time 180 \
-            https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/tools/auto-update/auto-update_darwin-amd64 > $IOTEX_HOME/bin/auto-update || exit 1
+        downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/tools/auto-update/auto-update_darwin-amd64" "$IOTEX_HOME/bin/auto-update" || exit 1
     else
-        curl -Ss --connect-timeout 10 \
-            --max-time 10 \
-            --retry 10 \
-            --retry-delay 0 \
-            --retry-max-time 180 \
-            https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/tools/auto-update/auto-update_linux-amd64 > $IOTEX_HOME/bin/auto-update || exit 1
+        downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/tools/auto-update/auto-update_linux-amd64" "$IOTEX_HOME/bin/auto-update" || exit 1
     fi
 
-    curl -Ss --connect-timeout 10 \
-            --max-time 10 \
-            --retry 10 \
-            --retry-delay 0 \
-            --retry-max-time 180 \
-            https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/update_silence.sh > $IOTEX_HOME/bin/update_silence.sh || exit 1
+    downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/update_silence.sh" "$IOTEX_HOME/bin/update_silence.sh" || exit 1
     chmod +x $IOTEX_HOME/bin/auto-update $IOTEX_HOME/bin/update_silence.sh
 
     # Run background
