@@ -377,6 +377,18 @@ function main() {
         fi
     fi
 
+    if [ $_PLUGINS_ ] && [ "$_PLUGINS_"X = "gateway"X ];then
+        plugins=Y    
+    else
+        plugins=N
+    fi
+
+    read -p "Do you want to enable gateway plugin [Y/N] (Default: $plugins)? " plugins
+    if [ "${plugins}X" = "yX" ];then
+        _PLUGINS_=gateway
+        echo "Gateway plugin enabled"
+    fi
+
     # Get the latest version.
     lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- $_GREP_STRING_:"|awk '{print $3}')
 
