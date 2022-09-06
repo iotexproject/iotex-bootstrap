@@ -463,7 +463,7 @@ function main() {
 
     startupNode
 
-    if [ "$_AUTO_UPDATE_"X != "N"X ];then
+    if [ "$_AUTO_UPDATE_"X == "Y"X ];then
         startAutoUpdate
     fi
 }
