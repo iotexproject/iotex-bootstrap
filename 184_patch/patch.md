@@ -5,7 +5,7 @@ in memory storage, which may occur when a node restarts.
 
 ## Impact
 A node could be affected by this issue if it has restarted sometime between Sep 30
-and Oct 08, 2002. It will get stuck on a certain height if it happens.
+and Oct 08, 2022. It will get stuck on a certain height if it happens.
 
 ## Solution
 This issue has been fixed in the v1.8.4 release. A script tool has been provided
