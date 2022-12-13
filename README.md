@@ -20,8 +20,8 @@
 
 Here are the software versions we use:
 
-- MainNet: v1.8.2
-- TestNet: v1.8.2
+- MainNet: v1.8.4
+- TestNet: v1.8.4
 
 ## <a name="mainnet"/>Join MainNet
 This is the recommended way to start an IoTeX node
