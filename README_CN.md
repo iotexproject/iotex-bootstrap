@@ -20,7 +20,7 @@
 以下是当前我们使用的软件版本：
 
 - 主网：v1.8.4
-- 测试网：v1.8.4
+- 测试网：v1.9.0-rc1
 
 ## <a name="mainnet"/>加入主网
 
@@ -158,11 +158,13 @@ nohup $IOTEX_HOME/iotex-server \
 
 加入测试网络基本没有什么不同，只是在第二步，您需要使用以下的源文件：
 ```
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.8.4/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.8.4/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.9.0-rc1/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.9.0-rc1/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 在步骤四中，您需要使用针对于测试网络的数据快照:  https://t.iotex.me/testnet-data-latest 和 https://t.iotex.me/testnet-data-with-idx-latest （如果节点启用了网关）. 如果您需要使用测试网中旧的节点代表数据（poll.db），可以在此处下载:  https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz
+
+在步骤五中，您需要将 `docker run`命令行中的 docker image替换成 `iotex/iotex-core:v1.9.0-rc1`
 
 ## <a name="ioctl"/>与区块链交互
 

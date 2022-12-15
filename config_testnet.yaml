@@ -27,6 +27,7 @@ chain:
   gravityChainDB:
     dbPath: "/var/data/poll.db"
     numRetries: 8
+  persistStakingPatchBlock: 18446744073709551615
 
 actPool:
   minGasPrice: "1000000000000"
