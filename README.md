@@ -21,7 +21,7 @@
 Here are the software versions we use:
 
 - MainNet: v1.8.4
-- TestNet: v1.8.4
+- TestNet: v1.9.0-rc1
 
 ## <a name="mainnet"/>Join MainNet
 This is the recommended way to start an IoTeX node
@@ -170,11 +170,13 @@ nohup $IOTEX_HOME/iotex-server \
 There's almost no difference to join TestNet, but in step 2, you need to use the config and genesis files for TestNet:
 
 ```
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.8.4/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.8.4/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.9.0-rc1/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.9.0-rc1/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 In step 4, you need to use the snapshot for TestNet: https://t.iotex.me/testnet-data-latest and https://t.iotex.me/testnet-data-with-idx-latest. If you need legacy delegate election data(poll.db) for TestNet, you can download it here: https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz
+
+In step 5, you need to replace the docker image in the `docker run` command line to `iotex/iotex-core:v1.9.0-rc1`
 
 ## <a name="ioctl"/>Interact with Blockchain
 
