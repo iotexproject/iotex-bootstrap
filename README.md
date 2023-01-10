@@ -51,14 +51,14 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.9.1/trie.
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
 
-4. Start from a snapshot, run the following commands:
+4. Start from a snapshot (rather than sync from the genesis block), run the following commands:
 
 ```
 curl -L https://t.iotex.me/mainnet-data-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 
-or run the following commands
+or download from Google Cloud:
 ```
 curl -L https://storage.googleapis.com/blockchain-archive/mainnet-data-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
