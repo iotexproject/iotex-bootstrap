@@ -488,12 +488,14 @@ function main() {
     else
         disableGateway
     fi
-
+    
     startupNode
 
-    if [ "$_AUTO_UPDATE_"X == "Y"X ];then
-        startAutoUpdate
-    fi
+    checkAndCleanAutoUpdate
+    
+    # if [ "$_AUTO_UPDATE_"X == "Y"X ];then
+    #     startAutoUpdate
+    # fi
 }
 
 main $@
