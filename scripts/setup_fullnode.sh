@@ -345,6 +345,7 @@ function startupNode() {
 function checkAndCleanAutoUpdate() {
     ps -ef | grep "$IOTEX_HOME/bin/auto-update"| grep -v grep > /dev/null 2>&1
     if [ $? -eq 0 ];then
+        echo -e "${YELLOW} ******  Detect the auto-update is running , it will stop and clean ******* ${NC}"
         pid=$(ps -ef | grep "$IOTEX_HOME/bin/auto-update" | grep -v grep | awk '{print $2}')
         kill -9 $pid > /dev/null 2>&1
         rm -f $IOTEX_HOME/bin/auto-update $IOTEX_HOME/bin/update_silence.sh
@@ -406,8 +407,8 @@ function main() {
     fi
 
     # Get the latest version.
-    lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- $_GREP_STRING_:"|awk '{print $3}')
-
+    #lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- $_GREP_STRING_:"|awk '{print $3}')
+    lastversion=$(curl https://api.github.com/repos/iotexproject/iotex-core/releases/latest|grep -oP '(?<="tag_name": ")[^"]*')
     echo -e "Current operating environment: ${YELLOW}  $env ${NC}"
     read -p "Install or Upgrade Version; if null the latest [$lastversion]: " ver
     version=${ver:-"$lastversion"}   # if $ver ;then version=$ver;else version=$lastversion"
@@ -488,12 +489,14 @@ function main() {
     else
         disableGateway
     fi
-
+    
     startupNode
 
-    if [ "$_AUTO_UPDATE_"X == "Y"X ];then
-        startAutoUpdate
-    fi
+    checkAndCleanAutoUpdate
+
+    # if [ "$_AUTO_UPDATE_"X == "Y"X ];then
+    #     startAutoUpdate
+    # fi
 }
 
 main $@
