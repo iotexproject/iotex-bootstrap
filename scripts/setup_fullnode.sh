@@ -345,6 +345,7 @@ function startupNode() {
 function checkAndCleanAutoUpdate() {
     ps -ef | grep "$IOTEX_HOME/bin/auto-update"| grep -v grep > /dev/null 2>&1
     if [ $? -eq 0 ];then
+        echo -e "${YELLOW} ******  Detect the auto-update is running , it will stop and clean ******* ${NC}"
         pid=$(ps -ef | grep "$IOTEX_HOME/bin/auto-update" | grep -v grep | awk '{print $2}')
         kill -9 $pid > /dev/null 2>&1
         rm -f $IOTEX_HOME/bin/auto-update $IOTEX_HOME/bin/update_silence.sh
