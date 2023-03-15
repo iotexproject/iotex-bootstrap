@@ -20,8 +20,13 @@
 
 Here are the software versions we use:
 
+- IoTeX Mainnet: v1.9.2
+- IoTeX Testnet: v1.9.2
+
+<!--
 - MainNet: v1.9.2
 - TestNet: v1.9.2
+-->
 
 ## <a name="mainnet"/>Join MainNet
 This is the recommended way to start an IoTeX node
