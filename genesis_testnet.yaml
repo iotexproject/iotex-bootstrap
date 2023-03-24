@@ -24,6 +24,7 @@ blockchain:
   midwayHeight: 13020481
   newfoundlandHeight: 14268961
   okhotskHeight: 17666641
+  palauHeight: 19165681
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
