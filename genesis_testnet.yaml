@@ -43,6 +43,10 @@ poll:
   selfStakingThreshold: "1200000000000000000000000"
   stakingContractAddress: 0x3bbe2346c40d34fc3f66ab059f75a6caece2c3b3
   voteThreshold: "100000000000000000000"
+  systemStakingContractAddress: io1224slckr49ryfhsg3z3m484pgsm89esl2nd4jh
+  systemStakingContractHeight: 20645456
+  systemSGDContractAddress: io1d82m3ywplzfcw9fxlh497jve5ljsud2rg4gute
+  systemSGDContractHeight: 20315706
 staking:
   withdrawWaitingPeriod: "336h"
 rewarding:
