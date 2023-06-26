@@ -270,7 +270,7 @@ bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/ma
 To enable [gateway](#gateway) on testnet
 ```bash
 sudo bash # If your docker requires root privilege
-bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) plugin=gateway testnet
+bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) testnet plugin=gateway
 ```
 
 Currently, auto upgrade is turned on by default. To disable this feature, enter `N` when asked following question:

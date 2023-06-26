@@ -247,7 +247,7 @@ bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/ma
 在测试网上启用 [网关](#gateway)
 ```bash
 sudo bash # If your docker requires root privilege
-bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) plugin=gateway testnet
+bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) testnet plugin=gateway
 ```
 
 目前，节点自动升级默认开启。如果需要禁用此功能，请在系统询问以下问题时输入“N”：
