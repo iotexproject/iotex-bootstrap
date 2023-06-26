@@ -7,6 +7,7 @@
 - [发布状态](#status)
 - [加入主网](#mainnet)
 - [不使用Docker加入主网](#mainnet_native)
+- [加入测试网络](#testnet)
 - [与区块链交互](#ioctl)
 - [节点操作](#ops)
 - [节点升级](#upgrade)
@@ -19,7 +20,7 @@
 
 - 主网：v1.10.1
 
-**Note**
+## <a name="testnet"/>加入测试网
 如果你要启动节点加入测试网，请点击[**加入测试网**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_CN_testnet.md)
 
 ## <a name="mainnet"/>加入主网
