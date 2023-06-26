@@ -18,8 +18,7 @@
 
 Here are the software versions we use:
 
-- IoTeX Mainnet: v1.10.1
-- IoTeX Testnet: v1.11.0-rc3
+- IoTeX MainNet: v1.10.1
 
 **Note**
 To start and run a testnet node, please click [**Join Testnet**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_testnet.md)
