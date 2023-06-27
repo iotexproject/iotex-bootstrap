@@ -6,9 +6,8 @@
 ## Index
 
 - [Release Status](#status)
-- [Join MainNet](#mainnet)
-- [Join Mainnet without using Docker](#mainnet_native)
 - [Join TestNet](#testnet)
+- [Join Testnet without using Docker](#testnet_native)
 - [Interact with Blockchain](#ioctl)
 - [Enable Logrotate](#log)
 - [Operate Your Node](#ops)
@@ -19,18 +18,18 @@
 
 Here are the software versions we use:
 
-- IoTeX MainNet: v1.10.1
+- IoTeX TestNet: v1.11.0-rc3
+
+**Note**
+To start and run a mainnet node, please click [**Join Mainnet**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README.md)
 
 ## <a name="testnet"/>Join TestNet
-To start and run a testnet node, please click [**Join Testnet**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_testnet.md)
-
-## <a name="mainnet"/>Join MainNet
 This is the recommended way to start an IoTeX node
 
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v1.10.1
+docker pull iotex/iotex-core:v1.11.0-rc3
 ```
 
 2. Set the environment with the following commands:
@@ -45,9 +44,8 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.10.1/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.10.1/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.10.1/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
@@ -55,24 +53,24 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.10.1/trie
 4. Start from a snapshot (rather than sync from the genesis block), run the following commands:
 
 ```
-curl -L https://t.iotex.me/mainnet-data-latest > $IOTEX_HOME/data.tar.gz
+curl -L https://t.iotex.me/testnet-data-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 
 or download from Google Cloud:
 ```
-curl -L https://storage.googleapis.com/blockchain-archive/mainnet-data-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://storage.googleapis.com/blockchain-archive/testnet-data-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 
 **We will update the snapshot once a day**. For advanced users, there are three options to consider:
 
 - Option 1: If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
-https://t.iotex.me/mainnet-data-with-idx-latest.
+https://t.iotex.me/testnet-data-with-idx-latest.
 
 - Optional 2: If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegate election data with following command:
 ```bash
-curl -L https://storage.googleapis.com/blockchain-golden/poll.mainnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
+curl -L https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
 
 - Optional 3: If you want to sync the chain from 0 height and also fetching legacy delegate election data from Ethereum, please change the `gravityChainAPIs` in config.yaml to use your infura key with Ethereum archive mode supported or change the API endpoint to an Ethereum archive node which you can access.
@@ -87,7 +85,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v1.10.1 \
+        iotex/iotex-core:v1.11.0-rc3 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -107,7 +105,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v1.10.1 \
+        iotex/iotex-core:v1.11.0-rc3 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -116,19 +114,19 @@ docker run -d --restart on-failure --name iotex \
 
 6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
-## <a name="mainnet_native"/>Join Mainnet without using Docker
+## <a name="testnet_native"/>Join Testnet without using Docker
 This is not the preferred way to start an IoTeX node
 
 1. Set the environment with the following commands:
 
-Same as [Join MainNet](#mainnet) step 2
+Same as [Join TestNet](#testnet) step 2
 
 2. Build server binary:
 
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v1.10.1
+git checkout v1.11.0-rc3
 
 // optional
 export GOPROXY=https://goproxy.io
@@ -139,11 +137,11 @@ cp ./bin/server $IOTEX_HOME/iotex-server
 
 3. Edit configs
 
-Same as [Join MainNet](#mainnet) step 3. Also make sure you update all db paths in config.yaml to correct location if you don't put them under `/var/data/`
+Same as [Join TestNet](#testnet) step 3. Also make sure you update all db paths in config.yaml to correct location if you don't put them under `/var/data/`
 
 4. Start from a snapshot
 
-Same as [Join MainNet](#mainnet) step 4
+Same as [Join TestNet](#testnet) step 4
 
 5. Run the following command to start a node:
 
@@ -184,8 +182,8 @@ ioctl config set endpoint localhost:14014 --insecure
 
 Or you can point it to our API nodes:
 
-- MainNet secure: `api.iotex.one:443`
-- MainNet insecure: `api.iotex.one:80`
+- TestNet secure: `api.testnet.iotex.one:443`
+- TestNet insecure: `api.testnet.iotex.one:80`
 
 If you want to set an insecure endpoint, you need to add `--insecure` option.
 
@@ -260,18 +258,18 @@ docker start iotex
 ```
 
 ## <a name="upgrade"/>Upgrade Your Node(One Line Upgrader)
-Make sure you have `$IOTEX_HOME` already set up, and all the files(configs, dbs etc) are placed in the right locations (Please refer to the Join MainNet section).
+Make sure you have `$IOTEX_HOME` already set up, and all the files(configs, dbs etc) are placed in the right locations (Please refer to the Join TestNet section).
 
-To upgrade mainnet node, use following command. By default, it will upgrade to latest mainnet version.
+To upgrade testnet node, use following command. By default, it will upgrade to latest testnet version.
 ```bash
 sudo bash # If your docker requires root privilege
-bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh)
+bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) testnet
 ```
 
-To enable [gateway](#gateway) on mainnet
+To enable [gateway](#gateway) on testnet
 ```bash
 sudo bash # If your docker requires root privilege
-bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) plugin=gateway
+bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) testnet plugin=gateway
 ```
 
 Currently, auto upgrade is turned on by default. To disable this feature, enter `N` when asked following question:
