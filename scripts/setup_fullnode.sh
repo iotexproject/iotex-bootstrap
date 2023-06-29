@@ -396,6 +396,10 @@ function main() {
 
     # Get the latest version.
     lastversion=$(curl -sS https://api.github.com/repos/iotexproject/iotex-core/releases/latest|grep -oP '(?<="tag_name": ")[^"]*')
+    if [ "$_GREP_STRING_" = "TestNet" ];then
+        lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README.md|grep "^- $_GREP_STRING_:"|awk '{print $3}')
+    fi
+    
     echo -e "Current operating environment: ${YELLOW}  $env ${NC}"
     read -p "Install or Upgrade Version; if null the latest [$lastversion]: " ver
     version=${ver:-"$lastversion"}   # if $ver ;then version=$ver;else version=$lastversion"
