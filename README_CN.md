@@ -250,11 +250,6 @@ sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) plugin=gateway
 ```
 
-目前，节点自动升级默认开启。如果需要禁用此功能，请在系统询问以下问题时输入“N”：
-```bash
-Do you want to auto update the node [Y/N] (Default: Y)? N
-```
-
 如果需要停止自动升级 cron job 和 iotex 服务器程序，您可以运行以下指令：
 ```bash
 sudo bash # If your docker requires root privilege

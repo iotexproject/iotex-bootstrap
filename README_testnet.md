@@ -18,7 +18,7 @@
 
 Here are the software versions we use:
 
-- IoTeX TestNet: v1.11.0-rc3
+- TestNet: v1.11.0-rc3
 
 **Note**
 To start and run a mainnet node, please click [**Join Mainnet**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README.md)
@@ -270,11 +270,6 @@ To enable [gateway](#gateway) on testnet
 ```bash
 sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) testnet plugin=gateway
-```
-
-Currently, auto upgrade is turned on by default. To disable this feature, enter `N` when asked following question:
-```bash
-Do you want to auto update the node [Y/N] (Default: Y)? N
 ```
 
 To stop auto upgdrade cron job and iotex server program, you can run
