@@ -397,7 +397,7 @@ function main() {
     # Get the latest version.
     lastversion=$(curl -sS https://api.github.com/repos/iotexproject/iotex-core/releases/latest|grep -oP '(?<="tag_name": ")[^"]*')
     if [ "$_GREP_STRING_" = "TestNet" ];then
-        lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README_testnet.md|grep "^- IoTeX TestNet:"|awk '{print $4}')
+        lastversion=$(curl -sS https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/README_testnet.md|grep "^- $_GREP_STRING_:"|awk '{print $3}')
     fi
 
     echo -e "Current operating environment: ${YELLOW}  $env ${NC}"
