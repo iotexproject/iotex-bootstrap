@@ -18,6 +18,8 @@ chain:
   bloomfilterIndexDBPath: "/var/data/bloomfilter.index.db"
   candidateIndexDBPath: "/var/data/candidate.index.db"
   stakingIndexDBPath: "/var/data/staking.index.db"
+  contractStakingIndexDBPath: "/var/data/contractstaking.index.db"
+  sgdIndexDBPath: "/var/data/sgd.index.db"
   maxCacheSize: 1000
   committee:
     gravityChainAPIs:
