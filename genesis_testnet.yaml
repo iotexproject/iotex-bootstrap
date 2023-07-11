@@ -25,6 +25,7 @@ blockchain:
   newfoundlandHeight: 14268961
   okhotskHeight: 17666641
   palauHeight: 19165681
+  quebecHeight: 20562481
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
