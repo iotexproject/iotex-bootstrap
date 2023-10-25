@@ -18,7 +18,7 @@
 
 以下是当前我们使用的软件版本：
 
-- 主网：v1.10.1
+- 主网：v1.11.2
 
 ## <a name="testnet"/>加入测试网
 如果你要启动节点加入测试网，请点击[**加入测试网**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_CN_testnet.md)
