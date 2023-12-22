@@ -35,8 +35,6 @@ chain:
 actPool:
   minGasPrice: "5000000000000"
   maxNumActsPerAcct: 100
-  maxNumActsPerPool: 64000
-  maxGasLimitPerPool: 640000000
   actionExpiry: 5m
 
 api:
