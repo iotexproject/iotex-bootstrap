@@ -27,6 +27,7 @@ blockchain:
   palauHeight: 19165681
   quebecHeight: 20562481
   redseaHeight: 22919041
+  sumatraHeight: 24527521
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
