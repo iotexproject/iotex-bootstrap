@@ -28,6 +28,7 @@ blockchain:
   quebecHeight: 20562481
   redseaHeight: 22919041
   sumatraHeight: 24527521
+  tsunamiHeight: 25226641
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
