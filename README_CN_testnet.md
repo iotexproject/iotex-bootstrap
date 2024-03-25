@@ -17,7 +17,7 @@
 
 以下是当前我们使用的软件版本：
 
-- 测试网：v1.14.0-rc0
+- 测试网：v1.14.0
 
 **Note**
 如果你要启动节点加入主网，请点击[**加入主网**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_CN.md)
@@ -29,7 +29,7 @@
 1. 提取(pull) docker镜像
 
 ```
-docker pull iotex/iotex-core:v1.14.0-rc0
+docker pull iotex/iotex-core:v1.14.0
 ```
 
 2. 使用以下命令设置运行环境
@@ -44,8 +44,8 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.14.0/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v1.14.0/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 3. 编辑 `$IOTEX_HOME/etc/config.yaml`, 查找 `externalHost` 和 `producerPrivKey`, 取消注释行并填写您的外部 IP 和私钥。如果`producerPrivKey`放空，你的节点将被分配一个随机密钥。
@@ -82,7 +82,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v1.14.0-rc0 \
+        iotex/iotex-core:v1.14.0 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -100,7 +100,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v1.14.0-rc0 \
+        iotex/iotex-core:v1.14.0 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -120,7 +120,7 @@ docker run -d --restart on-failure --name iotex \
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v1.14.0-rc0
+git checkout v1.14.0
 
 // optional
 export GOPROXY=https://goproxy.io
