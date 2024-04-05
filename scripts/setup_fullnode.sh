@@ -161,6 +161,12 @@ function checkPrivateKey() {
 
 
 function procssNotUpdate() {
+    latestConfig=N
+    read -p "Do you want to update to latest config [Y/N] (Default: $latestConfig)? " latestConfig
+    if [ "${latestConfig}X" = "yX" ] || [ "${latestConfig}X" = "YX" ];then
+        downloadConfig
+        echo "Updated to latest config"
+    fi
     echo "Not Upgrade!! current plugin is not changed, current ${runversion} is running....!"
     docker start iotex
     if [ "${wantmonitor}"X = "Y"X -o "${wantmonitor}"X = "y"X -o \
