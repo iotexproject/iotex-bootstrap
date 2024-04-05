@@ -33,7 +33,7 @@ chain:
     numRetries: 8
 
 actPool:
-  minGasPrice: "5000000000000"
+  minGasPrice: "1000000000000"
   maxNumActsPerAcct: 100
   maxNumActsPerPool: 32000
   maxGasLimitPerPool: 320000000
@@ -41,7 +41,7 @@ actPool:
 
 api:
   gasStation:
-    defaultGas: 5000000000000
+    defaultGas: 1000000000000
 
 consensus:
   scheme: ROLLDPOS
