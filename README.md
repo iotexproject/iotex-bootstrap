@@ -103,6 +103,7 @@ docker run -d --restart on-failure --name iotex \
         -p 14014:14014 \
         -p 15014:15014 \
         -p 8080:8080 \
+        -e "GOMEMLIMIT=8000MiB" \
         -v=$IOTEX_HOME/data:/var/data:rw \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
