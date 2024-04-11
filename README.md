@@ -115,6 +115,9 @@ docker run -d --restart on-failure --name iotex \
         -plugin=gateway
 ```
 
+Adjust `GOMEMLIMIT` env according to the actual memory resource.
+
+
 6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
 ## <a name="mainnet_native"/>Join Mainnet without using Docker
