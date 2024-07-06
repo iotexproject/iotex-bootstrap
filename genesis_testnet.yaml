@@ -29,6 +29,7 @@ blockchain:
   redseaHeight: 22919041
   sumatraHeight: 24527521
   tsunamiHeight: 25226641
+  upernavikHeight: 26984161
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
@@ -51,6 +52,8 @@ poll:
   systemStakingContractHeight: 20645456
   systemSGDContractAddress: io1d82m3ywplzfcw9fxlh497jve5ljsud2rg4gute
   systemSGDContractHeight: 20315706
+  systemStakingContractV2Address: io1l45vd72wykrxkculmh4m9ekudqrml0jles7mkm
+  systemStakingContractV2Height: 26978830
 staking:
   withdrawWaitingPeriod: "336h"
 rewarding:
