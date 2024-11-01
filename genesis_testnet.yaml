@@ -6,6 +6,7 @@ account:
   replayDeployerWhitelist:
   - 0x3fab184622dc19b6109349b94811493bf2a45362
   - 0x4c8d290a1b368ac4728d83a9e8321fc3af2b39b1
+  - 0xa71ec2ea4a0df8ba132dfe15bb76f6408a2f887f
 blockchain:
   actionGasLimit: 5000000
   aleutianHeight: 1
@@ -33,6 +34,7 @@ blockchain:
   sumatraHeight: 24527521
   tsunamiHeight: 25226641
   upernavikHeight: 26984161
+  vanuatuHeight: 28820881
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
