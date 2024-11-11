@@ -36,12 +36,14 @@ go version
 
 ## <a name="prepdata"/>Prepare Data
 Set up the home directory and download config, genesis, and snapshot data. In
-the instructions below `~/iotex-var` is used as the home directory, feel free
-to use a directory path at your choice (make sure you have file creation and
-write access in the folder)
+the instructions below `/iotex-var` is used as the home directory, this is the
+same directory as specified in the config yaml file so it will work with the
+downloaded config file.
+>Note: You are free to use a directory path at your choice, in which case, be
+sure to modify the file paths in `config_mainnet.yaml` (there are 13 of them)
 ```
-mkdir -p ~/iotex-var
-cd ~/iotex-var
+mkdir -p /iotex-var
+cd /iotex-var
 
 export IOTEX_HOME=$PWD
 
@@ -50,7 +52,7 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 
 #download config, genesis file
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_archive_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 curl https://storage.googleapis.com/blockchain-golden/poll.mainnet.db > $IOTEX_HOME/data/poll.db
