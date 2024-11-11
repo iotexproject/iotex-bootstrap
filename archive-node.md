@@ -36,14 +36,15 @@ go version
 
 ## <a name="prepdata"/>Prepare Data
 Set up the home directory and download config, genesis, and snapshot data. In
-the instructions below `/iotex-var` is used as the home directory, this is the
-same directory as specified in the config yaml file so it will work with the
-downloaded config file.
+the instructions below `/var/iotex-archive` is used as the home directory, this
+is the same directory as specified in the config yaml file so it will work with
+the downloaded config file.
 >Note: You are free to use a directory path at your choice, in which case, be
-sure to modify the file paths in `config_mainnet.yaml` (there are 13 of them)
+sure to modify the file paths in `config_archive_mainnet.yaml` (there are 13 of
+them)
 ```
-mkdir -p /iotex-var
-cd /iotex-var
+mkdir -p /var/iotex-archive
+cd /var/iotex-archive
 
 export IOTEX_HOME=$PWD
 
@@ -94,8 +95,8 @@ docker pull iotex/iotex-core:archive
 docker run -d --restart on-failure --name iotex \
         -p 4689:4689 \
         -p 8080:8080 \
-        -v=$IOTEX_HOME/data:/var/data:rw \
-        -v=$IOTEX_HOME/log:/var/log:rw \
+        -v=$IOTEX_HOME/data:/var/iotex-archive/data:rw \
+        -v=$IOTEX_HOME/log:/var/iotex-archive/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
         iotex/iotex-core:archive \

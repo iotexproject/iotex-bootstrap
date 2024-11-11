@@ -13,15 +13,15 @@ chain:
   # If you are a delegate, make sure producerPrivKey is the key for the operator address you have registered.
   # producerPrivKey: SET YOUR PRIVATE KEY HERE (e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)
   enableStakingIndexer: true
-  chainDBPath: "/iotex-var/data/chain.db"
-  trieDBPatchFile: "/iotex-var/data/trie.db.patch"
-  trieDBPath: "/iotex-var/data/archive.db"
-  indexDBPath: "/iotex-var/data/index.db"
-  blobStoreDBPath: "/iotex-var/data/blob.db"
-  bloomfilterIndexDBPath: "/iotex-var/data/bloomfilter.index.db"
-  candidateIndexDBPath: "/iotex-var/data/candidate.index.db"
-  stakingIndexDBPath: "/iotex-var/data/staking.index.db"
-  contractStakingIndexDBPath: "/iotex-var/data/contractstaking.index.db"
+  chainDBPath: "/var/iotex-archive/data/chain.db"
+  trieDBPatchFile: "/var/iotex-archive/data/trie.db.patch"
+  trieDBPath: "/var/iotex-archive/data/archive.db"
+  indexDBPath: "/var/iotex-archive/data/index.db"
+  blobStoreDBPath: "/var/iotex-archive/data/blob.db"
+  bloomfilterIndexDBPath: "/var/iotex-archive/data/bloomfilter.index.db"
+  candidateIndexDBPath: "/var/iotex-archive/data/candidate.index.db"
+  stakingIndexDBPath: "/var/iotex-archive/data/staking.index.db"
+  contractStakingIndexDBPath: "/var/iotex-archive/data/contractstaking.index.db"
   enableVersionedStateDB: true
   versionedNamespaces: ["Account", "Contract"]
   versionedMetadata: "Meta"
@@ -34,13 +34,13 @@ chain:
     paginationSize: 255
     cacheSize: 1000
   gravityChainDB:
-    dbPath: "/iotex-var/data/poll.db"
+    dbPath: "/var/iotex-archive/data/poll.db"
     numRetries: 8
 
 actPool:
   minGasPrice: "1000000000000"
   store:
-    datadir: "/iotex-var/data/actpool.cache"
+    datadir: "/var/iotex-archive/data/actpool.cache"
 
 api:
   gasStation:
@@ -56,7 +56,7 @@ consensus:
       acceptProposalEndorsementTTL: 2s
       acceptLockEndorsementTTL: 2s
     delay: 10s
-    consensusDBPath: "/iotex-var/data/consensus.db"
+    consensusDBPath: "/var/iotex-archive/data/consensus.db"
 
 blockSync:
   interval: 2s
@@ -71,5 +71,5 @@ log:
     disableStacktrace: true
     outputPaths: ["stderr", "stdout"]
     errorOutputPaths: ["stderr"]
-  stderrRedirectFile: /iotex-var/log/s.log
+  stderrRedirectFile: /var/iotex-archive/log/s.log
   stdLogRedirect: true
