@@ -7,7 +7,8 @@ time the tx was originally executed.
 The following instrcutions will guide you through setting up an IoTeX archive node 
 - [System Requirements](#system)
 - [Pre-Requisites](#requisite)
-- [Prepare Data](#prepdata)
+- [Prepare Home Directory](#prephome)
+- [Download Data](#download)
 - [Build Binary](#build)
 - [Start Node](#start)
 - [Running Node using Docker](#docker)
@@ -34,7 +35,7 @@ source ~/.bashrc
 go version
 ```
 
-## <a name="prepdata"/>Prepare Data
+## <a name="prephome"/>Prepare Home Directory
 Set up the home directory and download config, genesis, and snapshot data. In
 the instructions below `/var/iotex-archive` is used as the home directory, this
 is the same directory as specified in the config yaml file so it will work with
@@ -57,10 +58,78 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/confi
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 curl https://storage.googleapis.com/blockchain-golden/poll.mainnet.db > $IOTEX_HOME/data/poll.db
-
-#download snapshot and unzip data
-// TODO: add download link
 ```
+## <a name="download"/>Download Data
+Next step is to download the snapshot data. There are 2 files to download. The
+first is the IoTeX blockchain's address/state database file, due to the quite
+large size of this file in archive mode, the file is not compressed and will be
+a direct download. The second is a `tar.gz` compressed file containing multiple
+data files (block data, blob storage, and certain indexing files, etc). You will
+need to download and uncompress this file.
+
+In the $IOTEX_HOME folder, run the following commands:
+```
+#download the data files and uncompress it
+curl -LO https://storage.googleapis.com/blockchain-golden/archive/iotex-data.tar.gz
+tar -xzf iotex-data.tar.gz
+
+#download the state database file
+cd data
+curl -LO https://storage.googleapis.com/blockchain-golden/archive/archive.db
+```
+>Note: the state database file has a size of 4.6TB at this moment, it will take
+considerable amount of time (12.8 hours at 100MB/s download speed) to download.
+Please take measures (for example use `nohup` at the front) to prevent possible
+interruption of the download process.
+
+After successful download and uncompress operations, the $IOTEX_HOME/data folder
+will have these files:
+
+data<br>
+├── archive.db<br>
+├── blob.db<br>
+├── bloomfilter.index.db<br>
+├── candidate.index.db<br>
+├── chain-00000001.db<br>
+├── chain-00000002.db<br>
+├── chain-00000003.db<br>
+├── chain-00000004.db<br>
+├── chain-00000005.db<br>
+├── chain-00000006.db<br>
+├── chain-00000007.db<br>
+├── chain-00000008.db<br>
+├── chain-00000009.db<br>
+├── chain-00000010.db<br>
+├── chain-00000011.db<br>
+├── chain-00000012.db<br>
+├── chain-00000013.db<br>
+├── chain-00000014.db<br>
+├── chain-00000015.db<br>
+├── chain-00000016.db<br>
+├── chain-00000017.db<br>
+├── chain-00000018.db<br>
+├── chain-00000019.db<br>
+├── chain-00000020.db<br>
+├── chain-00000021.db<br>
+├── chain-00000022.db<br>
+├── chain-00000023.db<br>
+├── chain-00000024.db<br>
+├── chain-00000025.db<br>
+├── chain-00000026.db<br>
+├── chain-00000027.db<br>
+├── chain-00000028.db<br>
+├── chain-00000029.db<br>
+├── chain-00000030.db<br>
+├── chain-00000031.db<br>
+├── chain-00000032.db<br>
+├── chain-00000033.db<br>
+├── chain.db<br>
+├── consensus.db<br>
+├── contractstaking.index.db<br>
+├── index.db<br>
+├── poll.db<br>
+├── staking.index.db<br>
+└── trie.db.patch<br>
 
 ## <a name="build"/>Build Binary
 In the home directory, run the following commands
