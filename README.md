@@ -103,6 +103,7 @@ docker run -d --restart on-failure --name iotex \
         -p 14014:14014 \
         -p 15014:15014 \
         -p 8080:8080 \
+        -e "GOMEMLIMIT=8000MiB" \
         -v=$IOTEX_HOME/data:/var/data:rw \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
@@ -113,6 +114,9 @@ docker run -d --restart on-failure --name iotex \
         -genesis-path=/etc/iotex/genesis.yaml \
         -plugin=gateway
 ```
+
+Adjust `GOMEMLIMIT` env according to the actual memory resource.
+
 
 6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
