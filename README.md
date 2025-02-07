@@ -102,6 +102,7 @@ docker run -d --restart on-failure --name iotex \
         -p 4689:4689 \
         -p 14014:14014 \
         -p 15014:15014 \
+        -p 16014:16014 \
         -p 8080:8080 \
         -v=$IOTEX_HOME/data:/var/data:rw \
         -v=$IOTEX_HOME/log:/var/log:rw \
@@ -114,7 +115,10 @@ docker run -d --restart on-failure --name iotex \
         -plugin=gateway
 ```
 
-6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
+6. Ensure that TCP ports `4689` and `8080` are open on your firewall and load balancer (if applicable). Additionally, if you intend to use the node as a gateway, make sure the following ports are open:
+- `14014` for the IoTeX native gRPC API
+- `15014` for the Ethereum JSON API
+- `16014` for the Ethereum WebSocket
 
 ## <a name="mainnet_native"/>Join Mainnet without using Docker
 This is not the preferred way to start an IoTeX node
@@ -214,9 +218,9 @@ ioctl action invoke io1p99pprm79rftj4r6kenfjcp8jkp6zc6mytuah5 ${amountInIOTX} -s
 ```
 Click [IoTeX Tube docs](https://github.com/iotexproject/iotex-bootstrap/blob/master/tube/tube.md) for detailed documentation of the tube service.
 
-### JSON RPC API(Babel service)
+### JSON RPC API (former "Babel service")
 
-Our node supports most of methods of [Ethereum's JSON-RPC protocol](https://eth.wiki/json-rpc/API). The local endpoint of babal service is `localhost:15014` on the gateway node.
+Our node supports most methods of [Ethereum's JSON-RPC protocol](https://eth.wiki/json-rpc/API).  The local endpoint for the Ethereum API service is available at `localhost:15014`. WebSocket support is also available on `localhost:16014`. 
 
 Additional method support could be requested [here](https://github.com/iotexproject/iotex-core/issues).
 
