@@ -59,7 +59,7 @@ tar -xzf data.tar.gz
 
 or download from Google Cloud:
 ```
-curl -L https://storage.googleapis.com/blockchain-archive/testnet-data-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://r2.iotex.io/testnet-data-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 
@@ -70,7 +70,7 @@ https://t.iotex.me/testnet-data-with-idx-latest.
 
 - Optional 2: If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegate election data with following command:
 ```bash
-curl -L https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
+curl -L https://r2.iotex.io/poll.testnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
 
 - Optional 3: If you want to sync the chain from 0 height and also fetching legacy delegate election data from Ethereum, please change the `gravityChainAPIs` in config.yaml to use your infura key with Ethereum archive mode supported or change the API endpoint to an Ethereum archive node which you can access.
