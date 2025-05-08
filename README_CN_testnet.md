@@ -50,20 +50,50 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.1.2/genes
 
 3. 编辑 `$IOTEX_HOME/etc/config.yaml`, 查找 `externalHost` 和 `producerPrivKey`, 取消注释行并填写您的外部 IP 和私钥。如果`producerPrivKey`放空，你的节点将被分配一个随机密钥。
 
-4. 从数据快照启动, 请运行以下命令:
+4. 下载全量数据快照, 请运行以下命令:
 ```
-curl -L https://t.iotex.me/testnet-data-latest > $IOTEX_HOME/data.tar.gz
+curl -L https://t.iotex.me/testnet-data-snapshot-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 或者 请运行以下命令
 ```
-curl -L https://r2.iotex.io/testnet-data-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://r2.iotex.io/testnet-data-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 
-**我们将会每天更新一次数据快照**。对于高级用户，可以考虑以下三个选项：
+**我们将会在每月一日更新全量数据快照**。
+
+5. 下载增量数据快照, 请运行以下命令:
+
+```
+curl -L https://r2.iotex.io/testnet-data-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
+```
+
+**我们将会每天更新一次增量数据快照**。
+
+同时我们提供7日内的增量包下载，你可以选择这期间中任意一天。比如你想使用2025.4.27日的数据， 那么增量包的文件名称为`testnet-data-incr-2025-04-27.tar.gz`， latest为今日的数据。 还原的时候只需当月的全量包 + 当日的增量包即可。
+
+6. 解压数据包, 请注意解压顺序, 必须先解压全量包, 再解压增量包
+
+```
+tar -xzf data.tar.gz
+tar -xzf incr.tar.gz
+```
+
+确保增量包的文件覆盖全量包中相同文件
+
+对于高级用户，可以考虑以下三个选项：
 
 - 选项1：如果计划将节点作为[网关](#gateway)运行，请使用带有索引数据的快照：https://t.iotex.me/testnet-data-with-idx-latest.
+
+  或从Cloudflare下载:
+```
+curl -L https://r2.iotex.io/testnet-data-with-idx-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+tar -xzf data.tar.gz
+
+curl -L https://r2.iotex.io/testnet-data-with-idx-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
+tar -xzf incr.tar.gz
+```
 
 - 选择2：如果计划从 0 区块高度开始同步链上数据而不使用来自以太坊旧的节点代表数据，执行以下命令设置旧的节点代表数据：
 ```
