@@ -27,6 +27,8 @@
 
 以下是启动 IoTeX 节点的推荐方式
 
+> 所有步骤已集成在scripts/all_in_one_mainnet.sh, 可以直接`sh scripts/all_in_one_mainnet.sh`
+
 1. 提取(pull) docker镜像
 
 ```
@@ -58,7 +60,7 @@ curl -L https://t.iotex.me/mainnet-data-snapshot-latest > $IOTEX_HOME/data.tar.g
 ```
 或者 请运行以下命令
 ```
-curl -L https://r2.iotex.io/mainnet-data-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://storage.iotex.io/mainnet-data-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 ```
 
 **我们将会在每月一日更新全量数据快照**。
@@ -66,7 +68,7 @@ curl -L https://r2.iotex.io/mainnet-data-snapshot-latest.tar.gz > $IOTEX_HOME/da
 5. 下载增量数据快照, 请运行以下命令:
 
 ```
-curl -L https://r2.iotex.io/mainnet-data-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
+curl -L https://storage.iotex.io/mainnet-data-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
 ```
 
 **我们将会每天更新一次增量数据快照**。
@@ -76,8 +78,8 @@ curl -L https://r2.iotex.io/mainnet-data-incr-latest.tar.gz > $IOTEX_HOME/incr.t
 6. 解压数据包, 请注意解压顺序, 必须先解压全量包, 再解压增量包
 
 ```
-tar -xzf data.tar.gz
-tar -xzf incr.tar.gz
+tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
+tar -xzf $IOTEX_HOME/incr.tar.gz -C $IOTEX_HOME/data/
 ```
 
 确保增量包的文件覆盖全量包中相同文件。
@@ -88,21 +90,21 @@ tar -xzf incr.tar.gz
 
   或从Cloudflare下载:
 ```
-curl -L https://r2.iotex.io/mainnet-data-with-idx-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://storage.iotex.io/mainnet-data-with-idx-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 
-curl -L https://r2.iotex.io/mainnet-data-with-idx-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
+curl -L https://storage.iotex.io/mainnet-data-with-idx-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
 tar -xzf incr.tar.gz
 ```
 
 - 选择2：如果计划从 0 区块高度开始同步链上数据而不使用来自以太坊旧的节点代表数据，执行以下命令设置旧的节点代表数据：
 ```
-curl -L https://r2.iotex.io/poll.mainnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
+curl -L https://storage.iotex.io/poll.mainnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
 
 - 选择3：如果计划从 0 区块高度开始同步链并从以太坊获取旧的节点代表数据，请更改 config.yaml 中的 `gravityChainAPIs`并在支持以太坊存档模式的情况下使用您的 infura 密钥，或将 API 端点更改为您有权限访问的以太坊存档节点。
 
-5. 运行以下命令以启动节点:
+7. 运行以下命令以启动节点:
 
 ```
 docker run -d --restart on-failure --name iotex \
@@ -137,7 +139,7 @@ docker run -d --restart on-failure --name iotex \
         -plugin=gateway
 ```
 
-6. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 8080（14014如果节点启用了网关）已打开。
+7. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 8080（14014如果节点启用了网关）已打开。
 
 ## <a name="mainnet_native"/>不使用Docker加入主网
 

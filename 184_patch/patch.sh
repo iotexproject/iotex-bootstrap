@@ -17,7 +17,7 @@ echo "IOTEX_HOME : $IOTEX_HOME"
 cd $IOTEX_HOME
 
 #download readtip file
-curl https://r2.iotex.io/readtip > $IOTEX_HOME/readtip
+curl https://storage.iotex.io/readtip > $IOTEX_HOME/readtip
 
 if [ ! -f $IOTEX_HOME/readtip ];then
     echo "$IOTEX_HOME/readtip does not exist"

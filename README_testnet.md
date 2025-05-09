@@ -26,6 +26,8 @@ To start and run a mainnet node, please click [**Join Mainnet**](https://github.
 ## <a name="testnet"/>Join TestNet
 This is the recommended way to start an IoTeX node
 
+> All the steps have written in scripts/all_in_one_testnet.sh, you can directly run `sh scripts/all_in_one_testnet.sh`
+
 1. Pull the docker image:
 
 ```
@@ -59,7 +61,7 @@ tar -xzf data.tar.gz
 
 or download from Cloudflare:
 ```
-curl -L https://r2.iotex.io/testnet-data-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://storage.iotex.io/testnet-data-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 
@@ -68,7 +70,7 @@ tar -xzf data.tar.gz
 5. Start from a **incremental snapshot**, run the following commands:
 
 ```
-curl -L https://r2.iotex.io/testnet-data-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
+curl -L https://storage.iotex.io/testnet-data-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
 ```
 
 **We will update the incremental snapshot everyday**. 
@@ -85,8 +87,8 @@ To restore, you only need the full baseline package of the same month and the in
 It is essential to extract the baseline package first, followed by the incremental package.
 
 ```
-tar -xzf data.tar.gz
-tar -xzf incr.tar.gz
+tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
+tar -xzf $IOTEX_HOME/incr.tar.gz -C $IOTEX_HOME/data/
 ```
 
 Make sure the files from the incremental package **overwrite** those from the baseline.
@@ -99,16 +101,16 @@ https://t.iotex.me/testnet-data-with-idx-latest.
    or download from Cloudflare:
 
 ```
-curl -L https://r2.iotex.io/testnet-data-with-idx-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://storage.iotex.io/testnet-data-with-idx-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 
-curl -L https://r2.iotex.io/testnet-data-with-idx-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
+curl -L https://storage.iotex.io/testnet-data-with-idx-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
 tar -xzf incr.tar.gz
 ```
 
 - Optional 2: If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegate election data with following command:
 ```bash
-curl -L https://r2.iotex.io/poll.testnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
+curl -L https://storage.iotex.io/poll.testnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
 
 - Optional 3: If you want to sync the chain from 0 height and also fetching legacy delegate election data from Ethereum, please change the `gravityChainAPIs` in config.yaml to use your infura key with Ethereum archive mode supported or change the API endpoint to an Ethereum archive node which you can access.
