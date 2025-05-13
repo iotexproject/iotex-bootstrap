@@ -65,7 +65,7 @@ tar -xzf data.tar.gz
 
 **我们将会在每月一日更新全量数据快照**。
 
-5. 下载增量数据快照, 请运行以下命令:
+5. 下载最新增量数据, 请运行以下命令(可选):
 
 ```
 curl -L https://storage.iotex.io/testnet-data-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
@@ -78,17 +78,14 @@ curl -L https://storage.iotex.io/testnet-data-incr-latest.tar.gz > $IOTEX_HOME/i
 6. 解压数据包, 请注意解压顺序, 必须先解压全量包, 再解压增量包
 
 ```
-tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
-tar -xzf $IOTEX_HOME/incr.tar.gz -C $IOTEX_HOME/data/
+tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/ && tar -xzf $IOTEX_HOME/incr.tar.gz -C $IOTEX_HOME/data/
 ```
-
-确保增量包的文件覆盖全量包中相同文件
 
 对于高级用户，可以考虑以下三个选项：
 
 - 选项1：如果计划将节点作为[网关](#gateway)运行，请使用带有索引数据的快照：https://t.iotex.me/testnet-data-with-idx-latest.
 
-  或从Cloudflare下载:
+  或从另一个站点下载:
 ```
 curl -L https://storage.iotex.io/testnet-data-with-idx-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz

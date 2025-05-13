@@ -59,7 +59,7 @@ curl -L https://t.iotex.me/testnet-data-snapshot-latest > $IOTEX_HOME/data.tar.g
 tar -xzf data.tar.gz
 ```
 
-or download from Cloudflare:
+or download from another website:
 ```
 curl -L https://storage.iotex.io/testnet-data-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
@@ -67,7 +67,7 @@ tar -xzf data.tar.gz
 
 **We will update the baseline snapshot on the 1st of every month**. 
 
-5. Start from a **incremental snapshot**, run the following commands:
+5. Download the latest **incremental data** (Optional):
 
 ```
 curl -L https://storage.iotex.io/testnet-data-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
@@ -87,18 +87,15 @@ To restore, you only need the full baseline package of the same month and the in
 It is essential to extract the baseline package first, followed by the incremental package.
 
 ```
-tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
-tar -xzf $IOTEX_HOME/incr.tar.gz -C $IOTEX_HOME/data/
+tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/ && tar -xzf $IOTEX_HOME/incr.tar.gz -C $IOTEX_HOME/data/
 ```
-
-Make sure the files from the incremental package **overwrite** those from the baseline.
 
 For advanced users, there are three options to consider:
 
 - Option 1: If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
 https://t.iotex.me/testnet-data-with-idx-latest.
 
-   or download from Cloudflare:
+   or download from another website:
 
 ```
 curl -L https://storage.iotex.io/testnet-data-with-idx-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
