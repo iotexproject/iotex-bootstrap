@@ -98,12 +98,11 @@ https://t.iotex.me/mainnet-data-with-idx-latest.
 
   or download from another website:
 ```
-curl -L https://storage.iotex.io/mainnet-data-with-idx-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://storage.iotex.io/mainnet-data-with-idx-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
-
-curl -L https://storage.iotex.io/mainnet-data-with-idx-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
-tar -xzf incr.tar.gz
 ```
+
+> mainnet-data-with-idx-latest.tar.gz will be update on Monday every week
 
 - Optional 2: If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegate election data with following command:
 ```bash

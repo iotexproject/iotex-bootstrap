@@ -87,12 +87,11 @@ tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/ && tar -xzf $IOTEX_HOME/in
 
   或从另一个站点下载:
 ```
-curl -L https://storage.iotex.io/mainnet-data-with-idx-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://storage.iotex.io/mainnet-data-with-idx-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
-
-curl -L https://storage.iotex.io/mainnet-data-with-idx-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
-tar -xzf incr.tar.gz
 ```
+
+> mainnet-data-with-idx-latest.tar.gz 在每周一会打新的压缩包
 
 - 选择2：如果计划从 0 区块高度开始同步链上数据而不使用来自以太坊旧的节点代表数据，执行以下命令设置旧的节点代表数据：
 ```
