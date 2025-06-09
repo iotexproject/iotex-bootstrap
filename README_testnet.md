@@ -26,6 +26,8 @@ To start and run a mainnet node, please click [**Join Mainnet**](https://github.
 ## <a name="testnet"/>Join TestNet
 This is the recommended way to start an IoTeX node
 
+> All the steps have written in scripts/all_in_one_testnet.sh, you can directly run `sh scripts/all_in_one_testnet.sh`
+
 1. Pull the docker image:
 
 ```
@@ -50,27 +52,61 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.1.2/genes
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
 
-4. Start from a snapshot (rather than sync from the genesis block), run the following commands:
+4. Start from a **baseline snapshot** (rather than sync from the genesis block), run the following commands:
 
 ```
-curl -L https://t.iotex.me/testnet-data-latest > $IOTEX_HOME/data.tar.gz
+curl -L https://t.iotex.me/testnet-data-snapshot-latest > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 
-or download from Google Cloud:
+or download from another website:
 ```
-curl -L https://storage.googleapis.com/blockchain-archive/testnet-data-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://storage.iotex.io/testnet-data-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
 tar -xzf data.tar.gz
 ```
 
-**We will update the snapshot once a day**. For advanced users, there are three options to consider:
+**We will update the baseline snapshot on the 1st of every month**. 
+
+5. Download the latest **incremental data** (Optional):
+
+```
+curl -L https://storage.iotex.io/testnet-data-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
+```
+
+**We will update the incremental snapshot everyday**. 
+
+We also provide incremental packages from the **past 7 days**.
+You can choose any day within this period.
+For example, if you want to use the data from April 27, 2025, the incremental package file name will be `testnet-data-incr-2025-04-27.tar.gz`.
+
+The file named **latest** corresponds to today’s data.
+
+To restore, you only need the full baseline package of the same month and the incremental package of the selected date.
+
+6. Extract the data packages in the correct order.
+It is essential to extract the baseline package first, followed by the incremental package.
+
+```
+tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/ && tar -xzf $IOTEX_HOME/incr.tar.gz -C $IOTEX_HOME/data/
+```
+
+For advanced users, there are three options to consider:
 
 - Option 1: If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
 https://t.iotex.me/testnet-data-with-idx-latest.
 
+   or download from another website:
+
+```
+curl -L https://storage.iotex.io/testnet-data-with-idx-latest.tar.gz > $IOTEX_HOME/data.tar.gz
+tar -xzf data.tar.gz
+```
+
+> testnet-data-with-idx-latest.tar.gz will be update on Monday every week
+
 - Optional 2: If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegate election data with following command:
 ```bash
-curl -L https://storage.googleapis.com/blockchain-golden/poll.testnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
+curl -L https://storage.iotex.io/poll.testnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
 
 - Optional 3: If you want to sync the chain from 0 height and also fetching legacy delegate election data from Ethereum, please change the `gravityChainAPIs` in config.yaml to use your infura key with Ethereum archive mode supported or change the API endpoint to an Ethereum archive node which you can access.

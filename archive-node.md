@@ -57,7 +57,7 @@ mkdir -p $IOTEX_HOME/log
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_archive_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
-curl https://storage.googleapis.com/blockchain-golden/poll.mainnet.db > $IOTEX_HOME/data/poll.db
+curl https://storage.iotex.io/poll.mainnet.db > $IOTEX_HOME/data/poll.db
 ```
 ## <a name="download"/>Download Data
 Next step is to download the snapshot data. There are 2 files to download. The
@@ -70,7 +70,7 @@ need to download and uncompress this file.
 In the $IOTEX_HOME folder, run the following commands:
 ```
 #download the data files and uncompress it
-curl -LO https://storage.googleapis.com/blockchain-golden/archive/iotex-data.tar.gz
+curl -LO https://storage.iotex.io/iotex-data.tar.gz
 tar -xzf iotex-data.tar.gz
 
 #download the state database file
