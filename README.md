@@ -298,23 +298,25 @@ docker start iotex
 ```
 
 ## <a name="upgrade"/>Upgrade Your Node(One Line Upgrader)
-Make sure you have `$IOTEX_HOME` already set up, and all the files(configs, dbs etc) are placed in the right locations (Please refer to the Join MainNet section).
+Make sure that $IOTEX_HOME is already set up, and all necessary files (e.g., configs, databases, etc.) are placed in the correct locations.
+(Please refer to the Join MainNet section for detailed instructions.)
 
-To upgrade mainnet node, use following command. By default, it will upgrade to latest mainnet version.
+To upgrade your Mainnet node to the latest version, run the following command:
 ```bash
-sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh)
+```
+Note: If your Docker commands require root privileges, run the script with sudo like this:
+```
+sudo bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh)
 ```
 
 To enable [gateway](#gateway) on mainnet
 ```bash
-sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh) plugin=gateway
 ```
 
 To stop auto upgdrade cron job and iotex server program, you can run
 ```bash
-sudo bash # If your docker requires root privilege
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/stop_fullnode.sh)
 ```
 ## <a name="gateway"/> Gateway Plugin
