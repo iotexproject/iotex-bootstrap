@@ -18,7 +18,7 @@
 
 Here are the software versions we use:
 
-- TestNet: v2.2.1-rc8
+- TestNet: v2.2.1
 
 **Note**
 To start and run a mainnet node, please click [**Join Mainnet**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README.md)
