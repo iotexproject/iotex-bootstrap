@@ -16,14 +16,14 @@ chain:
   chainDBPath: "/var/iotex-archive/data/chain.db"
   trieDBPatchFile: "/var/iotex-archive/data/trie.db.patch"
   trieDBPath: "/var/iotex-archive/data/archive.db"
-  stakingPatchDir: "/var/iotex-archive/data",
+  stakingPatchDir: "/var/iotex-archive/data"
   indexDBPath: "/var/iotex-archive/data/index.db"
   blobStoreDBPath: "/var/iotex-archive/data/blob.db"
   bloomfilterIndexDBPath: "/var/iotex-archive/data/bloomfilter.index.db"
   candidateIndexDBPath: "/var/iotex-archive/data/candidate.index.db"
   stakingIndexDBPath: "/var/iotex-archive/data/staking.index.db"
   contractStakingIndexDBPath: "/var/iotex-archive/data/contractstaking.index.db"
-  enableArchiveMode: true
+  historyIndexPath: "/var/iotex-archive/data/historyindex"
   maxCacheSize: 1000
   committee:
     gravityChainAPIs:
