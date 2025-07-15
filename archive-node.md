@@ -132,7 +132,7 @@ git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
 
 #checkout the code branch for archive node
-git checkout origin/feature/archive-node
+git checkout origin/archive
 
 #build binary
 make build
@@ -154,7 +154,7 @@ You can also run the IoTeX archive node using Docker. To do so, skip the
 **Build Binary** and **Start Node** section, run the following commands
 instead:
 ```
-docker pull ghcr.io/iotexproject/iotex-core:feature-archive-node
+docker pull iotex/iotex-core:archive
 docker run -d --restart on-failure --name iotex \
         -p 4689:4689 \
         -p 8080:8080 \
