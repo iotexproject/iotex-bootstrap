@@ -67,7 +67,7 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 
 #download config, genesis file
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_archive_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/archive/config_archive_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 curl https://storage.iotex.io/poll.mainnet.db > $IOTEX_HOME/data/poll.db
