@@ -4,21 +4,34 @@ full history data. User can query an address's balance at any given height on
 the chain, or replay a past transaction with the exact state of the chain at the
 time the tx was originally executed. 
 
+## Important Notice - Optimized Archive Node Version
+
+This archive node is an **optimized version** with significant performance improvements and storage optimizations. However, please note that:
+
+- **Data files from previous archive node versions are NOT compatible** with this optimized version
+- If you are upgrading from a previous archive node setup, you **cannot** reuse existing data files
+- You must either:
+  - Download the provided snapshot data (recommended for faster setup)
+  - Or perform a complete resync from genesis (time-consuming but ensures full verification)
+
 The following instrcutions will guide you through setting up an IoTeX archive node 
-- [System Requirements](#system)
-- [Pre-Requisites](#requisite)
-- [Prepare Home Directory](#prephome)
-- [Download Data](#download)
-- [Build Binary](#build)
-- [Start Node](#start)
-- [Running Node using Docker](#docker)
-- [Interact with IoTeX Blockchain](#ioctl)
+- [IoTeX Archive Node Manual](#iotex-archive-node-manual)
+  - [Important Notice - Optimized Archive Node Version](#important-notice---optimized-archive-node-version)
+  - [System Requirements](#system-requirements)
+  - [Pre-Requisites](#pre-requisites)
+  - [Prepare Home Directory](#prepare-home-directory)
+  - [Download Data](#download-data)
+  - [Build Binary](#build-binary)
+  - [Start Node](#start-node)
+  - [Running Node using Docker](#running-node-using-docker)
+  - [Interact with IoTeX Blockchain](#interact-with-iotex-blockchain)
+    - [ioctl](#ioctl)
 
 ## <a name="system"/>System Requirements
 
 | OS | CPU | RAM | Disk |
 | ---------- | ------------ | ------------ | ------------ |
-| Debian 12/Ubuntu 22.04 | 8+ cores | 32GB+ | 10TB+ (SSD or NVMe) |
+| Debian 12/Ubuntu 22.04 | 8+ cores | 32GB+ | 1TB+ (SSD or NVMe) |
 
 ## <a name="requisite"/>Pre-Requisites
 ```
@@ -60,33 +73,22 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/trie.
 curl https://storage.iotex.io/poll.mainnet.db > $IOTEX_HOME/data/poll.db
 ```
 ## <a name="download"/>Download Data
-Next step is to download the snapshot data. There are 2 files to download. The
-first is the IoTeX blockchain's address/state database file, due to the quite
-large size of this file in archive mode, the file is not compressed and will be
-a direct download. The second is a `tar.gz` compressed file containing multiple
-data files (block data, blob storage, and certain indexing files, etc). You will
+Next step is to download the snapshot data. You will
 need to download and uncompress this file.
 
 In the $IOTEX_HOME folder, run the following commands:
 ```
 #download the data files and uncompress it
-curl -LO https://storage.iotex.io/iotex-data.tar.gz
-tar -xzf iotex-data.tar.gz
-
-#download the state database file
-cd data
-curl -LO https://storage.googleapis.com/blockchain-golden/archive/archive.db
+curl -LO https://storage.iotex.io/mainnet-archive-data-e-20250625.tar.gz
+tar -xzf mainnet-archive-data-e-20250625.tar.gz
 ```
->Note: the state database file has a size of 4.6TB at this moment, it will take
-considerable amount of time (12.8 hours at 100MB/s download speed) to download.
-Please take measures (for example use `nohup` at the front) to prevent possible
-interruption of the download process.
+>Note: the snapshot has a size of 300GB at this moment.
+Please take measures (for example use `nohup` at the front) to prevent possible interruption of the download process.
 
 After successful download and uncompress operations, the $IOTEX_HOME/data folder
 will have these files:
 
 data<br>
-├── archive.db<br>
 ├── blob.db<br>
 ├── bloomfilter.index.db<br>
 ├── candidate.index.db<br>
@@ -126,6 +128,9 @@ data<br>
 ├── chain.db<br>
 ├── consensus.db<br>
 ├── contractstaking.index.db<br>
+├── historyindex/<br>
+├────── mdbx.dat<br>
+├────── mdbx.lck<br>
 ├── index.db<br>
 ├── poll.db<br>
 ├── staking.index.db<br>
