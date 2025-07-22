@@ -10,22 +10,19 @@ This archive node is an **optimized version** with significant performance impro
 
 - **Data files from previous archive node versions are NOT compatible** with this optimized version
 - If you are upgrading from a previous archive node setup, you **cannot** reuse existing data files
-- You must either:
-  - Download the provided snapshot data (recommended for faster setup)
-  - Or perform a complete resync from genesis (time-consuming but ensures full verification)
+- You **MUST** either:
+  - **Download the provided snapshot data** (recommended for faster setup)
+  - Or **perform a complete resync from genesis** (time-consuming but ensures full verification)
 
 The following instrcutions will guide you through setting up an IoTeX archive node 
 - [IoTeX Archive Node Manual](#iotex-archive-node-manual)
   - [Important Notice - Optimized Archive Node Version](#important-notice---optimized-archive-node-version)
   - [System Requirements](#system-requirements)
-  - [Pre-Requisites](#pre-requisites)
   - [Prepare Home Directory](#prepare-home-directory)
-  - [Download Data](#download-data)
-  - [Build Binary](#build-binary)
-  - [Start Node](#start-node)
+  - [Download Data(Optional)](#download-data)
   - [Running Node using Docker](#running-node-using-docker)
-  - [Interact with IoTeX Blockchain](#interact-with-iotex-blockchain)
-    - [ioctl](#ioctl)
+  - [Running Node using Binary](#running-node-using-binary)
+
 
 ## <a name="system"/>System Requirements
 
@@ -33,20 +30,7 @@ The following instrcutions will guide you through setting up an IoTeX archive no
 | ---------- | ------------ | ------------ | ------------ |
 | Debian 12/Ubuntu 22.04 | 8+ cores | 32GB+ | 1TB+ (SSD or NVMe) |
 
-## <a name="requisite"/>Pre-Requisites
-```
-sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y
-sudo apt install -y git gcc make --fix-missing
 
-#install Go
-curl -LO https://go.dev/dl/go1.21.8.linux-amd64.tar.gz
-sudo tar xzf go1.21.8.linux-amd64.tar.gz -C /usr/local && rm go1.21.8.linux-amd64.tar.gz
-echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
-source ~/.bashrc
-
-#verify Go installation
-go version
-```
 
 ## <a name="prephome"/>Prepare Home Directory
 Set up the home directory and download config, genesis, and snapshot data. In
@@ -136,39 +120,20 @@ data<br>
 ├── staking.index.db<br>
 └── trie.db.patch<br>
 
-## <a name="build"/>Build Binary
-In the home directory, run the following commands
-```
-git clone https://github.com/iotexproject/iotex-core.git
-cd iotex-core
-
-#checkout the code branch for archive node
-git checkout origin/archive
-
-#build binary
-make build
-cp ./bin/server $IOTEX_HOME/iotex-server
-```
-
-## <a name="start"/>Start Node
-Run the following command to start the IoTeX archive node.
->Note: make sure TCP ports 4689, 8080, 14014, and 15014 are open on the node's
-network or firewall, these are needed for p2p and API query to work properly
-```
-nohup $IOTEX_HOME/iotex-server -config-path=$IOTEX_HOME/etc/config.yaml -genesis-path=$IOTEX_HOME/etc/genesis.yaml -plugin=gateway &
-```
-`nohup` will keep the process running in case you logged out of the terminal where
-the node is started
 
 ## <a name="docker"/>Running Node using Docker
-You can also run the IoTeX archive node using Docker. To do so, skip the
-**Build Binary** and **Start Node** section, run the following commands
+>Note: make sure TCP ports 4689, 8080, 14014, and 15014 are open on the node's
+network or firewall, these are needed for p2p and API query to work properly
+You can also run the IoTeX archive node using Docker. Run the following commands
 instead:
 ```
 docker pull iotex/iotex-core:archive
 docker run -d --restart on-failure --name iotex \
         -p 4689:4689 \
         -p 8080:8080 \
+        -p 14014:14014 \
+        -p 15014:15014 \
+        -p 16014:16014 \
         -v=$IOTEX_HOME/data:/var/iotex-archive/data:rw \
         -v=$IOTEX_HOME/log:/var/iotex-archive/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
@@ -191,35 +156,43 @@ docker stop iotex
 docker start iotex
 ```
 
-## <a name="ioctl"/>Interact with IoTeX Blockchain
+## <a name="binary"/>Running Node using Binary
 
-### ioctl
+### Pre-Requisites
+```
+sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y
+sudo apt install -y git gcc make --fix-missing
 
-You can install `ioctl` (a command-line interface for interacting with IoTeX blockchain)
+#install Go
+curl -LO https://go.dev/dl/go1.21.8.linux-amd64.tar.gz
+sudo tar xzf go1.21.8.linux-amd64.tar.gz -C /usr/local && rm go1.21.8.linux-amd64.tar.gz
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+source ~/.bashrc
+
+#verify Go installation
+go version
+```
+
+
+### Build Binary
+In the home directory, run the following commands
+```
+git clone https://github.com/iotexproject/iotex-core.git
+cd iotex-core
+
+#checkout the code branch for archive node
+git checkout origin/archive
+
+#build binary
+make build
+cp ./bin/server $IOTEX_HOME/iotex-server
+```
+
+### Start Node
+Run the following command to start the IoTeX archive node.
 
 ```
-curl https://raw.githubusercontent.com/iotexproject/iotex-core/master/install-cli.sh | sh
+nohup $IOTEX_HOME/iotex-server -config-path=$IOTEX_HOME/etc/config.yaml -genesis-path=$IOTEX_HOME/etc/genesis.yaml -plugin=gateway &
 ```
-
-You can point `ioctl` to your node (if you enable the [gateway](#gateway) plugin):
-
-```
-ioctl config set endpoint localhost:14014 --insecure
-```
-
-Or you can point it to our API nodes:
-
-- MainNet secure: `api.iotex.one:443`
-- MainNet insecure: `api.iotex.one:80`
-
-If you want to set an insecure endpoint, you need to add `--insecure` option.
-
-Generate key:
-```
-ioctl account create
-```
-Get consensus delegates of current epoch:
-```
-ioctl node delegate
-```
-Refer to [CLI document](https://github.com/iotexproject/iotex-core/blob/master/ioctl/README.md) for more details.
+`nohup` will keep the process running in case you logged out of the terminal where
+the node is started
