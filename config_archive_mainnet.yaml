@@ -15,7 +15,7 @@ chain:
   enableStakingIndexer: true
   chainDBPath: "/var/iotex-archive/data/chain.db"
   trieDBPatchFile: "/var/iotex-archive/data/trie.db.patch"
-  trieDBPath: "/var/iotex-archive/data/archive.db"
+  trieDBPath: "/var/iotex-archive/data/trie.db"
   stakingPatchDir: "/var/iotex-archive/data"
   indexDBPath: "/var/iotex-archive/data/index.db"
   blobStoreDBPath: "/var/iotex-archive/data/blob.db"
