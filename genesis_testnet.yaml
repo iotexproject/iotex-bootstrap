@@ -36,6 +36,7 @@ blockchain:
   upernavikHeight: 26984161
   vanuatuHeight: 28820881
   wakeHeight: 31943521
+  xinguHeight: 36619201
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
