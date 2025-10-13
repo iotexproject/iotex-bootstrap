@@ -17,7 +17,7 @@
 
 以下是当前我们使用的软件版本：
 
-- 测试网：v2.3.0-rc7
+- 测试网：v2.3.0-rc9
 
 **Note**
 如果你要启动节点加入主网，请点击[**加入主网**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_CN.md)
@@ -31,7 +31,7 @@
 1. 提取(pull) docker镜像
 
 ```
-docker pull iotex/iotex-core:v2.3.0-rc7
+docker pull iotex/iotex-core:v2.3.0-rc9
 ```
 
 2. 使用以下命令设置运行环境
@@ -110,7 +110,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.0-rc7 \
+        iotex/iotex-core:v2.3.0-rc9 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -128,7 +128,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.0-rc7 \
+        iotex/iotex-core:v2.3.0-rc9 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -148,7 +148,7 @@ docker run -d --restart on-failure --name iotex \
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v2.3.0-rc7
+git checkout v2.3.0-rc9
 
 // optional
 export GOPROXY=https://goproxy.io
