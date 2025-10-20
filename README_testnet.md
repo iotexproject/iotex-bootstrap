@@ -18,7 +18,7 @@
 
 Here are the software versions we use:
 
-- TestNet: v2.3.0-rc11
+- TestNet: v2.3.0-rc13
 
 **Note**
 To start and run a mainnet node, please click [**Join Mainnet**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README.md)
@@ -31,7 +31,7 @@ This is the recommended way to start an IoTeX node
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v2.3.0-rc11
+docker pull iotex/iotex-core:v2.3.0-rc13
 ```
 
 2. Set the environment with the following commands:
@@ -121,7 +121,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.0-rc11 \
+        iotex/iotex-core:v2.3.0-rc13 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -141,7 +141,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.0-rc11 \
+        iotex/iotex-core:v2.3.0-rc13 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -162,7 +162,7 @@ Same as [Join TestNet](#testnet) step 2
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v2.3.0-rc11
+git checkout v2.3.0-rc13
 
 // optional
 export GOPROXY=https://goproxy.io
