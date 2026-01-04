@@ -57,52 +57,24 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.3/trie.
 4. Start from a **baseline snapshot** (rather than sync from the genesis block), run the following commands:
 
 ```
-curl -L https://t.iotex.me/mainnet-data-snapshot-latest > $IOTEX_HOME/data.tar.gz
+curl -L https://storage.iotex.io/mainnet-data-e-20251228-042459-core.tar.gz > $IOTEX_HOME/data.tar.gz
 ```
 
-or download from another website:
+5. Extract the data package:
 
 ```
-curl -L https://storage.iotex.io/mainnet-data-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
-```
-
-**We will update the baseline snapshot on the 1st of every month**. 
-
-5. Download the latest **incremental data** (Optional):
-
-```
-curl -L https://storage.iotex.io/mainnet-data-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
-```
-
-**We will update the incremental snapshot everyday**. 
-
-We also provide incremental packages from the **past 7 days**.
-You can choose any day within this period.
-For example, if you want to use the data from April 27, 2025, the incremental package file name will be `mainnet-data-incr-2025-04-27.tar.gz`.
-
-The file named **latest** corresponds to today’s data.
-
-To restore, you only need the full baseline package of the same month and the incremental package of the selected date.
-
-6. Extract the data packages in the correct order.
-It is essential to extract the baseline package first, followed by the incremental package.
-
-```
-tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/ && tar -xzf $IOTEX_HOME/incr.tar.gz -C $IOTEX_HOME/data/
+tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
 ```
 
 For advanced users, there are three options to consider:
 
 - Option 1: If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
-https://t.iotex.me/mainnet-data-with-idx-latest.
-
-  or download from another website:
 ```
-curl -L https://storage.iotex.io/mainnet-data-with-idx-latest.tar.gz > $IOTEX_HOME/data.tar.gz
-tar -xzf data.tar.gz
+curl -L https://storage.iotex.io/mainnet-data-e-20251228-042459-gateway.tar.gz > $IOTEX_HOME/data_index.tar.gz
+tar -xzf data_index.tar.gz
 ```
 
-> mainnet-data-with-idx-latest.tar.gz will be update on Monday every week
+If you need to run your node in archive mode to provide full historical data, please go to [Archive Node](./archive-node.md).
 
 - Optional 2: If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegate election data with following command:
 ```bash
@@ -111,7 +83,7 @@ curl -L https://storage.iotex.io/poll.mainnet.tar.gz > $IOTEX_HOME/poll.tar.gz; 
 
 - Optional 3: If you want to sync the chain from 0 height and also fetching legacy delegate election data from Ethereum, please change the `gravityChainAPIs` in config.yaml to use your infura key with Ethereum archive mode supported or change the API endpoint to an Ethereum archive node which you can access.
 
-5. Run the following command to start a node:
+6. Run the following command to start a node:
 
 ```
 docker run -d --restart on-failure --name iotex \
@@ -149,7 +121,7 @@ docker run -d --restart on-failure --name iotex \
         -plugin=gateway
 ```
 
-6. Ensure that TCP ports `4689` and `8080` are open on your firewall and load balancer (if applicable). Additionally, if you intend to use the node as a gateway, make sure the following ports are open:
+7. Ensure that TCP ports `4689` and `8080` are open on your firewall and load balancer (if applicable). Additionally, if you intend to use the node as a gateway, make sure the following ports are open:
 - `14014` for the IoTeX native gRPC API
 - `15014` for the Ethereum JSON API
 - `16014` for the Ethereum WebSocket

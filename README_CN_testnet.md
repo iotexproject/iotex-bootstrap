@@ -53,45 +53,24 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.3/genes
 3. 编辑 `$IOTEX_HOME/etc/config.yaml`, 查找 `externalHost` 和 `producerPrivKey`, 取消注释行并填写您的外部 IP 和私钥。如果`producerPrivKey`放空，你的节点将被分配一个随机密钥。
 
 4. 下载全量数据快照, 请运行以下命令:
-```
-curl -L https://t.iotex.me/testnet-data-snapshot-latest > $IOTEX_HOME/data.tar.gz
-tar -xzf data.tar.gz
-```
-或者 请运行以下命令
-```
-curl -L https://storage.iotex.io/testnet-data-snapshot-latest.tar.gz > $IOTEX_HOME/data.tar.gz
-tar -xzf data.tar.gz
-```
-
-**我们将会在每月一日更新全量数据快照**。
-
-5. 下载最新增量数据, 请运行以下命令(可选):
 
 ```
-curl -L https://storage.iotex.io/testnet-data-incr-latest.tar.gz > $IOTEX_HOME/incr.tar.gz
+curl -L https://storage.iotex.io/testnet-data-e-20260105-042459-core.tar.gz > $IOTEX_HOME/data.tar.gz
 ```
 
-**我们将会每天更新一次增量数据快照**。
-
-同时我们提供7日内的增量包下载，你可以选择这期间中任意一天。比如你想使用2025.4.27日的数据， 那么增量包的文件名称为`testnet-data-incr-2025-04-27.tar.gz`， latest为今日的数据。 还原的时候只需当月的全量包 + 当日的增量包即可。
-
-6. 解压数据包, 请注意解压顺序, 必须先解压全量包, 再解压增量包
+5. 解压数据包
 
 ```
-tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/ && tar -xzf $IOTEX_HOME/incr.tar.gz -C $IOTEX_HOME/data/
+tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
 ```
 
 对于高级用户，可以考虑以下三个选项：
 
-- 选项1：如果计划将节点作为[网关](#gateway)运行，请使用带有索引数据的快照：https://t.iotex.me/testnet-data-with-idx-latest.
-
-  或从另一个站点下载:
+- 选项1：如果计划将节点作为[网关](#gateway)运行，请额外下载带有索引数据的快照
 ```
-curl -L https://storage.iotex.io/testnet-data-with-idx-latest.tar.gz > $IOTEX_HOME/data.tar.gz
-tar -xzf data.tar.gz
+curl -L https://storage.iotex.io/testnet-data-e-20260105-042459-gateway.tar.gz > $IOTEX_HOME/data_index.tar.gz
+tar -xzf data_index.tar.gz
 ```
-
-> testnet-data-with-idx-latest.tar.gz 在每周一会打新的压缩包
 
 - 选择2：如果计划从 0 区块高度开始同步链上数据而不使用来自以太坊旧的节点代表数据，执行以下命令设置旧的节点代表数据：
 ```
@@ -100,7 +79,7 @@ curl -L https://storage.iotex.io/poll.testnet.tar.gz > $IOTEX_HOME/poll.tar.gz; 
 
 - 选择3：如果计划从 0 区块高度开始同步链并从以太坊获取旧的节点代表数据，请更改 config.yaml 中的 `gravityChainAPIs`并在支持以太坊存档模式的情况下使用您的 infura 密钥，或将 API 端点更改为您有权限访问的以太坊存档节点。
 
-5. 运行以下命令以启动节点:
+6. 运行以下命令以启动节点:
 
 ```
 docker run -d --restart on-failure --name iotex \
@@ -135,7 +114,7 @@ docker run -d --restart on-failure --name iotex \
         -plugin=gateway
 ```
 
-6. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 8080（14014如果节点启用了网关）已打开。
+7. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 8080（14014如果节点启用了网关）已打开。
 
 ## <a name="testnet_native"/>不使用Docker加入测试网
 

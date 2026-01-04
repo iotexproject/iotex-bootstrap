@@ -8,8 +8,7 @@ time the tx was originally executed.
 
 This archive node is an **optimized version** with significant performance improvements and storage optimizations. However, please note that:
 
-- **Data files from previous archive node versions are NOT compatible** with this optimized version
-- If you are upgrading from a previous archive node setup, you **cannot** reuse existing data files
+- **Data files from any previous archive node builds (including earlier test/archive branches) are NOT compatible**, so you **cannot** reuse existing data files
 - You **MUST** either:
   - **Download the provided snapshot data** (recommended for faster setup)
   - Or **perform a complete resync from genesis** (time-consuming but ensures full verification)
@@ -19,9 +18,12 @@ The following instrcutions will guide you through setting up an IoTeX archive no
   - [Important Notice - Optimized Archive Node Version](#important-notice---optimized-archive-node-version)
   - [System Requirements](#system-requirements)
   - [Prepare Home Directory](#prepare-home-directory)
-  - [Download Data(Optional)](#download-data)
+  - [Download Data](#download-data)
   - [Running Node using Docker](#running-node-using-docker)
   - [Running Node using Binary](#running-node-using-binary)
+    - [Pre-Requisites](#pre-requisites)
+    - [Build Binary](#build-binary)
+    - [Start Node](#start-node)
 
 
 ## <a name="system"/>System Requirements
@@ -63,10 +65,16 @@ need to download and uncompress this file.
 In the $IOTEX_HOME folder, run the following commands:
 ```
 #download the data files and uncompress it
-curl -LO https://storage.iotex.io/mainnet-archive-data-e-20250625.tar.gz
-tar -xzf mainnet-archive-data-e-20250625.tar.gz
+curl -LO https://storage.iotex.io/mainnet-data-e-20251228-042459-core.tar.gz
+tar -xzf mainnet-data-e-20251228-042459-core.tar.gz
+
+curl -LO https://storage.iotex.io/mainnet-data-e-20251228-042459-gateway.tar.gz
+tar -xzf mainnet-data-e-20251228-042459-gateway.tar.gz
+
+curl -LO https://storage.iotex.io/mainnet-data-e-20251228-042459-trie-history.tar.gz
+tar -xzf mainnet-data-e-20251228-042459-trie-history.tar.gz
 ```
->Note: the snapshot has a size of 300GB at this moment.
+>Note: the snapshot has a size of 450GB at this moment.
 Please take measures (for example use `nohup` at the front) to prevent possible interruption of the download process.
 
 After successful download and uncompress operations, the $IOTEX_HOME/data folder
@@ -138,7 +146,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/iotex-archive/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:archive \
+        iotex/iotex-core:v2.3.3 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -181,7 +189,7 @@ git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
 
 #checkout the code branch for archive node
-git checkout origin/archive
+git checkout v2.3.3
 
 #build binary
 make build
