@@ -57,7 +57,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.3/trie.
 4. Start from a **baseline snapshot** (rather than sync from the genesis block), run the following commands:
 
 ```
-curl -L https://storage.iotex.io/mainnet-data-e-20251228-042459-core.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://t.iotex.me/mainnet-data-snapshot-core-latest > $IOTEX_HOME/data.tar.gz
 ```
 
 5. Extract the data package:
@@ -70,7 +70,7 @@ For advanced users, there are three options to consider:
 
 - Option 1: If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
 ```
-curl -L https://storage.iotex.io/mainnet-data-e-20251228-042459-gateway.tar.gz > $IOTEX_HOME/data_index.tar.gz
+curl -L https://t.iotex.me/mainnet-data-snapshot-gateway-latest > $IOTEX_HOME/data_index.tar.gz
 tar -xzf data_index.tar.gz
 ```
 
