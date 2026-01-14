@@ -65,13 +65,13 @@ need to download and uncompress this file.
 In the $IOTEX_HOME folder, run the following commands:
 ```
 #download the data files and uncompress it
-curl -LO https://storage.iotex.io/mainnet-data-e-20251228-042459-core.tar.gz
+curl -LO https://t.iotex.me/mainnet-data-snapshot-core-latest
 tar -xzf mainnet-data-e-20251228-042459-core.tar.gz
 
-curl -LO https://storage.iotex.io/mainnet-data-e-20251228-042459-gateway.tar.gz
+curl -LO https://t.iotex.me/mainnet-data-snapshot-gateway-latest
 tar -xzf mainnet-data-e-20251228-042459-gateway.tar.gz
 
-curl -LO https://storage.iotex.io/mainnet-data-e-20251228-042459-trie-history.tar.gz
+curl -LO https://t.iotex.me/mainnet-data-snapshot-trie-history-latest
 tar -xzf mainnet-data-e-20251228-042459-trie-history.tar.gz
 ```
 >Note: the snapshot has a size of 450GB at this moment.

@@ -56,7 +56,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.3/trie.
 
 4. 下载全量数据快照, 请运行以下命令:
 ```
-curl -L https://storage.iotex.io/mainnet-data-e-20251228-042459-core.tar.gz > $IOTEX_HOME/data.tar.gz
+curl -L https://t.iotex.me/mainnet-data-snapshot-core-latest > $IOTEX_HOME/data.tar.gz
 ```
 
 5. 解压数据包
@@ -69,7 +69,7 @@ tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
 
 - 选项1：如果计划将节点作为[网关](#gateway)运行，还需要额外下载带有索引数据的快照
 ```
-curl -L https://storage.iotex.io/mainnet-data-e-20251228-042459-gateway.tar.gz > $IOTEX_HOME/data_index.tar.gz
+curl -L https://t.iotex.me/mainnet-data-snapshot-gateway-latest > $IOTEX_HOME/data_index.tar.gz
 tar -xzf data_index.tar.gz
 ```
 
