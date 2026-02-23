@@ -146,7 +146,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/iotex-archive/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.3 \
+        iotex/iotex-core:v2.3.4 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -189,7 +189,7 @@ git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
 
 #checkout the code branch for archive node
-git checkout v2.3.3
+git checkout v2.3.4
 
 #build binary
 make build
