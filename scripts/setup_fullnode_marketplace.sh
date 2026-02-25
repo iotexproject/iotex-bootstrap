@@ -110,18 +110,24 @@ function downloadConfig() {
 }
 
 function donwloadBlockDataFile() {
-    NODE_GATEWAY_MAINNET_DATA_URL=https://t.iotex.me/mainnet-data-with-idx-latest
+    NODE_MAINNET_CORE_URL=https://t.iotex.me/mainnet-data-snapshot-core-latest
+    NODE_MAINNET_GATEWAY_URL=https://t.iotex.me/mainnet-data-snapshot-gateway-latest
 
     SAVE_DIR=$IOTEX_HOME/tmp
     mkdir -p $SAVE_DIR
-    DATA_FILE_PATH=$SAVE_DIR/data.tar.gz
 
-    UNZIP_FILE_CMD="tar xvf $SAVE_DIR/data.tar.gz -C $IOTEX_HOME"
+    echo -e "${YELLOW} Downloading the core snapshot...${NC}"
+    curl -sSL $NODE_MAINNET_CORE_URL > $SAVE_DIR/data-core.tar.gz
+    echo -e "${YELLOW} Unzipping core snapshot...${NC}"
+    tar xvf $SAVE_DIR/data-core.tar.gz -C $IOTEX_HOME
+    echo -e "${YELLOW} Core snapshot done.${NC}"
 
-    echo -e "${YELLOW} Downloading the db file from a snapshot...${NC}"
-    curl -sSL $NODE_GATEWAY_MAINNET_DATA_URL > $DATA_FILE_PATH
-    echo -e "${YELLOW} Unzipping...${NC}"
-    $UNZIP_FILE_CMD
+    echo -e "${YELLOW} Downloading the gateway snapshot...${NC}"
+    curl -sSL $NODE_MAINNET_GATEWAY_URL > $SAVE_DIR/data-gateway.tar.gz
+    echo -e "${YELLOW} Unzipping gateway snapshot...${NC}"
+    tar xvf $SAVE_DIR/data-gateway.tar.gz -C $IOTEX_HOME
+    echo -e "${YELLOW} Gateway snapshot done.${NC}"
+
     echo -e "${YELLOW} Done.${NC}"
 }
 
