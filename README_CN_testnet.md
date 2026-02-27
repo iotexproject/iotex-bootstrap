@@ -55,7 +55,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.4/genes
 4. 下载全量数据快照, 请运行以下命令:
 
 ```
-curl -L https://t.iotex.me/testnet-data-snapshot-core-latest > $IOTEX_HOME/data.tar.gz
+curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/testnet-data-snapshot-core-latest
 ```
 
 5. 解压数据包
@@ -68,13 +68,13 @@ tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
 
 - 选项1：如果计划将节点作为[网关](#gateway)运行，请额外下载带有索引数据的快照
 ```
-curl -L https://t.iotex.me/testnet-data-snapshot-gateway-latest > $IOTEX_HOME/data_index.tar.gz
+curl -L -C - -o $IOTEX_HOME/data_index.tar.gz https://t.iotex.me/testnet-data-snapshot-gateway-latest
 tar -xzf data_index.tar.gz
 ```
 
 - 选择2：如果计划从 0 区块高度开始同步链上数据而不使用来自以太坊旧的节点代表数据，执行以下命令设置旧的节点代表数据：
 ```
-curl -L https://storage.iotex.io/poll.testnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
+curl -L -C - -o $IOTEX_HOME/poll.tar.gz https://storage.iotex.io/poll.testnet.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
 
 - 选择3：如果计划从 0 区块高度开始同步链并从以太坊获取旧的节点代表数据，请更改 config.yaml 中的 `gravityChainAPIs`并在支持以太坊存档模式的情况下使用您的 infura 密钥，或将 API 端点更改为您有权限访问的以太坊存档节点。

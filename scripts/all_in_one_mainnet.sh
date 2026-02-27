@@ -17,7 +17,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.4/genes
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.4/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 
 # Download core snapshot (for delegate node)
-curl -L https://t.iotex.me/mainnet-data-snapshot-core-latest > $IOTEX_HOME/data.tar.gz
+curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/mainnet-data-snapshot-core-latest
 tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
 
 docker run -d --restart on-failure --name iotex \

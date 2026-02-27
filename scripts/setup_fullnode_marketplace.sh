@@ -117,13 +117,13 @@ function donwloadBlockDataFile() {
     mkdir -p $SAVE_DIR
 
     echo -e "${YELLOW} Downloading the core snapshot...${NC}"
-    curl -sSL $NODE_MAINNET_CORE_URL > $SAVE_DIR/data-core.tar.gz
+    curl -sSL -C - -o $SAVE_DIR/data-core.tar.gz $NODE_MAINNET_CORE_URL
     echo -e "${YELLOW} Unzipping core snapshot...${NC}"
     tar xvf $SAVE_DIR/data-core.tar.gz -C $IOTEX_HOME
     echo -e "${YELLOW} Core snapshot done.${NC}"
 
     echo -e "${YELLOW} Downloading the gateway snapshot...${NC}"
-    curl -sSL $NODE_MAINNET_GATEWAY_URL > $SAVE_DIR/data-gateway.tar.gz
+    curl -sSL -C - -o $SAVE_DIR/data-gateway.tar.gz $NODE_MAINNET_GATEWAY_URL
     echo -e "${YELLOW} Unzipping gateway snapshot...${NC}"
     tar xvf $SAVE_DIR/data-gateway.tar.gz -C $IOTEX_HOME
     echo -e "${YELLOW} Gateway snapshot done.${NC}"

@@ -57,7 +57,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.4/trie.
 4. Start from a **baseline snapshot** (rather than sync from the genesis block), run the following commands:
 
 ```
-curl -L https://t.iotex.me/mainnet-data-snapshot-core-latest > $IOTEX_HOME/data.tar.gz
+curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/mainnet-data-snapshot-core-latest
 ```
 
 5. Extract the data package:
@@ -70,7 +70,7 @@ For advanced users, there are three options to consider:
 
 - Option 1: If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
 ```
-curl -L https://t.iotex.me/mainnet-data-snapshot-gateway-latest > $IOTEX_HOME/data_index.tar.gz
+curl -L -C - -o $IOTEX_HOME/data_index.tar.gz https://t.iotex.me/mainnet-data-snapshot-gateway-latest
 tar -xzf data_index.tar.gz
 ```
 
@@ -78,7 +78,7 @@ If you need to run your node in archive mode to provide full historical data, pl
 
 - Optional 2: If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegate election data with following command:
 ```bash
-curl -L https://storage.iotex.io/poll.mainnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
+curl -L -C - -o $IOTEX_HOME/poll.tar.gz https://storage.iotex.io/poll.mainnet.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
 
 - Optional 3: If you want to sync the chain from 0 height and also fetching legacy delegate election data from Ethereum, please change the `gravityChainAPIs` in config.yaml to use your infura key with Ethereum archive mode supported or change the API endpoint to an Ethereum archive node which you can access.

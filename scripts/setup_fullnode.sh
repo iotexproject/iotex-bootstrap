@@ -278,9 +278,9 @@ function donwloadBlockDataFile() {
 
     echo -e "${YELLOW} Downloading the core snapshot...${NC}"
     if [ "${_ENV_}X" = "mainnetX" ];then
-        curl -L -o $SAVE_DIR/data-core.tar.gz $NODE_MAINNET_CORE_URL
+        curl -L -C - -o $SAVE_DIR/data-core.tar.gz $NODE_MAINNET_CORE_URL
     else
-        curl -L -o $SAVE_DIR/data-core.tar.gz $NODE_TESTNET_CORE_URL
+        curl -L -C - -o $SAVE_DIR/data-core.tar.gz $NODE_TESTNET_CORE_URL
     fi
     echo -e "${YELLOW} Unzipping core snapshot...${NC}"
     tar xvf $SAVE_DIR/data-core.tar.gz -C $IOTEX_HOME
@@ -289,9 +289,9 @@ function donwloadBlockDataFile() {
     if [ "${_PLUGINS_}X" = "gatewayX" ];then
         echo -e "${YELLOW} Downloading the gateway snapshot...${NC}"
         if [ "${_ENV_}X" = "mainnetX" ];then
-            curl -L -o $SAVE_DIR/data-gateway.tar.gz $NODE_MAINNET_GATEWAY_URL
+            curl -L -C - -o $SAVE_DIR/data-gateway.tar.gz $NODE_MAINNET_GATEWAY_URL
         else
-            curl -L -o $SAVE_DIR/data-gateway.tar.gz $NODE_TESTNET_GATEWAY_URL
+            curl -L -C - -o $SAVE_DIR/data-gateway.tar.gz $NODE_TESTNET_GATEWAY_URL
         fi
         echo -e "${YELLOW} Unzipping gateway snapshot...${NC}"
         tar xvf $SAVE_DIR/data-gateway.tar.gz -C $IOTEX_HOME
