@@ -18,7 +18,7 @@
 
 以下是当前我们使用的软件版本：
 
-- 主网：v2.3.4
+- 主网：v2.3.5
 
 ## <a name="testnet"/>加入测试网
 如果你要启动节点加入测试网，请点击[**加入测试网**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_CN_testnet.md)
@@ -32,7 +32,7 @@
 1. 提取(pull) docker镜像
 
 ```
-docker pull iotex/iotex-core:v2.3.4
+docker pull iotex/iotex-core:v2.3.5
 ```
 
 2. 使用以下命令设置运行环境
@@ -47,16 +47,16 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.4/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.4/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.4/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.5/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.5/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.5/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 ```
 
 3. 编辑 `$IOTEX_HOME/etc/config.yaml`, 查找 `externalHost` 和 `producerPrivKey`, 取消注释行并填写您的外部 IP 和私钥。如果`producerPrivKey`放空，你的节点将被分配一个随机密钥。
 
 4. 下载全量数据快照, 请运行以下命令:
 ```
-curl -L https://t.iotex.me/mainnet-data-snapshot-core-latest > $IOTEX_HOME/data.tar.gz
+curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/mainnet-data-snapshot-core-latest
 ```
 
 5. 解压数据包
@@ -69,7 +69,7 @@ tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
 
 - 选项1：如果计划将节点作为[网关](#gateway)运行，还需要额外下载带有索引数据的快照
 ```
-curl -L https://t.iotex.me/mainnet-data-snapshot-gateway-latest > $IOTEX_HOME/data_index.tar.gz
+curl -L -C - -o $IOTEX_HOME/data_index.tar.gz https://t.iotex.me/mainnet-data-snapshot-gateway-latest
 tar -xzf data_index.tar.gz
 ```
 
@@ -77,7 +77,7 @@ tar -xzf data_index.tar.gz
 
 - 选择2：如果计划从 0 区块高度开始同步链上数据而不使用来自以太坊旧的节点代表数据，执行以下命令设置旧的节点代表数据：
 ```
-curl -L https://storage.iotex.io/poll.mainnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
+curl -L -C - -o $IOTEX_HOME/poll.tar.gz https://storage.iotex.io/poll.mainnet.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
 
 - 选择3：如果计划从 0 区块高度开始同步链并从以太坊获取旧的节点代表数据，请更改 config.yaml 中的 `gravityChainAPIs`并在支持以太坊存档模式的情况下使用您的 infura 密钥，或将 API 端点更改为您有权限访问的以太坊存档节点。
@@ -92,7 +92,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.4 \
+        iotex/iotex-core:v2.3.5 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -110,7 +110,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.4 \
+        iotex/iotex-core:v2.3.5 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -130,7 +130,7 @@ docker run -d --restart on-failure --name iotex \
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v2.3.4
+git checkout v2.3.5
 
 // optional
 export GOPROXY=https://goproxy.io

@@ -65,13 +65,13 @@ need to download and uncompress this file.
 In the $IOTEX_HOME folder, run the following commands:
 ```
 #download the data files and uncompress it
-curl -LO https://t.iotex.me/mainnet-data-snapshot-core-latest
+curl -L -C - -O https://t.iotex.me/mainnet-data-snapshot-core-latest
 tar -xzf mainnet-data-e-20251228-042459-core.tar.gz
 
-curl -LO https://t.iotex.me/mainnet-data-snapshot-gateway-latest
+curl -L -C - -O https://t.iotex.me/mainnet-data-snapshot-gateway-latest
 tar -xzf mainnet-data-e-20251228-042459-gateway.tar.gz
 
-curl -LO https://t.iotex.me/mainnet-data-snapshot-trie-history-latest
+curl -L -C - -O https://t.iotex.me/mainnet-data-snapshot-trie-history-latest
 tar -xzf mainnet-data-e-20251228-042459-trie-history.tar.gz
 ```
 >Note: the snapshot has a size of 450GB at this moment.
@@ -146,7 +146,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/iotex-archive/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.4 \
+        iotex/iotex-core:v2.3.5 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -172,7 +172,7 @@ sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y
 sudo apt install -y git gcc make --fix-missing
 
 #install Go
-curl -LO https://go.dev/dl/go1.21.8.linux-amd64.tar.gz
+curl -L -C - -O https://go.dev/dl/go1.21.8.linux-amd64.tar.gz
 sudo tar xzf go1.21.8.linux-amd64.tar.gz -C /usr/local && rm go1.21.8.linux-amd64.tar.gz
 echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
 source ~/.bashrc
@@ -189,7 +189,7 @@ git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
 
 #checkout the code branch for archive node
-git checkout v2.3.4
+git checkout v2.3.5
 
 #build binary
 make build

@@ -268,33 +268,36 @@ function disableGateway() {
 }
 
 function donwloadBlockDataFile() {
-    NODE_GATEWAY_MAINNET_DATA_URL=https://t.iotex.me/mainnet-data-with-idx-latest
-    NODE_GATEWAY_TESTNET_DATA_URL=https://t.iotex.me/testnet-data-with-idx-latest
-    NODE_MAINNET_DATA_URL=https://t.iotex.me/mainnet-data-latest
-    NODE_TESTNET_DATA_URL=https://t.iotex.me/testnet-data-latest
+    NODE_MAINNET_CORE_URL=https://t.iotex.me/mainnet-data-snapshot-core-latest
+    NODE_TESTNET_CORE_URL=https://t.iotex.me/testnet-data-snapshot-core-latest
+    NODE_MAINNET_GATEWAY_URL=https://t.iotex.me/mainnet-data-snapshot-gateway-latest
+    NODE_TESTNET_GATEWAY_URL=https://t.iotex.me/testnet-data-snapshot-gateway-latest
 
     SAVE_DIR=$IOTEX_HOME/tmp
     mkdir -p $SAVE_DIR
-    DATA_FILE_PATH=$SAVE_DIR/data.tar.gz
 
-    UNZIP_FILE_CMD="tar xvf $SAVE_DIR/data.tar.gz -C $IOTEX_HOME"
-
-    echo -e "${YELLOW} Downloading the db file from a snapshot...${NC}"
-    if [ "${_PLUGINS_}X" = "gatewayX" ];then
-        if [ "${_ENV_}X" = "mainnetX" ];then
-            curl -L -o $DATA_FILE_PATH $NODE_GATEWAY_MAINNET_DATA_URL
-        else
-            curl -L -o $DATA_FILE_PATH $NODE_GATEWAY_TESTNET_DATA_URL
-        fi
+    echo -e "${YELLOW} Downloading the core snapshot...${NC}"
+    if [ "${_ENV_}X" = "mainnetX" ];then
+        curl -L -C - -o $SAVE_DIR/data-core.tar.gz $NODE_MAINNET_CORE_URL
     else
-        if [ "${_ENV_}X" = "mainnetX" ];then
-            curl -L -o $DATA_FILE_PATH $NODE_MAINNET_DATA_URL
-        else
-            curl -L -o $DATA_FILE_PATH $NODE_TESTNET_DATA_URL
-        fi
+        curl -L -C - -o $SAVE_DIR/data-core.tar.gz $NODE_TESTNET_CORE_URL
     fi
-    echo -e "${YELLOW} Unzipping...${NC}"
-    $UNZIP_FILE_CMD
+    echo -e "${YELLOW} Unzipping core snapshot...${NC}"
+    tar xvf $SAVE_DIR/data-core.tar.gz -C $IOTEX_HOME
+    echo -e "${YELLOW} Core snapshot done.${NC}"
+
+    if [ "${_PLUGINS_}X" = "gatewayX" ];then
+        echo -e "${YELLOW} Downloading the gateway snapshot...${NC}"
+        if [ "${_ENV_}X" = "mainnetX" ];then
+            curl -L -C - -o $SAVE_DIR/data-gateway.tar.gz $NODE_MAINNET_GATEWAY_URL
+        else
+            curl -L -C - -o $SAVE_DIR/data-gateway.tar.gz $NODE_TESTNET_GATEWAY_URL
+        fi
+        echo -e "${YELLOW} Unzipping gateway snapshot...${NC}"
+        tar xvf $SAVE_DIR/data-gateway.tar.gz -C $IOTEX_HOME
+        echo -e "${YELLOW} Gateway snapshot done.${NC}"
+    fi
+
     echo -e "${YELLOW} Done.${NC}"
 }
 

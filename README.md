@@ -19,7 +19,7 @@
 
 Here are the software versions we use:
 
-- MainNet: v2.3.4
+- MainNet: v2.3.5
 
 ## <a name="testnet"/>Join TestNet
 To start and run a testnet node, please click [**Join Testnet**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_testnet.md)
@@ -32,7 +32,7 @@ This is the recommended way to start an IoTeX node
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v2.3.4
+docker pull iotex/iotex-core:v2.3.5
 ```
 
 2. Set the environment with the following commands:
@@ -47,9 +47,9 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.4/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.4/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.4/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.5/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.5/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.5/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 ```
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
@@ -57,7 +57,7 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.4/trie.
 4. Start from a **baseline snapshot** (rather than sync from the genesis block), run the following commands:
 
 ```
-curl -L https://t.iotex.me/mainnet-data-snapshot-core-latest > $IOTEX_HOME/data.tar.gz
+curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/mainnet-data-snapshot-core-latest
 ```
 
 5. Extract the data package:
@@ -70,7 +70,7 @@ For advanced users, there are three options to consider:
 
 - Option 1: If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
 ```
-curl -L https://t.iotex.me/mainnet-data-snapshot-gateway-latest > $IOTEX_HOME/data_index.tar.gz
+curl -L -C - -o $IOTEX_HOME/data_index.tar.gz https://t.iotex.me/mainnet-data-snapshot-gateway-latest
 tar -xzf data_index.tar.gz
 ```
 
@@ -78,7 +78,7 @@ If you need to run your node in archive mode to provide full historical data, pl
 
 - Optional 2: If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegate election data with following command:
 ```bash
-curl -L https://storage.iotex.io/poll.mainnet.tar.gz > $IOTEX_HOME/poll.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
+curl -L -C - -o $IOTEX_HOME/poll.tar.gz https://storage.iotex.io/poll.mainnet.tar.gz; tar -xzf $IOTEX_HOME/poll.tar.gz --directory $IOTEX_HOME/data
 ```
 
 - Optional 3: If you want to sync the chain from 0 height and also fetching legacy delegate election data from Ethereum, please change the `gravityChainAPIs` in config.yaml to use your infura key with Ethereum archive mode supported or change the API endpoint to an Ethereum archive node which you can access.
@@ -93,7 +93,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.4 \
+        iotex/iotex-core:v2.3.5 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -114,7 +114,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.4 \
+        iotex/iotex-core:v2.3.5 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -138,7 +138,7 @@ Same as [Join MainNet](#mainnet) step 2
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v2.3.4
+git checkout v2.3.5
 
 // optional
 export GOPROXY=https://goproxy.io

@@ -32,6 +32,8 @@ chain:
 
 actPool:
   minGasPrice: "1000000000000"
+  blackList: []
+  blackListActiveHeight: 0
 
 consensus:
   scheme: ROLLDPOS
