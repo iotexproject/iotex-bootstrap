@@ -13,7 +13,7 @@ This is the **IoTeX Delegate Manual** repository - configuration and operational
 
 ## Version Alignment
 
-This repository is versioned in sync with [iotex-core](https://github.com/iotexproject/iotex-core). The current release is **v2.3.7**. When iotex-core releases a new version:
+This repository is versioned in sync with [iotex-core](https://github.com/iotexproject/iotex-core). The current release is **v2.3.8**. When iotex-core releases a new version:
 1. Update version references in README.md, config files, and scripts
 2. Add a release note in `changelog/`
 3. Create a PR but do NOT merge until the final release is tagged in iotex-core
@@ -38,7 +38,7 @@ See `release_flow.md` for the complete release process.
 ## Common Tasks
 
 ### Update for a new iotex-core release
-1. Update `version` references in README.md (search for `v2.3.7`)
+1. Update `version` references in README.md (search for `v2.3.8`)
 2. Update docker image tags in `scripts/all_in_one_mainnet.sh` and `scripts/all_in_one_testnet.sh`
 3. Add release note in `changelog/vX.Y.Z-release-note.md`
 4. Update `config_mainnet.yaml` and `config_testnet.yaml` if needed
