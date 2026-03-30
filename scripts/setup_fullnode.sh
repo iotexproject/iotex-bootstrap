@@ -112,11 +112,26 @@ function determinePluginIsChanged() {
     fi
 }
 
+function detectIotexHome() {
+    # Try to detect IOTEX_HOME from running iotex container mounts
+    local detected=$(docker inspect iotex --format '{{range .HostConfig.Binds}}{{println .}}{{end}}' 2>/dev/null | grep config_override | sed 's|/etc/config.yaml:/etc/iotex/config_override.yaml:ro||')
+    if [ -n "$detected" ];then
+        echo "$detected"
+    fi
+}
+
 function determinIotexHome() {
     if [ $_AUTO_ -eq 1 ] && [ -n "$IOTEX_HOME" ];then
         echo "Using IOTEX_HOME=$IOTEX_HOME"
         return
     fi
+
+    # Auto-detect from running container
+    local detected=$(detectIotexHome)
+    if [ -n "$detected" ];then
+        defaultdatadir="$detected"
+    fi
+
     ##Input Data Dir
     echo "The current user of the input directory must have write permission!!!"
     echo -e "${RED} If Upgrade ; input your old directory \$IOTEX_HOME !!! ${NC}"
@@ -553,6 +568,12 @@ function main() {
         popd
     fi
 
+    echo -e "Confirm your externalHost: ${YELLOW} $ip ${NC}"
+    echo -e "Confirm your producerPrivKey: ${RED} $privKey ${NC}"
+    if [ -n "$adminPort" ]; then
+        echo -e "Confirm your adminPort: ${YELLOW} $adminPort ${NC}"
+    fi
+
     wantdownload=N
     if [ $_AUTO_ -eq 0 ];then
         read -p "Do you prefer to start from a snapshot, This will overwrite existing data. Download the db file. [Y/N] (Default: N)? " wantdownload
@@ -564,14 +585,7 @@ function main() {
                 popd
             fi
         fi
-    fi
 
-    echo -e "Confirm your externalHost: ${YELLOW} $ip ${NC}"
-    echo -e "Confirm your producerPrivKey: ${RED} $privKey ${NC}"
-    if [ -n "$adminPort" ]; then
-        echo -e "Confirm your adminPort: ${YELLOW} $adminPort ${NC}"
-    fi
-    if [ $_AUTO_ -eq 0 ];then
         read -p "Press any key to continue ... [Ctrl + c exit!] " key2
     fi
 
