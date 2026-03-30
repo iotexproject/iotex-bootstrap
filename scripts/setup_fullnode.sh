@@ -55,6 +55,7 @@ function checkDockerCompose() {
 function setVar() {
     producerPrivKey=""
     externalHost=""
+    adminPort=""
     defaultdatadir="$HOME/iotex-var"
 
     processParam $@
@@ -206,10 +207,13 @@ function cleanOldVersion() {
         externalHost=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
         privKey=$(echo $producerPrivKey|awk -F':' '{print$2}')
         ip=$(echo $externalHost|awk -F':' '{print$2}')
+        # Extract existing admin port
+        adminPort=$(grep '^  httpAdminPort:' ${IOTEX_HOME}/etc/config.yaml|awk -F':' '{print$2}'|tr -d ' ')
     else
         # No old producerPrivKey and externalHost
         determineExtIp
         determinPrivKey
+        determineAdminPort
     fi
 }
 
@@ -226,6 +230,39 @@ function determinPrivKey() {
     read -p ": " inputkey
     privKey=${inputkey:-"96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8"}
     producerPrivKey="producerPrivKey: $privKey"
+}
+
+function determineAdminPort() {
+    echo "Enable admin port for node management."
+    read -p "SET ADMIN PORT (press Enter to skip, e.g., 9009): " inputport
+    if [ -n "$inputport" ]; then
+        # Validate port number (1-65535)
+        if [[ "$inputport" =~ ^[0-9]+$ ]] && [ "$inputport" -ge 1 ] && [ "$inputport" -le 65535 ]; then
+            adminPort=$inputport
+            echo "Admin port set to: $adminPort"
+        else
+            echo -e "${RED}Invalid port number. Skipping admin port setup.${NC}"
+        fi
+    fi
+}
+
+function addAdminPortToCompose() {
+    if [ -n "$adminPort" ]; then
+        local composeFile="$IOTEX_MONITOR_HOME/docker-compose.yml"
+        # Check if port mapping already exists to avoid duplicates
+        if grep -q "${adminPort}:${adminPort}" $composeFile; then
+            echo "Admin port mapping ${adminPort}:${adminPort} already exists in docker-compose.yml"
+            return
+        fi
+        echo "Adding admin port mapping to docker-compose.yml"
+        # Use awk for reliable cross-platform replacement with proper indentation
+        awk -v port="$adminPort" '{
+            print
+            if (/^[[:space:]]*- 4689:4689/) {
+                printf "      - %s:%s\n", port, port
+            }
+        }' "$composeFile" > "${composeFile}.tmp" && mv "${composeFile}.tmp" "$composeFile"
+    fi
 }
 
 function downloadConfig() {
@@ -245,13 +282,37 @@ function downloadConfig() {
     if [ $SED_IS_GNU -eq 1 ];then
         sed -i "/^network:/a\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
         sed -i "/^chain:/a\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
+        # Add admin port if set
+        if [ -n "$adminPort" ]; then
+            echo "Adding httpAdminPort: $adminPort to config.yaml"
+            # Check if system: section exists
+            if grep -q "^system:" $IOTEX_HOME/etc/config.yaml; then
+                sed -i "/^system:/a\ \ httpAdminPort: $adminPort" $IOTEX_HOME/etc/config.yaml
+            else
+                # Add system: section with httpAdminPort at the end of file
+                echo -e "\nsystem:\n  httpAdminPort: $adminPort" >> $IOTEX_HOME/etc/config.yaml
+            fi
+        fi
     else
-        sed -i '' "/^network:/a\ 
+        sed -i '' "/^network:/a\
 \ \ $externalHost
 " $IOTEX_HOME/etc/config.yaml
-        sed -i '' "/^chain:/a\ 
+        sed -i '' "/^chain:/a\
 \ \ $producerPrivKey
 " $IOTEX_HOME/etc/config.yaml
+        # Add admin port if set
+        if [ -n "$adminPort" ]; then
+            echo "Adding httpAdminPort: $adminPort to config.yaml"
+            # Check if system: section exists
+            if grep -q "^system:" $IOTEX_HOME/etc/config.yaml; then
+                sed -i '' "/^system:/a\\
+\ \ httpAdminPort: $adminPort\\
+" $IOTEX_HOME/etc/config.yaml
+            else
+                # Add system: section with httpAdminPort at the end of file
+                echo -e "\nsystem:\n  httpAdminPort: $adminPort" >> $IOTEX_HOME/etc/config.yaml
+            fi
+        fi
     fi
 }
 
@@ -392,7 +453,7 @@ function main() {
     fi
 
     read -p "Do you want to enable gateway plugin [Y/N] (Default: $plugins)? " plugins
-    if [ "${plugins}X" = "yX" ];then
+    if [ "${plugins}X" = "yX" ] || [ "${plugins}X" = "YX" ];then
         _PLUGINS_=gateway
         echo "Gateway plugin enabled"
     fi
@@ -433,11 +494,12 @@ function main() {
     else
         determineExtIp
         determinPrivKey
+        determineAdminPort
 
         echo -e "${YELLOW} ****** Install IoTeX Node  ***** ${NC}"
         echo -e "${YELLOW} if installed, Confirm Input IOTEX_HOME directory $IOTEX_HOME True ${NC};"
         read -p "[Ctrl + c exit!]; else Enter anykey ..." anykey
-        
+
         mkdir -p ${IOTEX_HOME}
         pushd ${IOTEX_HOME}
         mkdir data log etc > /dev/null 2>&1
@@ -464,6 +526,9 @@ function main() {
 
     echo -e "Confirm your externalHost: ${YELLOW} $ip ${NC}"
     echo -e "Confirm your producerPrivKey: ${RED} $privKey ${NC}"
+    if [ -n "$adminPort" ]; then
+        echo -e "Confirm your adminPort: ${YELLOW} $adminPort ${NC}"
+    fi
     read -p "Press any key to continue ... [Ctrl + c exit!] " key2
 
     echo "docker pull iotex-core ${version}"
@@ -478,7 +543,10 @@ function main() {
     else
         disableGateway
     fi
-    
+
+    # Add admin port mapping to docker-compose.yml if set
+    addAdminPortToCompose
+
     startupNode
 
     checkAndCleanAutoUpdate

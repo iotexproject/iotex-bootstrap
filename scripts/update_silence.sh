@@ -54,9 +54,10 @@ function checkDockerCompose() {
 
 function setVar() {
     IOTEX_MONITOR_HOME=$IOTEX_HOME/monitor
-    
+
     producerPrivKey=""
     externalHost=""
+    adminPort=""
 }
 
 function isNotRunning() {
@@ -79,6 +80,8 @@ function cleanOldVersion() {
     docker rm iotex
     producerPrivKey=$(grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
     externalHost=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
+    # Extract existing admin port
+    adminPort=$(grep '^  httpAdminPort:' ${IOTEX_HOME}/etc/config.yaml|awk -F':' '{print$2}'|tr -d ' ')
 }
 
 function downloadConfig() {
@@ -119,13 +122,54 @@ function downloadConfig() {
     if [ $SED_IS_GNU -eq 1 ];then
         sed -i "/^network:/a\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
         sed -i "/^chain:/a\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
+        # Add admin port if set
+        if [ -n "$adminPort" ]; then
+            echo "Adding httpAdminPort: $adminPort to config.yaml"
+            # Check if system: section exists
+            if grep -q "^system:" $IOTEX_HOME/etc/config.yaml; then
+                sed -i "/^system:/a\ \ httpAdminPort: $adminPort" $IOTEX_HOME/etc/config.yaml
+            else
+                # Add system: section with httpAdminPort at the end of file
+                echo -e "\nsystem:\n  httpAdminPort: $adminPort" >> $IOTEX_HOME/etc/config.yaml
+            fi
+        fi
     else
-        sed -i '' "/^network:/a\ 
+        sed -i '' "/^network:/a\
 \ \ $externalHost
 " $IOTEX_HOME/etc/config.yaml
-        sed -i '' "/^chain:/a\ 
+        sed -i '' "/^chain:/a\
 \ \ $producerPrivKey
 " $IOTEX_HOME/etc/config.yaml
+        # Add admin port if set
+        if [ -n "$adminPort" ]; then
+            echo "Adding httpAdminPort: $adminPort to config.yaml"
+            # Check if system: section exists
+            if grep -q "^system:" $IOTEX_HOME/etc/config.yaml; then
+                sed -i '' "/^system:/a\\
+\ \ httpAdminPort: $adminPort\\
+" $IOTEX_HOME/etc/config.yaml
+            else
+                # Add system: section with httpAdminPort at the end of file
+                echo -e "\nsystem:\n  httpAdminPort: $adminPort" >> $IOTEX_HOME/etc/config.yaml
+            fi
+        fi
+    fi
+}
+
+function addAdminPortToCompose() {
+    if [ -n "$adminPort" ]; then
+        echo "Adding admin port mapping to docker-compose.yml"
+        local composeFile="$IOTEX_MONITOR_HOME/docker-compose.yml"
+        # Check if port mapping already exists
+        if ! grep -q "${adminPort}:${adminPort}" $composeFile; then
+            # Use awk for reliable cross-platform replacement with proper indentation
+            awk -v port="$adminPort" '{
+                print
+                if (/^[[:space:]]*- 4689:4689/) {
+                    printf "      - %s:%s\n", port, port
+                }
+            }' "$composeFile" > "${composeFile}.tmp" && mv "${composeFile}.tmp" "$composeFile"
+        fi
     fi
 }
 
@@ -176,6 +220,9 @@ function main() {
     docker pull $IOTEX_IMAGE
 
     downloadConfig
+
+    # Add admin port mapping to docker-compose.yml if set
+    addAdminPortToCompose
 
     startupNode
 }
