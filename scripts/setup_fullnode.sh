@@ -248,14 +248,20 @@ function determineAdminPort() {
 
 function addAdminPortToCompose() {
     if [ -n "$adminPort" ]; then
-        echo "Adding admin port mapping to docker-compose.yml"
         local composeFile="$IOTEX_MONITOR_HOME/docker-compose.yml"
-        if [ $SED_IS_GNU -eq 1 ]; then
-            sed -i "s/- 4689:4689/- 4689:4689\n      - ${adminPort}:${adminPort}/" $composeFile
-        else
-            sed -i '' "s/- 4689:4689/- 4689:4689\\
-      - ${adminPort}:${adminPort}/" $composeFile
+        # Check if port mapping already exists to avoid duplicates
+        if grep -q "${adminPort}:${adminPort}" $composeFile; then
+            echo "Admin port mapping ${adminPort}:${adminPort} already exists in docker-compose.yml"
+            return
         fi
+        echo "Adding admin port mapping to docker-compose.yml"
+        # Use awk for reliable cross-platform replacement with proper indentation
+        awk -v port="$adminPort" '{
+            print
+            if (/^[[:space:]]*- 4689:4689/) {
+                printf "      - %s:%s\n", port, port
+            }
+        }' "$composeFile" > "${composeFile}.tmp" && mv "${composeFile}.tmp" "$composeFile"
     fi
 }
 
