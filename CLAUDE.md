@@ -48,10 +48,18 @@ See `release_flow.md` for the complete release process.
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh)
 ```
 
-### One-line upgrade
+### One-line upgrade (interactive)
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh)
 ```
+
+### Non-interactive upgrade (AI agent / CI)
+```bash
+bash setup_fullnode.sh --auto --home=/path/to/iotex-var
+bash setup_fullnode.sh --auto --home=/path/to/iotex-var --version=v2.3.8
+bash setup_fullnode.sh --auto --home=/path/to/iotex-var --force  # reinstall same version
+```
+Flags: `--auto` (skip prompts), `--home=` (IOTEX_HOME), `--version=` (target version), `--force` (bypass same-version check), `--monitor` (enable monitoring), `plugin=gateway` (enable gateway).
 
 ### Run with gateway plugin (for API serving)
 ```bash
