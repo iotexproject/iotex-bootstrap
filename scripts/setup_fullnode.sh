@@ -447,7 +447,7 @@ function main() {
     fi
 
     read -p "Do you want to enable gateway plugin [Y/N] (Default: $plugins)? " plugins
-    if [ "${plugins}X" = "yX" ];then
+    if [ "${plugins}X" = "yX" ] || [ "${plugins}X" = "YX" ];then
         _PLUGINS_=gateway
         echo "Gateway plugin enabled"
     fi
