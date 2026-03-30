@@ -14,6 +14,8 @@ NC='\033[0m' # No Color
 
 _NEED_INSTALL_=0
 _PLUGINS_CHANGE_=0
+_AUTO_=0
+_FORCE_=0
 
 pushd () {
     command pushd "$@" > /dev/null
@@ -64,22 +66,32 @@ function setVar() {
 function processParam() {
     _ENV_=mainnet
     _GREP_STRING_=MainNet
-    if [ $# -gt 0 ];then
-        if [ "$1"X = "testnet"X ];then
-            _ENV_=testnet
-            _GREP_STRING_=TestNet
-        elif [ "$1"X = "plugin=gateway"X ];then
-            _PLUGINS_=gateway
-        fi
-    fi
-    if [ $# -gt 1 ];then
-        if [ "$2"X = "testnet"X ];then
-            _ENV_=testnet
-            _GREP_STRING_=TestNet
-        elif [ "$2"X = "plugin=gateway"X ];then
-            _PLUGINS_=gateway
-        fi
-    fi
+    for arg in "$@"; do
+        case "$arg" in
+            testnet)
+                _ENV_=testnet
+                _GREP_STRING_=TestNet
+                ;;
+            plugin=gateway)
+                _PLUGINS_=gateway
+                ;;
+            --auto)
+                _AUTO_=1
+                ;;
+            --home=*)
+                IOTEX_HOME="${arg#--home=}"
+                ;;
+            --version=*)
+                _FORCE_VERSION_="${arg#--version=}"
+                ;;
+            --monitor)
+                _FORCE_MONITOR_=Y
+                ;;
+            --force)
+                _FORCE_=1
+                ;;
+        esac
+    done
     env=$_ENV_
 
     # Use for auto-update
@@ -101,10 +113,14 @@ function determinePluginIsChanged() {
 }
 
 function determinIotexHome() {
+    if [ $_AUTO_ -eq 1 ] && [ -n "$IOTEX_HOME" ];then
+        echo "Using IOTEX_HOME=$IOTEX_HOME"
+        return
+    fi
     ##Input Data Dir
     echo "The current user of the input directory must have write permission!!!"
     echo -e "${RED} If Upgrade ; input your old directory \$IOTEX_HOME !!! ${NC}"
-    
+
     #while True: do
     read -p "Input your \$IOTEX_HOME [e.g., $defaultdatadir]: " inputdir
     IOTEX_HOME=${inputdir:-"$defaultdatadir"}
@@ -152,11 +168,16 @@ function enableMonitor() {
 }
 
 function checkPrivateKey() {
+    _HAS_PRIVKEY_=0
     if [ -f ${IOTEX_HOME}/etc/config.yaml ];then
         grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml > /dev/null
-        if [ $? -ne 0 ];then
-            _NEED_INSTALL_=1
+        if [ $? -eq 0 ];then
+            _HAS_PRIVKEY_=1
         fi
+    fi
+    # Fresh install is determined by absence of chain.db, not by key
+    if [ ! -f "${IOTEX_HOME}/data/chain.db" ];then
+        _NEED_INSTALL_=1
     fi
 }
 
@@ -191,30 +212,40 @@ function procssNotUpdate() {
     fi
 }
 
-function cleanOldVersion() {
-    echo "Stop old iotex-core"
+function backupOldConfig() {
+    echo -e "${YELLOW} ******  Upgrade IoTeX Node ******* ${NC}"
+    echo -e "${YELLOW} ***  Will stop, delete old iotex container; ${NC}"
+    echo -e "${YELLOW} *** download new config and recover your externalHost producerPrivKey ${NC}"
+    if [ $_AUTO_ -eq 0 ];then
+        read -p "******* Press any key to continue ... [Ctrl + c exit!] " upgreadekey
+    fi
+
+    # Backup externalHost
+    externalHost=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
+    ip=$(echo $externalHost|awk -F':' '{print$2}')
+    if [ -z "$ip" ];then
+        determineExtIp
+    fi
+
+    # Backup producerPrivKey if it exists
+    if [ $_HAS_PRIVKEY_ -eq 1 ];then
+        producerPrivKey=$(grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
+        privKey=$(echo $producerPrivKey|awk -F':' '{print$2}')
+    else
+        echo "No producerPrivKey found — node will use a random key"
+        privKey=""
+        producerPrivKey=""
+    fi
+
+    # Extract existing admin port
+    adminPort=$(grep '^  httpAdminPort:' ${IOTEX_HOME}/etc/config.yaml|awk -F':' '{print$2}'|tr -d ' ')
+}
+
+function stopAndRemoveContainer() {
+    echo "Stop old iotex-core (downtime starts now)"
     docker stop iotex
     echo "delete old iotex docker container"
     docker rm iotex
-    if [ $_NEED_INSTALL_ -eq 0 ];then
-        echo -e "${YELLOW} ******  Upgrade IoTeX Node ******* ${NC}"
-        echo -e "${YELLOW} ***  Will stop, delete old iotex container; ${NC}"
-        echo -e "${YELLOW} *** download new config and recover your externalHost producerPrivKey ${NC}"
-        read -p "******* Press any key to continue ... [Ctrl + c exit!] " upgreadekey
-
-        # Has old producerPrivKey and externalHost
-        producerPrivKey=$(grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
-        externalHost=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
-        privKey=$(echo $producerPrivKey|awk -F':' '{print$2}')
-        ip=$(echo $externalHost|awk -F':' '{print$2}')
-        # Extract existing admin port
-        adminPort=$(grep '^  httpAdminPort:' ${IOTEX_HOME}/etc/config.yaml|awk -F':' '{print$2}'|tr -d ' ')
-    else
-        # No old producerPrivKey and externalHost
-        determineExtIp
-        determinPrivKey
-        determineAdminPort
-    fi
 }
 
 function determineExtIp() {
@@ -281,7 +312,9 @@ function downloadConfig() {
     echo "Update your externalHost,producerPrivKey to config.yaml"
     if [ $SED_IS_GNU -eq 1 ];then
         sed -i "/^network:/a\ \ $externalHost" $IOTEX_HOME/etc/config.yaml
-        sed -i "/^chain:/a\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
+        if [ -n "$producerPrivKey" ];then
+            sed -i "/^chain:/a\ \ $producerPrivKey" $IOTEX_HOME/etc/config.yaml
+        fi
         # Add admin port if set
         if [ -n "$adminPort" ]; then
             echo "Adding httpAdminPort: $adminPort to config.yaml"
@@ -297,9 +330,11 @@ function downloadConfig() {
         sed -i '' "/^network:/a\
 \ \ $externalHost
 " $IOTEX_HOME/etc/config.yaml
-        sed -i '' "/^chain:/a\
+        if [ -n "$producerPrivKey" ];then
+            sed -i '' "/^chain:/a\
 \ \ $producerPrivKey
 " $IOTEX_HOME/etc/config.yaml
+        fi
         # Add admin port if set
         if [ -n "$adminPort" ]; then
             echo "Adding httpAdminPort: $adminPort to config.yaml"
@@ -441,21 +476,25 @@ function main() {
     checkPrivateKey            # Determine the producerPrivKey in the config file is exist.
     checkAndCleanAutoUpdate    # Check if auto-update is installed, then kill and clean it.
 
-    deleteOldFile              # Clean up historical legacy files
-    
     # Interactive setup phase
-    read -p "Do you want to monitor the status of the node [Y/N] (Default: N)? " wantmonitor
+    if [ $_AUTO_ -eq 1 ];then
+        wantmonitor=${_FORCE_MONITOR_:-N}
+    else
+        read -p "Do you want to monitor the status of the node [Y/N] (Default: N)? " wantmonitor
+    fi
 
     if [ $_PLUGINS_ ] && [ "$_PLUGINS_"X = "gateway"X ];then
-        plugins=Y    
+        plugins=Y
     else
         plugins=N
     fi
 
-    read -p "Do you want to enable gateway plugin [Y/N] (Default: $plugins)? " plugins
-    if [ "${plugins}X" = "yX" ] || [ "${plugins}X" = "YX" ];then
-        _PLUGINS_=gateway
-        echo "Gateway plugin enabled"
+    if [ $_AUTO_ -eq 0 ];then
+        read -p "Do you want to enable gateway plugin [Y/N] (Default: $plugins)? " plugins
+        if [ "${plugins}X" = "yX" ] || [ "${plugins}X" = "YX" ];then
+            _PLUGINS_=gateway
+            echo "Gateway plugin enabled"
+        fi
     fi
 
     # Get the latest version.
@@ -465,8 +504,12 @@ function main() {
     fi
 
     echo -e "Current operating environment: ${YELLOW}  $env ${NC}"
-    read -p "Install or Upgrade Version; if null the latest [$lastversion]: " ver
-    version=${ver:-"$lastversion"}   # if $ver ;then version=$ver;else version=$lastversion"
+    if [ $_AUTO_ -eq 1 ];then
+        version=${_FORCE_VERSION_:-"$lastversion"}
+    else
+        read -p "Install or Upgrade Version; if null the latest [$lastversion]: " ver
+        version=${ver:-"$lastversion"}   # if $ver ;then version=$ver;else version=$lastversion"
+    fi
 
     # Get the running version.
     docker ps -a |grep "iotex/iotex-core:v" > /dev/null 2>&1
@@ -480,7 +523,7 @@ function main() {
         # Check if the plugin needs to be changed
         determinePluginIsChanged
 
-        if [ "$version"X = "$runversion"X ] && [ $_PLUGINS_CHANGE_ -eq 0 ];then
+        if [ "$version"X = "$runversion"X ] && [ $_PLUGINS_CHANGE_ -eq 0 ] && [ $_FORCE_ -eq 0 ];then
             # Do nothing
             procssNotUpdate
             exit 0
@@ -488,9 +531,11 @@ function main() {
     fi
 
     # Need update or install
+    _IS_UPGRADE_=0
     if [ -f "${IOTEX_HOME}/data/chain.db" ];then
-        # Clean old version.
-        cleanOldVersion
+        _IS_UPGRADE_=1
+        # Backup config while node is still running
+        backupOldConfig
     else
         determineExtIp
         determinPrivKey
@@ -498,7 +543,9 @@ function main() {
 
         echo -e "${YELLOW} ****** Install IoTeX Node  ***** ${NC}"
         echo -e "${YELLOW} if installed, Confirm Input IOTEX_HOME directory $IOTEX_HOME True ${NC};"
-        read -p "[Ctrl + c exit!]; else Enter anykey ..." anykey
+        if [ $_AUTO_ -eq 0 ];then
+            read -p "[Ctrl + c exit!]; else Enter anykey ..." anykey
+        fi
 
         mkdir -p ${IOTEX_HOME}
         pushd ${IOTEX_HOME}
@@ -507,34 +554,31 @@ function main() {
     fi
 
     wantdownload=N
-    read -p "Do you prefer to start from a snapshot, This will overwrite existing data. Download the db file. [Y/N] (Default: N)? " wantdownload
-    if [ "$_PLUGINS_"X = "gateway"X ];then
-
-        if [[ "$runversion" == "v1.1"* && "$version" == "v1.2"* ]] && ([ "$wantdownload"X = "N"X ] || [ "$wantdownload"X = "n"X ]);then
-            read -p "Confirm that the current bloomfilter.index.db file will be deleted to be forward-compatible." dbf
-            pushd ${IOTEX_HOME}
-            rm -f data/bloomfilter.index.db || echo 'Not exist bloomfilter.index.db.'
-            popd
+    if [ $_AUTO_ -eq 0 ];then
+        read -p "Do you prefer to start from a snapshot, This will overwrite existing data. Download the db file. [Y/N] (Default: N)? " wantdownload
+        if [ "$_PLUGINS_"X = "gateway"X ];then
+            if [[ "$runversion" == "v1.1"* && "$version" == "v1.2"* ]] && ([ "$wantdownload"X = "N"X ] || [ "$wantdownload"X = "n"X ]);then
+                read -p "Confirm that the current bloomfilter.index.db file will be deleted to be forward-compatible." dbf
+                pushd ${IOTEX_HOME}
+                rm -f data/bloomfilter.index.db || echo 'Not exist bloomfilter.index.db.'
+                popd
+            fi
         fi
     fi
-    
-    if [ "${wantdownload}X" = "YX" ] || [ "${wantdownload}X" = "yX" ];then
-        # Download db file
-        donwloadBlockDataFile
-    fi
-
 
     echo -e "Confirm your externalHost: ${YELLOW} $ip ${NC}"
     echo -e "Confirm your producerPrivKey: ${RED} $privKey ${NC}"
     if [ -n "$adminPort" ]; then
         echo -e "Confirm your adminPort: ${YELLOW} $adminPort ${NC}"
     fi
-    read -p "Press any key to continue ... [Ctrl + c exit!] " key2
+    if [ $_AUTO_ -eq 0 ];then
+        read -p "Press any key to continue ... [Ctrl + c exit!] " key2
+    fi
 
+    # All heavy downloads happen while the old node is still running
     echo "docker pull iotex-core ${version}"
     docker pull iotex/iotex-core:${version}
     # or use gcr.io/iotex-servers/iotex-core:${version}
-    #Set the environment with the following commands:
 
     downloadConfig
     preDockerCompose
@@ -547,7 +591,20 @@ function main() {
     # Add admin port mapping to docker-compose.yml if set
     addAdminPortToCompose
 
+    # --- Downtime starts here: stop old container as late as possible ---
+    if [ $_IS_UPGRADE_ -eq 1 ];then
+        stopAndRemoveContainer
+    fi
+
+    deleteOldFile
+
+    # Extract snapshot after container is stopped (writes to mounted data dir)
+    if [ "${wantdownload}X" = "YX" ] || [ "${wantdownload}X" = "yX" ];then
+        donwloadBlockDataFile
+    fi
+
     startupNode
+    # --- Downtime ends here ---
 
     checkAndCleanAutoUpdate
 }
