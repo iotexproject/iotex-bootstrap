@@ -228,13 +228,6 @@ function procssNotUpdate() {
 }
 
 function backupOldConfig() {
-    echo -e "${YELLOW} ******  Upgrade IoTeX Node ******* ${NC}"
-    echo -e "${YELLOW} ***  Will stop, delete old iotex container; ${NC}"
-    echo -e "${YELLOW} *** download new config and recover your externalHost producerPrivKey ${NC}"
-    if [ $_AUTO_ -eq 0 ];then
-        read -p "******* Press any key to continue ... [Ctrl + c exit!] " upgreadekey
-    fi
-
     # Backup externalHost
     externalHost=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
     ip=$(echo $externalHost|awk -F':' '{print$2}')
@@ -586,7 +579,13 @@ function main() {
             fi
         fi
 
-        read -p "Press any key to continue ... [Ctrl + c exit!] " key2
+    fi
+
+    # Last chance to bail out before making changes
+    if [ $_IS_UPGRADE_ -eq 1 ] && [ $_AUTO_ -eq 0 ];then
+        echo -e "${YELLOW} ******  Upgrade IoTeX Node ******* ${NC}"
+        echo -e "${YELLOW} ***  Will pull new image, download config, then stop and replace the container. ${NC}"
+        read -p "******* Press any key to continue ... [Ctrl + c exit!] " upgreadekey
     fi
 
     # All heavy downloads happen while the old node is still running
