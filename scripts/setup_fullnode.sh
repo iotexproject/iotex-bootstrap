@@ -121,11 +121,28 @@ function detectIotexHome() {
 }
 
 function determinIotexHome() {
-    if [ $_AUTO_ -eq 1 ] && [ -n "$IOTEX_HOME" ];then
-        echo "Using IOTEX_HOME=$IOTEX_HOME"
-        return
+    # In auto mode, avoid interactive prompts.
+    if [ $_AUTO_ -eq 1 ];then
+        # If IOTEX_HOME is already set, just use it.
+        if [ -n "$IOTEX_HOME" ];then
+            echo "Using IOTEX_HOME=$IOTEX_HOME"
+            return
+        fi
+
+        # Try to auto-detect IOTEX_HOME from a running container.
+        local detected=$(detectIotexHome)
+        if [ -n "$detected" ];then
+            IOTEX_HOME="$detected"
+            echo "Using auto-detected IOTEX_HOME=$IOTEX_HOME"
+            return
+        fi
+
+        # In auto mode, we cannot prompt; fail fast with a clear error.
+        echo "Error: --auto mode requires --home to be specified or an existing IoTeX container to detect IOTEX_HOME." >&2
+        exit 1
     fi
 
+    # Non-auto mode: optionally auto-detect and then prompt the user.
     # Auto-detect from running container
     local detected=$(detectIotexHome)
     if [ -n "$detected" ];then
@@ -230,9 +247,14 @@ function procssNotUpdate() {
 function backupOldConfig() {
     # Backup externalHost
     externalHost=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml|sed 's/^  //g')
-    ip=$(echo $externalHost|awk -F':' '{print$2}')
+    ip=$(echo "$externalHost" | awk -F':' '{print $2}' | xargs)
     if [ -z "$ip" ];then
-        determineExtIp
+        if [ "$_AUTO_" -eq 1 ]; then
+            echo "Error: externalHost is missing or invalid in ${IOTEX_HOME}/etc/config.yaml; cannot continue auto-upgrade."
+            exit 1
+        else
+            determineExtIp
+        fi
     fi
 
     # Backup producerPrivKey if it exists
