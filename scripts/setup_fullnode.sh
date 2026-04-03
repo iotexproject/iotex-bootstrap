@@ -16,6 +16,7 @@ _NEED_INSTALL_=0
 _PLUGINS_CHANGE_=0
 _AUTO_=0
 _FORCE_=0
+_SNAPSHOT_=0
 
 pushd () {
     command pushd "$@" > /dev/null
@@ -89,6 +90,9 @@ function processParam() {
                 ;;
             --force)
                 _FORCE_=1
+                ;;
+            --snapshot)
+                _SNAPSHOT_=1
                 ;;
         esac
     done
@@ -590,7 +594,9 @@ function main() {
     fi
 
     wantdownload=N
-    if [ $_AUTO_ -eq 0 ];then
+    if [ $_AUTO_ -eq 1 ] && [ $_SNAPSHOT_ -eq 1 ];then
+        wantdownload=Y
+    elif [ $_AUTO_ -eq 0 ];then
         read -p "Do you prefer to start from a snapshot, This will overwrite existing data. Download the db file. [Y/N] (Default: N)? " wantdownload
         if [ "$_PLUGINS_"X = "gateway"X ];then
             if [[ "$runversion" == "v1.1"* && "$version" == "v1.2"* ]] && ([ "$wantdownload"X = "N"X ] || [ "$wantdownload"X = "n"X ]);then
