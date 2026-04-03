@@ -13,7 +13,7 @@
 - [Enable Logrotate](#log)
 - [Operate Your Node](#ops)
 - [Upgrade Your Node（One Line Upgrader）](#upgrade)
-- [AI Agent Upgrade (Non-Interactive)](#agent-upgrade)
+- [Agent Guide](AGENT.md)
 - [Q&A](#qa)
 
 ## <a name="status"/>Release Status
@@ -292,11 +292,10 @@ To stop auto upgdrade cron job and iotex server program, you can run
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/stop_fullnode.sh)
 ```
-## <a name="agent-upgrade"/>AI Agent Upgrade (Non-Interactive)
+
+### Auto Mode (Non-Interactive)
 
 The upgrade script supports a non-interactive mode for use with AI agents, CI/CD pipelines, or automation tools. Use the `--auto` flag to skip all interactive prompts.
-
-**Flags:**
 
 | Flag | Description |
 |---|---|
@@ -304,28 +303,25 @@ The upgrade script supports a non-interactive mode for use with AI agents, CI/CD
 | `--home=/path` | Set `$IOTEX_HOME` directory |
 | `--version=v2.3.8` | Target version (default: latest release) |
 | `--force` | Reinstall even if already running the same version |
+| `--snapshot` | Download blockchain snapshot (recommended for fresh install) |
 | `--monitor` | Enable monitoring |
 | `plugin=gateway` | Enable gateway plugin |
 
-**Upgrade to latest version:**
 ```bash
-bash setup_fullnode.sh --auto --home=/path/to/iotex-var
-```
+# Fresh install with snapshot
+bash setup_fullnode.sh --auto --home=/path/to/iotex-var --snapshot
 
-**Upgrade to a specific version:**
-```bash
+# Upgrade to latest version
+bash setup_fullnode.sh --auto --home=/path/to/iotex-var
+
+# Upgrade to a specific version
 bash setup_fullnode.sh --auto --home=/path/to/iotex-var --version=v2.3.8
 ```
 
-**Force reinstall same version:**
-```bash
-bash setup_fullnode.sh --auto --home=/path/to/iotex-var --force
-```
-
 **Notes:**
-- The script auto-detects `IOTEX_HOME` from the running container if `--home` is not specified in interactive mode.
-- Existing `producerPrivKey` and `externalHost` are preserved during upgrades. If no key is configured, the node will use a random key.
-- The old container is stopped as late as possible (after docker pull and config downloads) to minimize downtime.
+- Existing `producerPrivKey` and `externalHost` are preserved during upgrades.
+- The old container is stopped as late as possible to minimize downtime.
+- See the [Agent Guide](AGENT.md) for detailed setup instructions and common pitfalls.
 
 ## <a name="gateway"/> Gateway Plugin
 Node with gateway plugin enabled will perform extra indexing to serve API requests of more detail chain information, such as number of actions in a block or query actions by hash.
