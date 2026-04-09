@@ -57,8 +57,8 @@ See the [main README](README.md#agent-upgrade) for all available flags.
   - A random `producerPrivKey` is auto-generated as a temporary operator wallet.
   - After install, ask the user: "A temporary operator key was generated. Do you want to fund this wallet for staking, or replace it with an existing key in `$IOTEX_HOME/etc/config.yaml`?"
 - **`externalHost` must be IPv4.** The script now uses `curl -4 ip.sb` by default. If the detected IP is wrong, update `$IOTEX_HOME/etc/config.yaml` and restart.
-- **Snapshot size analysis:** The compressed snapshot is ~182GB and extracts to ~265GB (as of 2026-04). These sizes grow over time — always verify by checking the URL as shown above.
-  - **File download + extract (recommended):** Download the tarball first with resume support, then extract. This is more reliable than streaming for large files — any network interruption resumes from where it left off instead of restarting. If the main disk can't hold both compressed + extracted data, use a temporary volume for the download:
+- **Snapshot download:** The `--snapshot` flag downloads the snapshot to `$IOTEX_HOME/tmp/` and extracts it. This requires enough disk to hold both the compressed tarball and the extracted data on the same partition. The compressed snapshot is ~182GB and extracts to ~265GB (as of 2026-04) — these sizes grow over time, always verify by checking the URL as shown above.
+  - **Manual download (recommended for large snapshots):** Instead of using `--snapshot`, download the snapshot yourself before running the script. This lets you use a separate disk/volume for the tarball and supports resume on failure. Run the setup script without `--snapshot` afterward — the script detects existing data in `$IOTEX_HOME/data/`:
     ```bash
     apt-get install -y pigz
     mkdir -p $IOTEX_HOME/data

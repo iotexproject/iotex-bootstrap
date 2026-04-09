@@ -295,12 +295,22 @@ function determineExtIp() {
     fi
 
     # Force IPv4 — p2p layer does not handle IPv6
-    findip=$(curl -4 -Ss ip.sb)
+    findip=$(curl -4 -Ss --max-time 10 ip.sb 2>/dev/null)
+    if [ -z "$findip" ];then
+        if [ $_AUTO_ -eq 1 ];then
+            echo -e "${RED}Error: Failed to detect external IPv4 address. Check network connectivity or set externalHost manually in \$IOTEX_HOME/etc/config.yaml.${NC}"
+            exit 1
+        fi
+    fi
     if [ $_AUTO_ -eq 1 ];then
         ip=$findip
     else
         read -p "SET YOUR EXTERNAL IP HERE [$findip]: " inputip
         ip=${inputip:-$findip}
+    fi
+    if [ -z "$ip" ];then
+        echo -e "${RED}Error: externalHost cannot be empty.${NC}"
+        exit 1
     fi
     externalHost="externalHost: $ip"
 }
@@ -319,7 +329,15 @@ function determinPrivKey() {
 
     if [ $_AUTO_ -eq 1 ];then
         # Auto-generate a random private key as temp operator wallet
+        if ! command -v openssl &>/dev/null; then
+            echo -e "${RED}Error: openssl is required to generate a private key. Install it or provide producerPrivKey in \$IOTEX_HOME/etc/config.yaml.${NC}"
+            exit 1
+        fi
         privKey=$(openssl rand -hex 32)
+        if [ $? -ne 0 ] || [ -z "$privKey" ] || [ ${#privKey} -ne 64 ];then
+            echo -e "${RED}Error: Failed to generate private key via openssl.${NC}"
+            exit 1
+        fi
         echo -e "${YELLOW}Auto-generated temporary operator key: $privKey${NC}"
         echo -e "${YELLOW}To use your own key, update producerPrivKey in \$IOTEX_HOME/etc/config.yaml and restart.${NC}"
     else
