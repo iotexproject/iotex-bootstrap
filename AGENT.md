@@ -42,23 +42,32 @@ Practical knowledge for AI agents setting up or upgrading an IoTeX mainnet fulln
 ```bash
 # Download the setup script — note: it's under scripts/, NOT repo root
 curl -sSL https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/scripts/setup_fullnode.sh -o ~/setup_fullnode.sh
-
-# Run with --snapshot to download blockchain data (~180GB, takes 1-3 hours)
-bash ~/setup_fullnode.sh --auto --home=<install-path> --snapshot
 ```
 
 See the [main README](README.md#agent-upgrade) for all available flags.
 
-### Key things to know
+**Fresh installs need snapshot data.** Without it, the node tries to sync from genesis using an Ethereum RPC endpoint. The default Infura key in config.yaml is expired, so the node will crash with `401 Unauthorized: account disabled`. There are two ways to get the snapshot data:
 
-- **Always use `--snapshot` for fresh installs.** Without it, the node tries to sync from genesis using an Ethereum RPC endpoint. The default Infura key in config.yaml is expired, so the node will crash with `401 Unauthorized: account disabled`.
+- **Option A: Let the script download it (`--snapshot`).** Simple, but downloads the tarball to `$IOTEX_HOME/tmp/` on the same partition, so you need enough disk for both compressed + extracted data.
+  ```bash
+  bash ~/setup_fullnode.sh --auto --home=<install-path> --snapshot
+  ```
+- **Option B: Download the snapshot manually first (recommended).** Supports resume on failure and lets you use a separate disk/volume for the tarball. After extracting to `$IOTEX_HOME/data/`, run the script without `--snapshot` — it detects existing data automatically.
+  ```bash
+  # 1. Download and extract (see "Snapshot download" below for details)
+  # 2. Then run setup without --snapshot
+  bash ~/setup_fullnode.sh --auto --home=<install-path>
+  ```
+
+### Key things to know
 - **Fresh install in `--auto` mode** now works without interactive prompts:
   - `externalHost` is auto-detected via `curl -4 ip.sb` (forced IPv4 — p2p layer does not handle IPv6).
   - A random `producerPrivKey` is auto-generated as a temporary operator wallet.
   - After install, ask the user: "A temporary operator key was generated. Do you want to fund this wallet for staking, or replace it with an existing key in `$IOTEX_HOME/etc/config.yaml`?"
 - **`externalHost` must be IPv4.** The script now uses `curl -4 ip.sb` by default. If the detected IP is wrong, update `$IOTEX_HOME/etc/config.yaml` and restart.
-- **Snapshot download:** The `--snapshot` flag downloads the snapshot to `$IOTEX_HOME/tmp/` and extracts it. This requires enough disk to hold both the compressed tarball and the extracted data on the same partition. The compressed snapshot is ~182GB and extracts to ~265GB (as of 2026-04) — these sizes grow over time, always verify by checking the URL as shown above.
-  - **Manual download (recommended for large snapshots):** Instead of using `--snapshot`, download the snapshot yourself before running the script. This lets you use a separate disk/volume for the tarball and supports resume on failure. Run the setup script without `--snapshot` afterward — the script detects existing data in `$IOTEX_HOME/data/`:
+- **Snapshot download details:** The compressed snapshot is ~182GB and extracts to ~265GB (as of 2026-04) — these sizes grow over time, always verify by checking the URL as shown above.
+  - **Option A (`--snapshot`)** downloads to `$IOTEX_HOME/tmp/` on the same partition. Needs enough disk for compressed + extracted data. No resume on failure.
+  - **Option B (manual, recommended):** Download the tarball yourself — supports resume and separate disk/volume:
     ```bash
     apt-get install -y pigz
     mkdir -p $IOTEX_HOME/data
