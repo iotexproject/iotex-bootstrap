@@ -283,21 +283,36 @@ function stopAndRemoveContainer() {
 }
 
 function determineExtIp() {
-    findip=$(curl -Ss ip.sb)
-    read -p "SET YOUR EXTERNAL IP HERE [$findip]: " inputip
-    ip=${inputip:-$findip}
+    # Force IPv4 — p2p layer does not handle IPv6
+    findip=$(curl -4 -Ss ip.sb)
+    if [ $_AUTO_ -eq 1 ];then
+        ip=$findip
+    else
+        read -p "SET YOUR EXTERNAL IP HERE [$findip]: " inputip
+        ip=${inputip:-$findip}
+    fi
     externalHost="externalHost: $ip"
 }
 
 function determinPrivKey() {
-    echo "If you are a delegate, make sure producerPrivKey is the key for the operator address you have registered."
-    echo  "SET YOUR PRIVATE KEY HERE(e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)"
-    read -p ": " inputkey
-    privKey=${inputkey:-"96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8"}
+    if [ $_AUTO_ -eq 1 ];then
+        # Auto-generate a random private key as temp operator wallet
+        privKey=$(openssl rand -hex 32)
+        echo -e "${YELLOW}Auto-generated temporary operator key: $privKey${NC}"
+        echo -e "${YELLOW}To use your own key, update producerPrivKey in \$IOTEX_HOME/etc/config.yaml and restart.${NC}"
+    else
+        echo "If you are a delegate, make sure producerPrivKey is the key for the operator address you have registered."
+        echo  "SET YOUR PRIVATE KEY HERE(e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)"
+        read -p ": " inputkey
+        privKey=${inputkey:-"96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8"}
+    fi
     producerPrivKey="producerPrivKey: $privKey"
 }
 
 function determineAdminPort() {
+    if [ $_AUTO_ -eq 1 ];then
+        return
+    fi
     echo "Enable admin port for node management."
     read -p "SET ADMIN PORT (press Enter to skip, e.g., 9009): " inputport
     if [ -n "$inputport" ]; then
@@ -576,9 +591,11 @@ function main() {
         determineAdminPort
 
         echo -e "${YELLOW} ****** Install IoTeX Node  ***** ${NC}"
-        echo -e "${YELLOW} if installed, Confirm Input IOTEX_HOME directory $IOTEX_HOME True ${NC};"
         if [ $_AUTO_ -eq 0 ];then
+            echo -e "${YELLOW} if installed, Confirm Input IOTEX_HOME directory $IOTEX_HOME True ${NC};"
             read -p "[Ctrl + c exit!]; else Enter anykey ..." anykey
+        else
+            echo -e "${YELLOW} Installing to $IOTEX_HOME ${NC}"
         fi
 
         mkdir -p ${IOTEX_HOME}

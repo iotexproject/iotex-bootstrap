@@ -52,7 +52,11 @@ See the [main README](README.md#agent-upgrade) for all available flags.
 ### Key things to know
 
 - **Always use `--snapshot` for fresh installs.** Without it, the node tries to sync from genesis using an Ethereum RPC endpoint. The default Infura key in config.yaml is expired, so the node will crash with `401 Unauthorized: account disabled`.
-- **`externalHost` must be IPv4.** The script auto-detects via `curl ip.sb`, which may return IPv6 on dual-stack servers. The p2p layer does not handle IPv6. Fix with: `curl -4 ip.sb` and update `$IOTEX_HOME/etc/config.yaml`.
+- **Fresh install in `--auto` mode** now works without interactive prompts:
+  - `externalHost` is auto-detected via `curl -4 ip.sb` (forced IPv4 — p2p layer does not handle IPv6).
+  - A random `producerPrivKey` is auto-generated as a temporary operator wallet.
+  - After install, ask the user: "A temporary operator key was generated. Do you want to fund this wallet for staking, or replace it with an existing key in `$IOTEX_HOME/etc/config.yaml`?"
+- **`externalHost` must be IPv4.** The script now uses `curl -4 ip.sb` by default. If the detected IP is wrong, update `$IOTEX_HOME/etc/config.yaml` and restart.
 - **Snapshot size analysis:** The compressed snapshot is ~182GB and extracts to ~265GB (as of 2026-04). These sizes grow over time — always verify by checking the URL as shown above.
   - **File download + extract (recommended):** Download the tarball first with resume support, then extract. This is more reliable than streaming for large files — any network interruption resumes from where it left off instead of restarting. If the main disk can't hold both compressed + extracted data, use a temporary volume for the download:
     ```bash
