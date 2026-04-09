@@ -24,10 +24,14 @@ Practical knowledge for AI agents setting up or upgrading an IoTeX mainnet fulln
 
 ### Before you start
 
-1. **Check available disk space** — a core node needs at least 500GB free, a gateway node needs 1TB+:
+1. **Check available disk space** — run `df -h` and analyze ALL mounted partitions:
    ```bash
-   df -h /
+   df -h
    ```
+   - Core node: **300GB minimum** (265GB snapshot data + growth). 500GB+ recommended.
+   - Gateway node: **1TB+ required**.
+   - If using stream extraction (curl | tar), only ~265GB needed. If downloading tarball first, ~450GB needed (180GB compressed + 265GB extracted).
+   - If no single partition is large enough, tell the user to resize the disk or attach additional storage before proceeding.
 2. **Choose the install path** — pick the partition with the most space. Recommend `$HOME/iotex-var` if the home partition is large enough, otherwise use the largest mounted volume (e.g., `/data/iotex-var`, `/mnt/iotex-var`). Ask the user if unclear.
 
 ### Run the setup
@@ -46,15 +50,25 @@ See the [main README](README.md#agent-upgrade) for all available flags.
 
 - **Always use `--snapshot` for fresh installs.** Without it, the node tries to sync from genesis using an Ethereum RPC endpoint. The default Infura key in config.yaml is expired, so the node will crash with `401 Unauthorized: account disabled`.
 - **`externalHost` must be IPv4.** The script auto-detects via `curl ip.sb`, which may return IPv6 on dual-stack servers. The p2p layer does not handle IPv6. Fix with: `curl -4 ip.sb` and update `$IOTEX_HOME/etc/config.yaml`.
-- **The snapshot download is blocking** and can take hours. For manual background download:
-  ```bash
-  nohup bash -c "\
-    curl -L -C - -o $HOME/iotex-var/data.tar.gz https://t.iotex.me/mainnet-data-snapshot-core-latest && \
-    tar -xzf $HOME/iotex-var/data.tar.gz -C $HOME/iotex-var/data/ && \
-    echo DONE > $HOME/iotex-var/snapshot.status \
-  " > $HOME/iotex-var/snapshot.log 2>&1 &
-  ```
-- **Disk space:** if the target partition has less than 500GB free, warn the user before proceeding.
+- **Snapshot size analysis:** Before downloading, check how much free space the target partition has. The snapshot is ~180GB compressed and ~265GB extracted.
+  - **Stream extraction (recommended):** Pipe curl directly into tar — no intermediate file, needs only ~265GB free:
+    ```bash
+    # Install pigz for parallel decompression (much faster on multi-core)
+    apt-get install -y pigz
+    mkdir -p $IOTEX_HOME/data
+    curl -L -s https://t.iotex.me/mainnet-data-snapshot-core-latest | pigz -d | tar -xf - -C $IOTEX_HOME/data/
+    ```
+  - **Two-step download (if you need resume support):** Downloads the tarball first, then extracts. Needs ~450GB free (180GB compressed + 265GB extracted):
+    ```bash
+    nohup bash -c "\
+      curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/mainnet-data-snapshot-core-latest && \
+      tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/ && \
+      rm -f $IOTEX_HOME/data.tar.gz && \
+      echo DONE > $IOTEX_HOME/snapshot.status \
+    " > $IOTEX_HOME/snapshot.log 2>&1 &
+    ```
+  - If the partition has **less than 300GB free**, use stream extraction. If less than 265GB, the disk is too small — warn the user.
+- **Disk space:** a core node needs at least 300GB free (265GB data + growth headroom). A gateway node needs 1TB+. If the target partition is too small, suggest the user resize the disk or pick a larger volume before proceeding.
 
 ## Upgrade
 
