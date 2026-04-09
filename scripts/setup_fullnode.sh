@@ -295,12 +295,14 @@ function determineExtIp() {
     fi
 
     # Force IPv4 — p2p layer does not handle IPv6
-    findip=$(curl -4 -Ss --max-time 10 ip.sb 2>/dev/null)
-    if [ -z "$findip" ];then
-        if [ $_AUTO_ -eq 1 ];then
-            echo -e "${RED}Error: Failed to detect external IPv4 address. Check network connectivity or set externalHost manually in \$IOTEX_HOME/etc/config.yaml.${NC}"
-            exit 1
-        fi
+    findip=$(curl -4 -sSf --max-time 10 ip.sb 2>/dev/null | tr -d '[:space:]')
+    # Validate it looks like an IPv4 address
+    if ! echo "$findip" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$';then
+        findip=""
+    fi
+    if [ -z "$findip" ] && [ $_AUTO_ -eq 1 ];then
+        echo -e "${RED}Error: Failed to detect external IPv4 address. Check network connectivity or set externalHost manually in \$IOTEX_HOME/etc/config.yaml.${NC}"
+        exit 1
     fi
     if [ $_AUTO_ -eq 1 ];then
         ip=$findip
@@ -630,8 +632,10 @@ function main() {
     fi
 
     # Need update or install
+    # Upgrade requires both chain.db AND config.yaml — if data was pre-loaded
+    # (e.g. snapshot extracted manually) but no config exists, treat as fresh install
     _IS_UPGRADE_=0
-    if [ -f "${IOTEX_HOME}/data/chain.db" ];then
+    if [ -f "${IOTEX_HOME}/data/chain.db" ] && [ -f "${IOTEX_HOME}/etc/config.yaml" ];then
         _IS_UPGRADE_=1
         # Backup config while node is still running
         backupOldConfig
