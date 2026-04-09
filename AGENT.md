@@ -54,12 +54,20 @@ See the [main README](README.md#agent-upgrade) for all available flags.
 - **Always use `--snapshot` for fresh installs.** Without it, the node tries to sync from genesis using an Ethereum RPC endpoint. The default Infura key in config.yaml is expired, so the node will crash with `401 Unauthorized: account disabled`.
 - **`externalHost` must be IPv4.** The script auto-detects via `curl ip.sb`, which may return IPv6 on dual-stack servers. The p2p layer does not handle IPv6. Fix with: `curl -4 ip.sb` and update `$IOTEX_HOME/etc/config.yaml`.
 - **Snapshot size analysis:** The compressed snapshot is ~182GB and extracts to ~265GB (as of 2026-04). These sizes grow over time — always verify by checking the URL as shown above.
-  - **Stream extraction (recommended):** Pipe curl directly into tar — no intermediate file, only needs enough space for the extracted data:
+  - **Stream extraction (recommended):** Pipe curl directly into tar — no intermediate file, only needs enough space for the extracted data. Wrap in a retry loop since stream extraction cannot resume mid-way:
     ```bash
     # Install pigz for parallel decompression (much faster on multi-core)
     apt-get install -y pigz
     mkdir -p $IOTEX_HOME/data
-    curl -L -s https://t.iotex.me/mainnet-data-snapshot-core-latest | pigz -d | tar -xf - -C $IOTEX_HOME/data/
+    # Retry loop — stream can't resume, so restart from scratch on failure
+    ATTEMPT=0; MAX=5
+    until [ $ATTEMPT -ge $MAX ]; do
+      ATTEMPT=$((ATTEMPT + 1)); echo "Attempt $ATTEMPT/$MAX"
+      rm -rf $IOTEX_HOME/data/*
+      curl -L -s --retry 10 --retry-delay 5 --speed-limit 100000 --speed-time 60 \
+        https://t.iotex.me/mainnet-data-snapshot-core-latest | pigz -d | tar -xf - -C $IOTEX_HOME/data/ && break
+      echo "Failed, retrying in 30s..."; sleep 30
+    done
     ```
   - **Two-step download (if you need resume support):** Downloads the tarball first, then extracts. Needs enough space for both compressed and extracted data:
     ```bash
