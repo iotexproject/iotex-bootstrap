@@ -54,12 +54,27 @@ See the [main README](README.md#agent-upgrade) for all available flags.
 - **Always use `--snapshot` for fresh installs.** Without it, the node tries to sync from genesis using an Ethereum RPC endpoint. The default Infura key in config.yaml is expired, so the node will crash with `401 Unauthorized: account disabled`.
 - **`externalHost` must be IPv4.** The script auto-detects via `curl ip.sb`, which may return IPv6 on dual-stack servers. The p2p layer does not handle IPv6. Fix with: `curl -4 ip.sb` and update `$IOTEX_HOME/etc/config.yaml`.
 - **Snapshot size analysis:** The compressed snapshot is ~182GB and extracts to ~265GB (as of 2026-04). These sizes grow over time — always verify by checking the URL as shown above.
-  - **Stream extraction (recommended):** Pipe curl directly into tar — no intermediate file, only needs enough space for the extracted data. Wrap in a retry loop since stream extraction cannot resume mid-way:
+  - **File download + extract (recommended):** Download the tarball first with resume support, then extract. This is more reliable than streaming for large files — any network interruption resumes from where it left off instead of restarting. If the main disk can't hold both compressed + extracted data, use a temporary volume for the download:
     ```bash
-    # Install pigz for parallel decompression (much faster on multi-core)
     apt-get install -y pigz
     mkdir -p $IOTEX_HOME/data
-    # Retry loop — stream can't resume, so restart from scratch on failure
+    # Download with resume support (use a separate disk/volume if main disk is too small)
+    DOWNLOAD_DIR=$IOTEX_HOME  # or /mnt/volume if main disk can't hold both
+    until curl -L -C - -o $DOWNLOAD_DIR/snapshot.tar.gz \
+      --retry 20 --retry-delay 10 --speed-limit 100000 --speed-time 120 \
+      https://t.iotex.me/mainnet-data-snapshot-core-latest; do
+      echo "Download interrupted, resuming in 30s..."; sleep 30
+    done
+    # Extract with parallel decompression, then clean up
+    pigz -dc $DOWNLOAD_DIR/snapshot.tar.gz | tar -xf - -C $IOTEX_HOME/data/
+    rm -f $DOWNLOAD_DIR/snapshot.tar.gz
+    ```
+    For even faster downloads, use `aria2c -x16 -s16` instead of curl (16 parallel connections). aria2c also supports resume via `--continue=true`.
+  - **Stream extraction (fallback — only when disk is very constrained):** Pipe curl directly into tar — no intermediate file, but cannot resume on failure. Only use when you truly cannot attach a temporary volume:
+    ```bash
+    apt-get install -y pigz
+    mkdir -p $IOTEX_HOME/data
+    # No resume — restarts from scratch on failure
     ATTEMPT=0; MAX=5
     until [ $ATTEMPT -ge $MAX ]; do
       ATTEMPT=$((ATTEMPT + 1)); echo "Attempt $ATTEMPT/$MAX"
@@ -69,17 +84,7 @@ See the [main README](README.md#agent-upgrade) for all available flags.
       echo "Failed, retrying in 30s..."; sleep 30
     done
     ```
-  - **Two-step download (if you need resume support):** Downloads the tarball first, then extracts. Needs enough space for both compressed and extracted data:
-    ```bash
-    nohup bash -c "\
-      curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/mainnet-data-snapshot-core-latest && \
-      tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/ && \
-      rm -f $IOTEX_HOME/data.tar.gz && \
-      echo DONE > $IOTEX_HOME/snapshot.status \
-    " > $IOTEX_HOME/snapshot.log 2>&1 &
-    ```
-  - If the partition cannot hold both the compressed and extracted data, use stream extraction. If it cannot hold even the extracted data, the disk is too small — warn the user.
-- **Disk space:** always verify the current snapshot size from the URL before proceeding. Ensure the target partition has enough free space plus growth headroom. If the target partition is too small, suggest the user resize the disk or pick a larger volume before proceeding.
+- **Disk space:** always verify the current snapshot size from the URL before proceeding. Ensure the target partition has enough free space plus growth headroom. If the main disk can't hold both the compressed and extracted data, attach a temporary volume for the download — it only needs to hold the compressed file and can be deleted after extraction. If the target partition is too small even for extracted data, suggest the user resize the disk before proceeding.
 
 ## Upgrade
 
