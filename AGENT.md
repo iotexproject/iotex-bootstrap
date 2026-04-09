@@ -24,13 +24,15 @@ Practical knowledge for AI agents setting up or upgrading an IoTeX mainnet fulln
 
 ### Before you start
 
-1. **Check available disk space** — run `df -h` and analyze ALL mounted partitions, then check the actual snapshot size on `storage.iotex.io`:
+1. **Check available disk space** — first check the actual snapshot size, then compare against free disk:
    ```bash
+   # Step 1: Check current compressed snapshot size (as of 2026-04, ~182GB compressed, ~265GB extracted)
+   curl -sIL https://t.iotex.me/mainnet-data-snapshot-core-latest 2>/dev/null | grep -i content-length
+   # Step 2: Check free disk on all partitions
    df -h
-   # Check current snapshot sizes (compressed .tar.gz and extracted)
-   curl -sI https://t.iotex.me/mainnet-data-snapshot-core-latest 2>/dev/null | grep -i content-length
    ```
-   - Gateway node: much larger than core — 1TB+ required.
+   - These sizes grow over time — always check the URL first, don't rely on the numbers above.
+   - Core node: extracted size + growth headroom (as of 2026-04, ~300GB minimum). Gateway node: 1TB+.
    - If using stream extraction (curl | tar), only the extracted size is needed. If downloading tarball first, both compressed + extracted sizes are needed.
    - If no single partition is large enough, tell the user to resize the disk or attach additional storage before proceeding.
 2. **Choose the install path** — pick the partition with the most space. Recommend `$HOME/iotex-var` if the home partition is large enough, otherwise use the largest mounted volume (e.g., `/data/iotex-var`, `/mnt/iotex-var`). Ask the user if unclear.
@@ -51,7 +53,7 @@ See the [main README](README.md#agent-upgrade) for all available flags.
 
 - **Always use `--snapshot` for fresh installs.** Without it, the node tries to sync from genesis using an Ethereum RPC endpoint. The default Infura key in config.yaml is expired, so the node will crash with `401 Unauthorized: account disabled`.
 - **`externalHost` must be IPv4.** The script auto-detects via `curl ip.sb`, which may return IPv6 on dual-stack servers. The p2p layer does not handle IPv6. Fix with: `curl -4 ip.sb` and update `$IOTEX_HOME/etc/config.yaml`.
-- **Snapshot size analysis:** Before downloading, check the actual snapshot size on `storage.iotex.io` and compare against free disk space. Snapshot sizes grow over time — do not hardcode assumptions.
+- **Snapshot size analysis:** The compressed snapshot is ~182GB and extracts to ~265GB (as of 2026-04). These sizes grow over time — always verify by checking the URL as shown above.
   - **Stream extraction (recommended):** Pipe curl directly into tar — no intermediate file, only needs enough space for the extracted data:
     ```bash
     # Install pigz for parallel decompression (much faster on multi-core)
@@ -69,7 +71,7 @@ See the [main README](README.md#agent-upgrade) for all available flags.
     " > $IOTEX_HOME/snapshot.log 2>&1 &
     ```
   - If the partition cannot hold both the compressed and extracted data, use stream extraction. If it cannot hold even the extracted data, the disk is too small — warn the user.
-- **Disk space:** check `storage.iotex.io` for current snapshot sizes and ensure the target partition has enough free space plus growth headroom. A gateway node needs 1TB+. If the target partition is too small, suggest the user resize the disk or pick a larger volume before proceeding.
+- **Disk space:** always verify the current snapshot size from the URL before proceeding. Ensure the target partition has enough free space plus growth headroom. If the target partition is too small, suggest the user resize the disk or pick a larger volume before proceeding.
 
 ## Upgrade
 
