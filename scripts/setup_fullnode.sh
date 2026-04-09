@@ -283,21 +283,88 @@ function stopAndRemoveContainer() {
 }
 
 function determineExtIp() {
-    findip=$(curl -Ss ip.sb)
-    read -p "SET YOUR EXTERNAL IP HERE [$findip]: " inputip
-    ip=${inputip:-$findip}
+    # Check if an existing config already has externalHost
+    if [ -f "${IOTEX_HOME}/etc/config.yaml" ];then
+        local existingIp=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml 2>/dev/null | awk -F': ' '{print $2}' | tr -d ' "')
+        if [ -n "$existingIp" ];then
+            echo "Using existing externalHost from config.yaml: $existingIp"
+            ip="$existingIp"
+            externalHost="externalHost: $ip"
+            return
+        fi
+    fi
+
+    # Force IPv4 — p2p layer does not handle IPv6
+    findip=$(curl -4 -sSf --max-time 10 ip.sb 2>/dev/null | tr -d '[:space:]')
+    # Validate it looks like an IPv4 address
+    if ! echo "$findip" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$';then
+        findip=""
+    fi
+    if [ -z "$findip" ] && [ $_AUTO_ -eq 1 ];then
+        echo -e "${RED}Error: Failed to detect external IPv4 address. Check network connectivity or set externalHost manually in \$IOTEX_HOME/etc/config.yaml.${NC}"
+        exit 1
+    fi
+    if [ $_AUTO_ -eq 1 ];then
+        ip=$findip
+    else
+        read -p "SET YOUR EXTERNAL IP HERE [$findip]: " inputip
+        ip=${inputip:-$findip}
+    fi
+    if [ -z "$ip" ];then
+        echo -e "${RED}Error: externalHost cannot be empty.${NC}"
+        exit 1
+    fi
     externalHost="externalHost: $ip"
 }
 
 function determinPrivKey() {
-    echo "If you are a delegate, make sure producerPrivKey is the key for the operator address you have registered."
-    echo  "SET YOUR PRIVATE KEY HERE(e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)"
-    read -p ": " inputkey
-    privKey=${inputkey:-"96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8"}
+    # Check if an existing config already has a producerPrivKey
+    if [ -f "${IOTEX_HOME}/etc/config.yaml" ];then
+        local existingKey=$(grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml 2>/dev/null | awk -F': ' '{print $2}' | tr -d ' "')
+        if [ -n "$existingKey" ];then
+            echo "Using existing producerPrivKey from config.yaml"
+            privKey="$existingKey"
+            producerPrivKey="producerPrivKey: $privKey"
+            return
+        fi
+    fi
+
+    if [ $_AUTO_ -eq 1 ];then
+        # Auto-generate a random private key as temp operator wallet
+        if ! command -v openssl &>/dev/null; then
+            echo -e "${RED}Error: openssl is required to generate a private key. Install it or provide producerPrivKey in \$IOTEX_HOME/etc/config.yaml.${NC}"
+            exit 1
+        fi
+        privKey=$(openssl rand -hex 32)
+        if [ $? -ne 0 ] || [ -z "$privKey" ] || [ ${#privKey} -ne 64 ];then
+            echo -e "${RED}Error: Failed to generate private key via openssl.${NC}"
+            exit 1
+        fi
+        echo -e "${YELLOW}Auto-generated temporary operator key: $privKey${NC}"
+        echo -e "${YELLOW}To use your own key, update producerPrivKey in \$IOTEX_HOME/etc/config.yaml and restart.${NC}"
+    else
+        echo "If you are a delegate, make sure producerPrivKey is the key for the operator address you have registered."
+        echo  "SET YOUR PRIVATE KEY HERE(e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)"
+        read -p ": " inputkey
+        privKey=${inputkey:-"96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8"}
+    fi
     producerPrivKey="producerPrivKey: $privKey"
 }
 
 function determineAdminPort() {
+    # Check if an existing config already has adminPort
+    if [ -f "${IOTEX_HOME}/etc/config.yaml" ];then
+        local existingPort=$(grep '^  httpAdminPort:' ${IOTEX_HOME}/etc/config.yaml 2>/dev/null | awk -F':' '{print $2}' | tr -d ' ')
+        if [ -n "$existingPort" ];then
+            echo "Using existing adminPort from config.yaml: $existingPort"
+            adminPort="$existingPort"
+            return
+        fi
+    fi
+
+    if [ $_AUTO_ -eq 1 ];then
+        return
+    fi
     echo "Enable admin port for node management."
     read -p "SET ADMIN PORT (press Enter to skip, e.g., 9009): " inputport
     if [ -n "$inputport" ]; then
@@ -565,8 +632,10 @@ function main() {
     fi
 
     # Need update or install
+    # Upgrade requires both chain.db AND config.yaml — if data was pre-loaded
+    # (e.g. snapshot extracted manually) but no config exists, treat as fresh install
     _IS_UPGRADE_=0
-    if [ -f "${IOTEX_HOME}/data/chain.db" ];then
+    if [ -f "${IOTEX_HOME}/data/chain.db" ] && [ -f "${IOTEX_HOME}/etc/config.yaml" ];then
         _IS_UPGRADE_=1
         # Backup config while node is still running
         backupOldConfig
@@ -576,9 +645,11 @@ function main() {
         determineAdminPort
 
         echo -e "${YELLOW} ****** Install IoTeX Node  ***** ${NC}"
-        echo -e "${YELLOW} if installed, Confirm Input IOTEX_HOME directory $IOTEX_HOME True ${NC};"
         if [ $_AUTO_ -eq 0 ];then
+            echo -e "${YELLOW} if installed, Confirm Input IOTEX_HOME directory $IOTEX_HOME True ${NC};"
             read -p "[Ctrl + c exit!]; else Enter anykey ..." anykey
+        else
+            echo -e "${YELLOW} Installing to $IOTEX_HOME ${NC}"
         fi
 
         mkdir -p ${IOTEX_HOME}
