@@ -283,6 +283,17 @@ function stopAndRemoveContainer() {
 }
 
 function determineExtIp() {
+    # Check if an existing config already has externalHost
+    if [ -f "${IOTEX_HOME}/etc/config.yaml" ];then
+        local existingIp=$(grep '^  externalHost:' ${IOTEX_HOME}/etc/config.yaml 2>/dev/null | awk -F': ' '{print $2}' | tr -d ' "')
+        if [ -n "$existingIp" ];then
+            echo "Using existing externalHost from config.yaml: $existingIp"
+            ip="$existingIp"
+            externalHost="externalHost: $ip"
+            return
+        fi
+    fi
+
     # Force IPv4 — p2p layer does not handle IPv6
     findip=$(curl -4 -Ss ip.sb)
     if [ $_AUTO_ -eq 1 ];then
@@ -295,6 +306,17 @@ function determineExtIp() {
 }
 
 function determinPrivKey() {
+    # Check if an existing config already has a producerPrivKey
+    if [ -f "${IOTEX_HOME}/etc/config.yaml" ];then
+        local existingKey=$(grep '^  producerPrivKey:' ${IOTEX_HOME}/etc/config.yaml 2>/dev/null | awk -F': ' '{print $2}' | tr -d ' "')
+        if [ -n "$existingKey" ];then
+            echo "Using existing producerPrivKey from config.yaml"
+            privKey="$existingKey"
+            producerPrivKey="producerPrivKey: $privKey"
+            return
+        fi
+    fi
+
     if [ $_AUTO_ -eq 1 ];then
         # Auto-generate a random private key as temp operator wallet
         privKey=$(openssl rand -hex 32)
@@ -310,6 +332,16 @@ function determinPrivKey() {
 }
 
 function determineAdminPort() {
+    # Check if an existing config already has adminPort
+    if [ -f "${IOTEX_HOME}/etc/config.yaml" ];then
+        local existingPort=$(grep '^  httpAdminPort:' ${IOTEX_HOME}/etc/config.yaml 2>/dev/null | awk -F':' '{print $2}' | tr -d ' ')
+        if [ -n "$existingPort" ];then
+            echo "Using existing adminPort from config.yaml: $existingPort"
+            adminPort="$existingPort"
+            return
+        fi
+    fi
+
     if [ $_AUTO_ -eq 1 ];then
         return
     fi
