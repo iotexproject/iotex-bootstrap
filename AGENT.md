@@ -82,7 +82,18 @@ See the [main README](README.md#agent-upgrade) for all available flags.
     pigz -dc $DOWNLOAD_DIR/snapshot.tar.gz | tar -xf - -C $IOTEX_HOME/data/
     rm -f $DOWNLOAD_DIR/snapshot.tar.gz
     ```
-    For even faster downloads, use `aria2c -x16 -s16` instead of curl (16 parallel connections). aria2c also supports resume via `--continue=true`.
+    **Highly recommended: use `aria2c` instead of curl** — 5x to 15x faster in practice (measured ~275 MB/s with aria2c vs ~17 MB/s with single-connection curl). It splits the download across multiple parallel connections and also supports resume:
+    ```bash
+    apt-get install -y aria2 pigz
+    mkdir -p $IOTEX_HOME/data
+    DOWNLOAD_DIR=$IOTEX_HOME  # or /mnt/volume if main disk can't hold both
+    aria2c -x 16 -s 16 -k 10M --continue=true \
+      --max-tries=20 --retry-wait=10 \
+      -o snapshot.tar.gz -d $DOWNLOAD_DIR \
+      https://t.iotex.me/mainnet-data-snapshot-core-latest
+    pigz -dc $DOWNLOAD_DIR/snapshot.tar.gz | tar -xf - -C $IOTEX_HOME/data/
+    rm -f $DOWNLOAD_DIR/snapshot.tar.gz
+    ```
   - **Stream extraction (fallback — only when disk is very constrained):** Pipe curl directly into tar — no intermediate file, but cannot resume on failure. Only use when you truly cannot attach a temporary volume:
     ```bash
     apt-get install -y pigz
