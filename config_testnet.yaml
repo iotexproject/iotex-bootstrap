@@ -1,9 +1,9 @@
 network:
   # externalHost: SET YOUR EXTERNAL IP HERE (e.g., 12.34.56.78)
-  externalPort: 4689
+  externalPort: 4690
   bootstrapNodes:
-    - /dns4/bootnode-0.testnet.iotex.one/tcp/4689/ipfs/12D3KooWFnaTYuLo8Mkbm3wzaWHtUuaxBRe24Uiopu15Wr5EhD3o
-    - /dns4/bootnode-1.testnet.iotex.one/tcp/4689/ipfs/12D3KooWS7hkdFozeUqriUxv7zw8Y6NCeV8E5HUbgmVkGJUv4jHS
+    - /dns4/bootnode-0.testnet.iotex.one/tcp/4690/ipfs/12D3KooWFnaTYuLo8Mkbm3wzaWHtUuaxBRe24Uiopu15Wr5EhD3o
+    - /dns4/bootnode-1.testnet.iotex.one/tcp/4690/ipfs/12D3KooWS7hkdFozeUqriUxv7zw8Y6NCeV8E5HUbgmVkGJUv4jHS
 
 chain:
   # producerPrivKey: SET YOUR PRIVATE KEY HERE (e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)
