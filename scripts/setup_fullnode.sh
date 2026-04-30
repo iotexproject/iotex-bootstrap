@@ -67,11 +67,13 @@ function setVar() {
 function processParam() {
     _ENV_=mainnet
     _GREP_STRING_=MainNet
+    _P2P_PORT_=4689
     for arg in "$@"; do
         case "$arg" in
             testnet)
                 _ENV_=testnet
                 _GREP_STRING_=TestNet
+                _P2P_PORT_=4690
                 ;;
             plugin=gateway)
                 _PLUGINS_=gateway
@@ -195,6 +197,10 @@ function preDockerCompose() {
     downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml.gateway" "$IOTEX_MONITOR_HOME/docker-compose.yml.gateway"
     downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/docker-compose.yml" "$IOTEX_MONITOR_HOME/docker-compose.yml.default"
     downloadFile "https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/monitor/.env" "$IOTEX_MONITOR_HOME/.env"
+    if [ "${_P2P_PORT_}" != "4689" ]; then
+        sed -i "s/- 4689:4689/- ${_P2P_PORT_}:${_P2P_PORT_}/g" "$IOTEX_MONITOR_HOME/docker-compose.yml.gateway"
+        sed -i "s/- 4689:4689/- ${_P2P_PORT_}:${_P2P_PORT_}/g" "$IOTEX_MONITOR_HOME/docker-compose.yml.default"
+    fi
 }
 
 function enableMonitor() {
@@ -388,9 +394,9 @@ function addAdminPortToCompose() {
         fi
         echo "Adding admin port mapping to docker-compose.yml"
         # Use awk for reliable cross-platform replacement with proper indentation
-        awk -v port="$adminPort" '{
+        awk -v port="$adminPort" -v p2pport="${_P2P_PORT_}" '{
             print
-            if (/^[[:space:]]*- 4689:4689/) {
+            if ($0 ~ ("^[[:space:]]*- " p2pport ":" p2pport)) {
                 printf "      - %s:%s\n", port, port
             }
         }' "$composeFile" > "${composeFile}.tmp" && mv "${composeFile}.tmp" "$composeFile"
