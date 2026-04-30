@@ -15,6 +15,13 @@ NC='\033[0m' # No Color
 #echo -e "ENV _GREP_STRING_ must be set."
 [ $_GREP_STRING_ ] || exit 2
 
+# Derive P2P port from environment (testnet uses 4690, mainnet uses 4689)
+if [ "${_ENV_}" = "testnet" ]; then
+    _P2P_PORT_=4690
+else
+    _P2P_PORT_=4689
+fi
+
 pushd () {
     command pushd "$@" > /dev/null
 }
@@ -163,9 +170,9 @@ function addAdminPortToCompose() {
         # Check if port mapping already exists
         if ! grep -q "${adminPort}:${adminPort}" $composeFile; then
             # Use awk for reliable cross-platform replacement with proper indentation
-            awk -v port="$adminPort" '{
+            awk -v port="$adminPort" -v p2pport="${_P2P_PORT_}" '{
                 print
-                if (/^[[:space:]]*- 4689:4689/) {
+                if ($0 ~ ("^[[:space:]]*- " p2pport ":" p2pport)) {
                     printf "      - %s:%s\n", port, port
                 }
             }' "$composeFile" > "${composeFile}.tmp" && mv "${composeFile}.tmp" "$composeFile"
