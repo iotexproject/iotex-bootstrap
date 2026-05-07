@@ -84,7 +84,7 @@ curl -L -C - -o $IOTEX_HOME/poll.tar.gz https://storage.iotex.io/poll.testnet.ta
 
 ```
 docker run -d --restart on-failure --name iotex \
-        -p 4689:4689 \
+        -p 4690:4690 \
         -p 8080:8080 \
         -v=$IOTEX_HOME/data:/var/data:rw \
         -v=$IOTEX_HOME/log:/var/log:rw \
@@ -102,7 +102,7 @@ If you want to also make your node be a [gateway](#gateway), which could process
 
 ```
 docker run -d --restart on-failure --name iotex \
-        -p 4689:4689 \
+        -p 4690:4690 \
         -p 14014:14014 \
         -p 15014:15014 \
         -p 8080:8080 \
@@ -117,7 +117,7 @@ docker run -d --restart on-failure --name iotex \
         -plugin=gateway
 ```
 
-7. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
+7. Make sure TCP ports 4690, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
 ## <a name="testnet_native"/>Join Testnet without using Docker
 This is not the preferred way to start an IoTeX node
@@ -167,7 +167,7 @@ nohup $IOTEX_HOME/iotex-server \
         -plugin=gateway &
 ```
 
-6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
+6. Make sure TCP ports 4690, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
 ## <a name="ioctl"/>Interact with Blockchain
 

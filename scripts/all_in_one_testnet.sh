@@ -20,7 +20,7 @@ curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/testnet-data-snapshot
 tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
 
 docker run -d --restart on-failure --name iotex \
-        -p 4689:4689 \
+        -p 4690:4690 \
         -p 8080:8080 \
         -v=$IOTEX_HOME/data:/var/data:rw \
         -v=$IOTEX_HOME/log:/var/log:rw \

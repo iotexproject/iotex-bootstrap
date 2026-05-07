@@ -83,7 +83,7 @@ curl -L -C - -o $IOTEX_HOME/poll.tar.gz https://storage.iotex.io/poll.testnet.ta
 
 ```
 docker run -d --restart on-failure --name iotex \
-        -p 4689:4689 \
+        -p 4690:4690 \
         -p 8080:8080 \
         -v=$IOTEX_HOME/data:/var/data:rw \
         -v=$IOTEX_HOME/log:/var/log:rw \
@@ -100,7 +100,7 @@ docker run -d --restart on-failure --name iotex \
 如果您还希望使节点成为[网关](#gateway)，可以处理用户的API请求，请改用以下命令：
 ```
 docker run -d --restart on-failure --name iotex \
-        -p 4689:4689 \
+        -p 4690:4690 \
         -p 14014:14014 \
         -p 8080:8080 \
         -v=$IOTEX_HOME/data:/var/data:rw \
@@ -114,7 +114,7 @@ docker run -d --restart on-failure --name iotex \
         -plugin=gateway
 ```
 
-7. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 8080（14014如果节点启用了网关）已打开。
+7. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4690, 8080（14014如果节点启用了网关）已打开。
 
 ## <a name="testnet_native"/>不使用Docker加入测试网
 
@@ -158,7 +158,7 @@ nohup $IOTEX_HOME/iotex-server \
         -plugin=gateway &
 ```
 
-6. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4689, 8080（14014如果节点启用了网关）已打开。
+6. 确保您的防火墙和负载均衡器（如果有）上的TCP端口4690, 8080（14014如果节点启用了网关）已打开。
 
 ## <a name="ioctl"/>与区块链交互
 
