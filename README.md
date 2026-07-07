@@ -326,5 +326,26 @@ bash setup_fullnode.sh --auto --home=/path/to/iotex-var --version=v2.4.3
 ## <a name="gateway"/> Gateway Plugin
 Node with gateway plugin enabled will perform extra indexing to serve API requests of more detail chain information, such as number of actions in a block or query actions by hash.
 
+### Transaction-log patch (gateway / API / archive nodes)
+
+Nodes that **serve transaction-log queries** (`GetTransactionLogByActionHash`, `GetTransactionLogByBlockHeight`) should apply the transaction-log patch shipped with v2.4.3, which corrects a set of historical in-contract-transfer records. Delegate / fullnodes that do not serve these queries do not need it.
+
+1. Download the patch file into the node's data directory:
+
+```
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.3/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
+```
+
+2. Add the following line to the `chain:` section of `$IOTEX_HOME/etc/config.yaml`:
+
+```yaml
+chain:
+  patchTransactionLogPath: /var/data/txlog.db.patch
+```
+
+3. Restart the node.
+
+> **Important:** only set `patchTransactionLogPath` if the patch file exists at that path — a node configured with a missing patch file will **fail to start**. The patch is read-only and does not change balances, receipts, or block hashes. See the [v2.4.3 release note](changelog/v2.4.3-release-note.md) for details.
+
 ## <a name="qa"/>Q&A
 Please refer [here](https://github.com/iotexproject/iotex-bootstrap/wiki/Q&A) for Q&A.
