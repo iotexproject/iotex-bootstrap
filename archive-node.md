@@ -56,6 +56,7 @@ mkdir -p $IOTEX_HOME/log
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_archive_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
 curl https://storage.iotex.io/poll.mainnet.db > $IOTEX_HOME/data/poll.db
 ```
 ## <a name="download"/>Download Data
@@ -126,7 +127,8 @@ data<br>
 ├── index.db<br>
 ├── poll.db<br>
 ├── staking.index.db<br>
-└── trie.db.patch<br>
+├── trie.db.patch<br>
+└── txlog.db.patch<br>
 
 
 ## <a name="docker"/>Running Node using Docker

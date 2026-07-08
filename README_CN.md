@@ -268,6 +268,27 @@ bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/ma
 
 为服务更多详细链信息的 API 请求，启用网关插件的节点将执行额外的索引。例如区块中的操作数量或通过哈希查询操作信息。
 
+### 交易日志补丁（网关 / API / 归档节点）
+
+**对外提供交易日志查询**（`GetTransactionLogByActionHash`、`GetTransactionLogByBlockHeight`）的节点应安装 v2.4.3 引入的交易日志补丁，它会修正一组历史合约内转账记录。不对外提供这些查询的 delegate / 全节点无需安装。
+
+1. 将补丁文件下载到节点的 data 目录：
+
+```
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.3/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
+```
+
+2. 在 `$IOTEX_HOME/etc/config.yaml` 的 `chain:` 段中添加：
+
+```yaml
+chain:
+  patchTransactionLogPath: /var/data/txlog.db.patch
+```
+
+3. 重启节点。
+
+> **重要：** 仅当补丁文件确实存在于该路径时才设置 `patchTransactionLogPath` —— 若配置了该路径但文件缺失，节点将**无法启动**。该补丁为只读，不会改变余额、收据或区块哈希。详见 [v2.4.3 release note](changelog/v2.4.3-release-note.md)。
+
 ## <a name="qa"/>常见问题
 
 请参考 [此处](https://github.com/iotexproject/iotex-bootstrap/wiki/Q&A) 了解常见问题。
