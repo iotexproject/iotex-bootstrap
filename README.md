@@ -330,10 +330,11 @@ Node with gateway plugin enabled will perform extra indexing to serve API reques
 
 Nodes that **serve transaction-log queries** (`GetTransactionLogByActionHash`, `GetTransactionLogByBlockHeight`) should apply the transaction-log patch shipped with v2.4.4, which corrects a set of historical in-contract-transfer records. Delegate / fullnodes that do not serve these queries do not need it.
 
-1. Download the patch file into the node's data directory:
+1. Download the patch file into the node's data directory and verify its checksum:
 
 ```
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
+echo "dee9406afc991d5439ab4c27bc85fa658e1fb241ddabe1cc5fef18f27d728986  $IOTEX_HOME/data/txlog.db.patch" | sha256sum -c
 ```
 
 2. Add the following line to the `chain:` section of `$IOTEX_HOME/etc/config.yaml`:

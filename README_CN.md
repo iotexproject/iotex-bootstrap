@@ -272,10 +272,11 @@ bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/ma
 
 **对外提供交易日志查询**（`GetTransactionLogByActionHash`、`GetTransactionLogByBlockHeight`）的节点应安装 v2.4.4 引入的交易日志补丁，它会修正一组历史合约内转账记录。不对外提供这些查询的 delegate / 全节点无需安装。
 
-1. 将补丁文件下载到节点的 data 目录：
+1. 将补丁文件下载到节点的 data 目录，并校验其 checksum：
 
 ```
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
+echo "dee9406afc991d5439ab4c27bc85fa658e1fb241ddabe1cc5fef18f27d728986  $IOTEX_HOME/data/txlog.db.patch" | sha256sum -c
 ```
 
 2. 在 `$IOTEX_HOME/etc/config.yaml` 的 `chain:` 段中添加：
