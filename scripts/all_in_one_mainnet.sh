@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-docker pull iotex/iotex-core:v2.4.3
+docker pull iotex/iotex-core:v2.4.4
 
 mkdir -p ~/iotex-var
 cd ~/iotex-var
@@ -12,9 +12,9 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.3/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.3/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.3/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 
 # Download core snapshot (for delegate node)
 curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/mainnet-data-snapshot-core-latest
@@ -27,7 +27,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.4.3 \
+        iotex/iotex-core:v2.4.4 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -35,9 +35,9 @@ docker run -d --restart on-failure --name iotex \
 # --- Optional: gateway / API node only (not needed for a delegate / fullnode) ---
 # If you run this node as a gateway (add `-plugin=gateway` to the docker run above) so it
 # serves API / transaction-log queries, also apply the transaction-log patch shipped with
-# v2.4.3 (see changelog/v2.4.3-release-note.md):
+# v2.4.4 (see changelog/v2.4.4-release-note.md):
 #
-#   curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.3/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
+#   curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
 #
 # then add the following to the chain: section of $IOTEX_HOME/etc/config.yaml and restart:
 #
