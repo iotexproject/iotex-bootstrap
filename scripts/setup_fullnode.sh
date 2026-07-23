@@ -470,6 +470,31 @@ function disableGateway() {
     popd
 }
 
+function ensureAria2() {
+    command -v aria2c >/dev/null 2>&1 && return 0
+    echo -e "${YELLOW} aria2 not found, installing it for faster multi-threaded download...${NC}"
+    if [ "$(id -u)" = "0" ]; then
+        (apt-get update && apt-get install -y aria2) >/dev/null 2>&1
+    else
+        (sudo apt-get update && sudo apt-get install -y aria2) >/dev/null 2>&1
+    fi
+    command -v aria2c >/dev/null 2>&1
+}
+
+function downloadSnapshotFile() {
+    # $1 = URL, $2 = destination file. Snapshots are served from object storage that
+    # rate-limits single connections, so prefer multi-threaded aria2c (16 parallel
+    # connections + resume) and fall back to curl when aria2c is unavailable.
+    local url=$1 out=$2
+    if ensureAria2; then
+        aria2c -x16 -s16 -c --file-allocation=none --max-tries=0 --retry-wait=10 \
+            -d "$(dirname "$out")" -o "$(basename "$out")" "$url"
+    else
+        echo -e "${YELLOW} aria2 unavailable, falling back to single-threaded curl (slower)...${NC}"
+        curl -L -C - -o "$out" "$url"
+    fi
+}
+
 function donwloadBlockDataFile() {
     NODE_MAINNET_CORE_URL=https://t.iotex.me/mainnet-data-snapshot-core-latest
     NODE_TESTNET_CORE_URL=https://t.iotex.me/testnet-data-snapshot-core-latest
@@ -481,9 +506,9 @@ function donwloadBlockDataFile() {
 
     echo -e "${YELLOW} Downloading the core snapshot...${NC}"
     if [ "${_ENV_}X" = "mainnetX" ];then
-        curl -L -C - -o $SAVE_DIR/data-core.tar.gz $NODE_MAINNET_CORE_URL
+        downloadSnapshotFile $NODE_MAINNET_CORE_URL $SAVE_DIR/data-core.tar.gz
     else
-        curl -L -C - -o $SAVE_DIR/data-core.tar.gz $NODE_TESTNET_CORE_URL
+        downloadSnapshotFile $NODE_TESTNET_CORE_URL $SAVE_DIR/data-core.tar.gz
     fi
     echo -e "${YELLOW} Unzipping core snapshot...${NC}"
     tar xvf $SAVE_DIR/data-core.tar.gz -C $IOTEX_HOME
@@ -492,9 +517,9 @@ function donwloadBlockDataFile() {
     if [ "${_PLUGINS_}X" = "gatewayX" ];then
         echo -e "${YELLOW} Downloading the gateway snapshot...${NC}"
         if [ "${_ENV_}X" = "mainnetX" ];then
-            curl -L -C - -o $SAVE_DIR/data-gateway.tar.gz $NODE_MAINNET_GATEWAY_URL
+            downloadSnapshotFile $NODE_MAINNET_GATEWAY_URL $SAVE_DIR/data-gateway.tar.gz
         else
-            curl -L -C - -o $SAVE_DIR/data-gateway.tar.gz $NODE_TESTNET_GATEWAY_URL
+            downloadSnapshotFile $NODE_TESTNET_GATEWAY_URL $SAVE_DIR/data-gateway.tar.gz
         fi
         echo -e "${YELLOW} Unzipping gateway snapshot...${NC}"
         tar xvf $SAVE_DIR/data-gateway.tar.gz -C $IOTEX_HOME
