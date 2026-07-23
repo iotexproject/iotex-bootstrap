@@ -20,7 +20,7 @@
 
 Here are the software versions we use:
 
-- MainNet: v2.3.8
+- MainNet: v2.4.4
 
 ## <a name="testnet"/>Join TestNet
 To start and run a testnet node, please click [**Join Testnet**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_testnet.md)
@@ -33,7 +33,7 @@ This is the recommended way to start an IoTeX node
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v2.3.8
+docker pull iotex/iotex-core:v2.4.4
 ```
 
 2. Set the environment with the following commands:
@@ -48,9 +48,9 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 ```
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
@@ -105,7 +105,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.8 \
+        iotex/iotex-core:v2.4.4 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -126,7 +126,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.8 \
+        iotex/iotex-core:v2.4.4 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -150,7 +150,7 @@ Same as [Join MainNet](#mainnet) step 2
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v2.3.8
+git checkout v2.4.4
 
 // optional
 export GOPROXY=https://goproxy.io
@@ -312,7 +312,7 @@ The upgrade script supports a non-interactive mode for use with AI agents, CI/CD
 |---|---|
 | `--auto` | Non-interactive mode, skip all prompts |
 | `--home=/path` | Set `$IOTEX_HOME` directory |
-| `--version=v2.3.8` | Target version (default: latest release) |
+| `--version=v2.4.4` | Target version (default: latest release) |
 | `--force` | Reinstall even if already running the same version |
 | `--snapshot` | Download blockchain snapshot (recommended for fresh install) |
 | `--monitor` | Enable monitoring |
@@ -326,7 +326,7 @@ bash setup_fullnode.sh --auto --home=/path/to/iotex-var --snapshot
 bash setup_fullnode.sh --auto --home=/path/to/iotex-var
 
 # Upgrade to a specific version
-bash setup_fullnode.sh --auto --home=/path/to/iotex-var --version=v2.3.8
+bash setup_fullnode.sh --auto --home=/path/to/iotex-var --version=v2.4.4
 ```
 
 **Notes:**
@@ -336,6 +336,28 @@ bash setup_fullnode.sh --auto --home=/path/to/iotex-var --version=v2.3.8
 
 ## <a name="gateway"/> Gateway Plugin
 Node with gateway plugin enabled will perform extra indexing to serve API requests of more detail chain information, such as number of actions in a block or query actions by hash.
+
+### Transaction-log patch (gateway / API / archive nodes)
+
+Nodes that **serve transaction-log queries** (`GetTransactionLogByActionHash`, `GetTransactionLogByBlockHeight`) should apply the transaction-log patch shipped with v2.4.4, which corrects a set of historical in-contract-transfer records. Delegate / fullnodes that do not serve these queries do not need it.
+
+1. Download the patch file into the node's data directory and verify its checksum:
+
+```
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
+echo "dee9406afc991d5439ab4c27bc85fa658e1fb241ddabe1cc5fef18f27d728986  $IOTEX_HOME/data/txlog.db.patch" | sha256sum -c
+```
+
+2. Add the following line to the `chain:` section of `$IOTEX_HOME/etc/config.yaml`:
+
+```yaml
+chain:
+  patchTransactionLogPath: /var/data/txlog.db.patch
+```
+
+3. Restart the node.
+
+> **Important:** only set `patchTransactionLogPath` if the patch file exists at that path — a node configured with a missing patch file will **fail to start**. The patch is read-only and does not change balances, receipts, or block hashes. See the [v2.4.4 release note](changelog/v2.4.4-release-note.md) for details.
 
 ## <a name="qa"/>Q&A
 Please refer [here](https://github.com/iotexproject/iotex-bootstrap/wiki/Q&A) for Q&A.

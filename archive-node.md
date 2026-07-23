@@ -56,6 +56,7 @@ mkdir -p $IOTEX_HOME/log
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/config_archive_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/master/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
 curl https://storage.iotex.io/poll.mainnet.db > $IOTEX_HOME/data/poll.db
 ```
 ## <a name="download"/>Download Data
@@ -129,7 +130,8 @@ data<br>
 ├── index.db<br>
 ├── poll.db<br>
 ├── staking.index.db<br>
-└── trie.db.patch<br>
+├── trie.db.patch<br>
+└── txlog.db.patch<br>
 
 
 ## <a name="docker"/>Running Node using Docker
@@ -149,7 +151,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/iotex-archive/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.8 \
+        iotex/iotex-core:v2.4.4 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -192,7 +194,7 @@ git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
 
 #checkout the code branch for archive node
-git checkout v2.3.8
+git checkout v2.4.4
 
 #build binary
 make build

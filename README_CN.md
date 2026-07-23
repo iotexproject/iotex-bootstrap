@@ -18,7 +18,7 @@
 
 以下是当前我们使用的软件版本：
 
-- 主网：v2.3.8
+- 主网：v2.4.4
 
 ## <a name="testnet"/>加入测试网
 如果你要启动节点加入测试网，请点击[**加入测试网**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_CN_testnet.md)
@@ -32,7 +32,7 @@
 1. 提取(pull) docker镜像
 
 ```
-docker pull iotex/iotex-core:v2.3.8
+docker pull iotex/iotex-core:v2.4.4
 ```
 
 2. 使用以下命令设置运行环境
@@ -47,9 +47,9 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 ```
 
 3. 编辑 `$IOTEX_HOME/etc/config.yaml`, 查找 `externalHost` 和 `producerPrivKey`, 取消注释行并填写您的外部 IP 和私钥。如果`producerPrivKey`放空，你的节点将被分配一个随机密钥。
@@ -103,7 +103,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.8 \
+        iotex/iotex-core:v2.4.4 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -121,7 +121,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.8 \
+        iotex/iotex-core:v2.4.4 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -141,7 +141,7 @@ docker run -d --restart on-failure --name iotex \
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v2.3.8
+git checkout v2.4.4
 
 // optional
 export GOPROXY=https://goproxy.io
@@ -278,6 +278,28 @@ bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/ma
 ## <a name="gateway"/>网关插件
 
 为服务更多详细链信息的 API 请求，启用网关插件的节点将执行额外的索引。例如区块中的操作数量或通过哈希查询操作信息。
+
+### 交易日志补丁（网关 / API / 归档节点）
+
+**对外提供交易日志查询**（`GetTransactionLogByActionHash`、`GetTransactionLogByBlockHeight`）的节点应安装 v2.4.4 引入的交易日志补丁，它会修正一组历史合约内转账记录。不对外提供这些查询的 delegate / 全节点无需安装。
+
+1. 将补丁文件下载到节点的 data 目录，并校验其 checksum：
+
+```
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
+echo "dee9406afc991d5439ab4c27bc85fa658e1fb241ddabe1cc5fef18f27d728986  $IOTEX_HOME/data/txlog.db.patch" | sha256sum -c
+```
+
+2. 在 `$IOTEX_HOME/etc/config.yaml` 的 `chain:` 段中添加：
+
+```yaml
+chain:
+  patchTransactionLogPath: /var/data/txlog.db.patch
+```
+
+3. 重启节点。
+
+> **重要：** 仅当补丁文件确实存在于该路径时才设置 `patchTransactionLogPath` —— 若配置了该路径但文件缺失，节点将**无法启动**。该补丁为只读，不会改变余额、收据或区块哈希。详见 [v2.4.4 release note](changelog/v2.4.4-release-note.md)。
 
 ## <a name="qa"/>常见问题
 

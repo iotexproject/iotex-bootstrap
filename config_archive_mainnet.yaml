@@ -14,6 +14,7 @@ chain:
   # producerPrivKey: SET YOUR PRIVATE KEY HERE (e.g., 96f0aa5e8523d6a28dc35c927274be4e931e74eaa720b418735debfcbfe712b8)
   chainDBPath: "/var/iotex-archive/data/chain.db"
   trieDBPatchFile: "/var/iotex-archive/data/trie.db.patch"
+  patchTransactionLogPath: "/var/iotex-archive/data/txlog.db.patch"
   trieDBPath: "/var/iotex-archive/data/trie.db"
   stakingPatchDir: "/var/iotex-archive/data"
   indexDBPath: "/var/iotex-archive/data/index.db"

@@ -67,7 +67,7 @@ See the [main README](README.md#agent-upgrade) for all available flags.
 - **`externalHost` must be IPv4.** The script now uses `curl -4 ip.sb` by default. If the detected IP is wrong, update `$IOTEX_HOME/etc/config.yaml` and restart.
 - **Snapshot download details:** The compressed snapshot is ~182GB and extracts to ~265GB (as of 2026-04) — these sizes grow over time, always verify by checking the URL as shown above.
   - **Option A (`--snapshot`)** downloads to `$IOTEX_HOME/tmp/` on the same partition. Needs enough disk for compressed + extracted data. No resume on failure.
-  - **Option B (manual, recommended):** Download the tarball yourself — supports resume and a separate disk/volume. **Prefer `aria2c` (multi-threaded): the snapshot is served from object storage where a single connection is rate-limited, so 16 parallel connections are typically several times faster.** Fall back to `curl` only if `aria2c` cannot be installed.
+  - **Option B (manual, recommended):** Download the tarball yourself — supports resume and a separate disk/volume. **Prefer `aria2c` (multi-threaded): the snapshot is served from object storage where a single connection is rate-limited, so 16 parallel connections are typically several times faster — one datacenter benchmark measured ~275 MB/s with aria2c vs ~17 MB/s single-connection curl.** Fall back to `curl` only if `aria2c` cannot be installed.
     ```bash
     apt-get install -y aria2 pigz
     mkdir -p $IOTEX_HOME/data

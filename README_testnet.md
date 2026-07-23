@@ -18,7 +18,7 @@
 
 Here are the software versions we use:
 
-- TestNet: v2.3.8
+- TestNet: v2.4.4
 
 **Note**
 To start and run a mainnet node, please click [**Join Mainnet**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README.md)
@@ -31,7 +31,7 @@ This is the recommended way to start an IoTeX node
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v2.3.8
+docker pull iotex/iotex-core:v2.4.4
 ```
 
 2. Set the environment with the following commands:
@@ -46,8 +46,8 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
@@ -95,13 +95,13 @@ curl -L -C - -o $IOTEX_HOME/poll.tar.gz https://storage.iotex.io/poll.testnet.ta
 
 ```
 docker run -d --restart on-failure --name iotex \
-        -p 4689:4689 \
+        -p 4690:4690 \
         -p 8080:8080 \
         -v=$IOTEX_HOME/data:/var/data:rw \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.8 \
+        iotex/iotex-core:v2.4.4 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -113,7 +113,7 @@ If you want to also make your node be a [gateway](#gateway), which could process
 
 ```
 docker run -d --restart on-failure --name iotex \
-        -p 4689:4689 \
+        -p 4690:4690 \
         -p 14014:14014 \
         -p 15014:15014 \
         -p 8080:8080 \
@@ -121,14 +121,14 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.3.8 \
+        iotex/iotex-core:v2.4.4 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
         -plugin=gateway
 ```
 
-7. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
+7. Make sure TCP ports 4690, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
 ## <a name="testnet_native"/>Join Testnet without using Docker
 This is not the preferred way to start an IoTeX node
@@ -142,7 +142,7 @@ Same as [Join TestNet](#testnet) step 2
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v2.3.8
+git checkout v2.4.4
 
 // optional
 export GOPROXY=https://goproxy.io
@@ -178,7 +178,7 @@ nohup $IOTEX_HOME/iotex-server \
         -plugin=gateway &
 ```
 
-6. Make sure TCP ports 4689, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
+6. Make sure TCP ports 4690, 8080 (also 14014 if used) are open on your firewall and load balancer (if any).
 
 ## <a name="ioctl"/>Interact with Blockchain
 
