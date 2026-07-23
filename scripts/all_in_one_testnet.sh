@@ -15,8 +15,13 @@ mkdir -p $IOTEX_HOME/etc
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 
-# Download core snapshot (for delegate node)
-curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/testnet-data-snapshot-core-latest
+# Download core snapshot (for delegate node) — use multi-threaded aria2c for speed, fall back to curl
+command -v aria2c >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y aria2) || true
+if command -v aria2c >/dev/null 2>&1; then
+    aria2c -x16 -s16 -c --file-allocation=none -d $IOTEX_HOME -o data.tar.gz https://t.iotex.me/testnet-data-snapshot-core-latest
+else
+    curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/testnet-data-snapshot-core-latest
+fi
 tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
 
 docker run -d --restart on-failure --name iotex \

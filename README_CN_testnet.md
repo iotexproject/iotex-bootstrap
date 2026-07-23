@@ -52,11 +52,20 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/genes
 
 3. 编辑 `$IOTEX_HOME/etc/config.yaml`, 查找 `externalHost` 和 `producerPrivKey`, 取消注释行并填写您的外部 IP 和私钥。如果`producerPrivKey`放空，你的节点将被分配一个随机密钥。
 
-4. 下载全量数据快照, 请运行以下命令:
+4. 下载全量数据快照。快照是存放在对象存储上的大文件,单连接会被限速、下载很慢。请使用多线程下载工具 `aria2c`——它会开启多条并行连接(通常快数倍),并支持断点续传:
 
 ```
-curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/testnet-data-snapshot-core-latest
+# 先安装 aria2 —— 以 Ubuntu/Debian 为例;其他系统用 `yum install aria2` / `brew install aria2`
+sudo apt-get update && sudo apt-get install -y aria2
+
+# 16 条并行连接,支持断点续传
+aria2c -x16 -s16 -c --file-allocation=none \
+  -d $IOTEX_HOME -o data.tar.gz \
+  https://t.iotex.me/testnet-data-snapshot-core-latest
 ```
+
+> 没有 `aria2c`?可以退回到单线程 `curl`,但对这么大的文件会慢很多:
+> `curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/testnet-data-snapshot-core-latest`
 
 5. 解压数据包
 
@@ -68,7 +77,9 @@ tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
 
 - 选项1：如果计划将节点作为[网关](#gateway)运行，请额外下载带有索引数据的快照
 ```
-curl -L -C - -o $IOTEX_HOME/data_index.tar.gz https://t.iotex.me/testnet-data-snapshot-gateway-latest
+aria2c -x16 -s16 -c --file-allocation=none \
+  -d $IOTEX_HOME -o data_index.tar.gz \
+  https://t.iotex.me/testnet-data-snapshot-gateway-latest
 tar -xzf data_index.tar.gz
 ```
 

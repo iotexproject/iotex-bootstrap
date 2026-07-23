@@ -16,8 +16,13 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/confi
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 
-# Download core snapshot (for delegate node)
-curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/mainnet-data-snapshot-core-latest
+# Download core snapshot (for delegate node) — use multi-threaded aria2c for speed, fall back to curl
+command -v aria2c >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y aria2) || true
+if command -v aria2c >/dev/null 2>&1; then
+    aria2c -x16 -s16 -c --file-allocation=none -d $IOTEX_HOME -o data.tar.gz https://t.iotex.me/mainnet-data-snapshot-core-latest
+else
+    curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/mainnet-data-snapshot-core-latest
+fi
 tar -xzf $IOTEX_HOME/data.tar.gz -C $IOTEX_HOME/data/
 
 docker run -d --restart on-failure --name iotex \

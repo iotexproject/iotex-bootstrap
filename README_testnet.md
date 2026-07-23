@@ -52,11 +52,20 @@ curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.3.8/genes
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
 
-4. Start from a **baseline snapshot** (rather than sync from the genesis block), run the following commands:
+4. Start from a **baseline snapshot** (rather than sync from the genesis block). The snapshot is a large file served from object storage, where a single connection is rate-limited and slow. Use the multi-threaded downloader `aria2c` — it opens several parallel connections (typically a few times faster) and can resume:
 
 ```
-curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/testnet-data-snapshot-core-latest
+# Install aria2 first — Ubuntu/Debian shown; use `yum install aria2` / `brew install aria2` on other systems
+sudo apt-get update && sudo apt-get install -y aria2
+
+# 16 parallel connections, resume-capable
+aria2c -x16 -s16 -c --file-allocation=none \
+  -d $IOTEX_HOME -o data.tar.gz \
+  https://t.iotex.me/testnet-data-snapshot-core-latest
 ```
+
+> No `aria2c` available? You can fall back to single-threaded `curl`, but it will be much slower on a file this large:
+> `curl -L -C - -o $IOTEX_HOME/data.tar.gz https://t.iotex.me/testnet-data-snapshot-core-latest`
 
 5. Extract the data package:
 
@@ -69,7 +78,9 @@ For advanced users, there are three options to consider:
 - Option 1: If you plan to run your node as a [gateway](#gateway), please use the snapshot with index data:
 
 ```
-curl -L -C - -o $IOTEX_HOME/data_index.tar.gz https://t.iotex.me/testnet-data-snapshot-gateway-latest
+aria2c -x16 -s16 -c --file-allocation=none \
+  -d $IOTEX_HOME -o data_index.tar.gz \
+  https://t.iotex.me/testnet-data-snapshot-gateway-latest
 tar -xzf data_index.tar.gz
 ```
 

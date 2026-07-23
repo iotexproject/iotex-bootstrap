@@ -62,20 +62,23 @@ curl https://storage.iotex.io/poll.mainnet.db > $IOTEX_HOME/data/poll.db
 Next step is to download the snapshot data. You will
 need to download and uncompress this file.
 
-In the $IOTEX_HOME folder, run the following commands:
+In the $IOTEX_HOME folder, run the following commands. The snapshots are large files served from object storage, where a single connection is rate-limited and slow — use the multi-threaded downloader `aria2c` (several parallel connections, resume-capable):
 ```
-#download the data files and uncompress it
-curl -L -C - -O https://t.iotex.me/mainnet-data-snapshot-core-latest
-tar -xzf mainnet-data-e-20251228-042459-core.tar.gz
+# Install aria2 first — Ubuntu/Debian shown; use `yum install aria2` / `brew install aria2` on other systems
+sudo apt-get update && sudo apt-get install -y aria2
 
-curl -L -C - -O https://t.iotex.me/mainnet-data-snapshot-gateway-latest
-tar -xzf mainnet-data-e-20251228-042459-gateway.tar.gz
+# Download the three data files with 16 parallel connections each (resume-capable)
+aria2c -x16 -s16 -c --file-allocation=none -d $IOTEX_HOME -o core.tar.gz         https://t.iotex.me/mainnet-data-snapshot-core-latest
+aria2c -x16 -s16 -c --file-allocation=none -d $IOTEX_HOME -o gateway.tar.gz      https://t.iotex.me/mainnet-data-snapshot-gateway-latest
+aria2c -x16 -s16 -c --file-allocation=none -d $IOTEX_HOME -o trie-history.tar.gz https://t.iotex.me/mainnet-data-snapshot-trie-history-latest
 
-curl -L -C - -O https://t.iotex.me/mainnet-data-snapshot-trie-history-latest
-tar -xzf mainnet-data-e-20251228-042459-trie-history.tar.gz
+# Uncompress
+tar -xzf core.tar.gz
+tar -xzf gateway.tar.gz
+tar -xzf trie-history.tar.gz
 ```
 >Note: the snapshot has a size of 450GB at this moment.
-Please take measures (for example use `nohup` at the front) to prevent possible interruption of the download process.
+`aria2c -c` resumes an interrupted download automatically — just re-run the same command. If you fall back to `curl`, wrap it with `nohup` to survive session drops.
 
 After successful download and uncompress operations, the $IOTEX_HOME/data folder
 will have these files:
