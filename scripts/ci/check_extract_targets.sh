@@ -50,6 +50,10 @@ checked=0
 # Only shell and markdown are in scope; those are the files node operators copy
 # commands out of. Comment lines in shell scripts are skipped so that
 # commented-out history does not have to be kept compliant.
+#
+# scripts/ci/ is excluded: it is tooling, not something anyone runs against a
+# node, and this file quotes the correct tar form in its own failure message —
+# without the exclusion the check reports itself.
 while IFS= read -r file; do
     lineno=0
     while IFS= read -r line; do
@@ -73,7 +77,7 @@ while IFS= read -r file; do
             failed=1
         fi
     done < "$file"
-done < <(git ls-files '*.sh' '*.md')
+done < <(git ls-files '*.sh' '*.md' | grep -v '^scripts/ci/')
 
 if [ $failed -ne 0 ]; then
     echo
