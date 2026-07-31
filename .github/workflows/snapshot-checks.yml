@@ -1,0 +1,37 @@
+name: snapshot-checks
+
+# Guards the snapshot install path, which has no other automated coverage.
+#
+# The bug these exist for was a disagreement between two facts that are each
+# fine on their own: the published tarballs are flat, and the extractions in
+# this repo name a destination. Only when the two drift apart does a fresh
+# install silently sync from genesis after downloading ~190GB. So each fact is
+# asserted separately — neither check downloads a snapshot or starts a node.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  schedule:
+    # Off the hour on purpose: the tarball layout can change without any commit
+    # to this repo, so this needs to run on a clock, not only on PRs.
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  extract-targets:
+    name: extraction targets are $IOTEX_HOME/data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/ci/check_extract_targets.sh
+
+  snapshot-layout:
+    name: published snapshots are flat
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Fetches the first megabyte of each of the four tarballs (~4MB total).
+      # Retries internally; re-run the job if the storage host is having a
+      # bad day.
+      - run: ./scripts/ci/check_snapshot_layout.sh

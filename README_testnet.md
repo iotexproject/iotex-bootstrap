@@ -81,7 +81,7 @@ For advanced users, there are three options to consider:
 aria2c -x16 -s16 -c --file-allocation=none \
   -d $IOTEX_HOME -o data_index.tar.gz \
   https://t.iotex.me/testnet-data-snapshot-gateway-latest
-tar -xzf data_index.tar.gz
+tar -xzf $IOTEX_HOME/data_index.tar.gz -C $IOTEX_HOME/data/
 ```
 
 - Optional 2: If you only want to sync chain data from 0 height without relaying on legacy delegate election data from Ethereum, you can setup legacy delegate election data with following command:

@@ -115,17 +115,21 @@ function donwloadBlockDataFile() {
 
     SAVE_DIR=$IOTEX_HOME/tmp
     mkdir -p $SAVE_DIR
+    # The snapshot tarballs are flat (chain-*.db / bloomfilter.index.db at the
+    # root, no data/ prefix), so they must be extracted into $IOTEX_HOME/data,
+    # which is what gets mounted as /var/data in the container.
+    mkdir -p $IOTEX_HOME/data
 
     echo -e "${YELLOW} Downloading the core snapshot...${NC}"
     curl -sSL -C - -o $SAVE_DIR/data-core.tar.gz $NODE_MAINNET_CORE_URL
     echo -e "${YELLOW} Unzipping core snapshot...${NC}"
-    tar xvf $SAVE_DIR/data-core.tar.gz -C $IOTEX_HOME
+    tar xvf $SAVE_DIR/data-core.tar.gz -C $IOTEX_HOME/data
     echo -e "${YELLOW} Core snapshot done.${NC}"
 
     echo -e "${YELLOW} Downloading the gateway snapshot...${NC}"
     curl -sSL -C - -o $SAVE_DIR/data-gateway.tar.gz $NODE_MAINNET_GATEWAY_URL
     echo -e "${YELLOW} Unzipping gateway snapshot...${NC}"
-    tar xvf $SAVE_DIR/data-gateway.tar.gz -C $IOTEX_HOME
+    tar xvf $SAVE_DIR/data-gateway.tar.gz -C $IOTEX_HOME/data
     echo -e "${YELLOW} Gateway snapshot done.${NC}"
 
     echo -e "${YELLOW} Done.${NC}"
