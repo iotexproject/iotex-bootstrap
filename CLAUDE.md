@@ -13,7 +13,7 @@ This is the **IoTeX Delegate Manual** repository - configuration and operational
 
 ## Version Alignment
 
-This repository is versioned in sync with [iotex-core](https://github.com/iotexproject/iotex-core). The current release is **v2.5.0**. When iotex-core releases a new version:
+This repository is versioned in sync with [iotex-core](https://github.com/iotexproject/iotex-core). The current release is **v2.5.0 on TestNet** and **v2.4.4 on MainNet** — v2.5.0 carries the Zanzibar hardfork, which is scheduled on TestNet only, so the MainNet docs deliberately still point at v2.4.4. When iotex-core releases a new version:
 1. Update version references in README.md, config files, and scripts
 2. Add a release note in `changelog/`
 3. Create a PR but do NOT merge until the final release is tagged in iotex-core
