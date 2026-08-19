@@ -40,7 +40,7 @@ blockchain:
   xinguBetaHeight: 36826561
   yapHeight: 42819841
   yapBetaHeight: 43361281
-  zanzibarHeight: 46850041
+  zanzibarHeight: 46880641
   autoDepositContractAddress: io1grzhsc5w7a07d6ple4kuaxylxdwcsj7w8r2zuu
   numCandidateDelegates: 36
   numDelegates: 24
