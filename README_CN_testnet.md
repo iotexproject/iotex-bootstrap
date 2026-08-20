@@ -2,6 +2,19 @@
 
 *最新版本请参考 https://github.com/iotexproject/iotex-bootstrap/blob/master/README.md*
 
+
+> ### ⚠️ Zanzibar 硬分叉 — 测试网 46880641 块（2026-08-21 约 10:00 CST）
+>
+> 必须在该高度之前升级到 `v2.5.0-rc0` **并**重新下载 `genesis_testnet.yaml`。
+> 停留在旧二进制或旧 genesis 的节点会从网络分叉出去。
+>
+> 激活高度较早前的草案有过调整，请重新下载 genesis，不要假设手上那份是最新的。
+> `config_testnet.yaml` 本次没有变化，可以沿用。
+>
+> 希望启用 IIP-59 链上投票人奖励发放的 delegate，需要用
+> `ioctl stake2 voterrewardoptin` 开启，并在 DelegateProfile 合约中设置分成比例。
+> 详见 [v2.5.0 release note](changelog/v2.5.0-release-note.md)。
+
 ## 索引
 
 - [发布状态](#status)

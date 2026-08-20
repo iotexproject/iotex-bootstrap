@@ -14,6 +14,22 @@
 - [Upgrade Your Node（One Line Upgrader）](#upgrade)
 - [Q&A](#qa)
 
+
+> ### ⚠️ Zanzibar hardfork — TestNet block 46880641 (2026-08-21 ~10:00 CST)
+>
+> Upgrading to `v2.5.0-rc0` **and** re-downloading `genesis_testnet.yaml` is
+> required before that block. A node left on the old binary or the old genesis
+> will fork off the network.
+>
+> The activation height changed from an earlier draft, so re-download the
+> genesis rather than assuming the copy you have is current. `config_testnet.yaml`
+> is unchanged and can be kept.
+>
+> Delegates who want IIP-59 on-chain voter reward distribution need to opt in
+> with `ioctl stake2 voterrewardoptin` and set their reward portions in the
+> DelegateProfile contract. See the
+> [v2.5.0 release note](changelog/v2.5.0-release-note.md).
+
 ## <a name="status"/>Release Status
 
 Here are the software versions we use:
