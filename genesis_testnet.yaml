@@ -1,4 +1,9 @@
 account:
+  testnetGrants:
+  - height: 47141281
+    recipients:
+    - address: io1ycl9fzdve2l5yqwxywrtpvz2wtwlzfc349r7fc
+      amount: "1000000000000000000000000000"
   initBalances:
     io10t7juxazfteqzjsd6qjk7tkgmngj2tm7n4fvrd: "1000000000000000000000000000"
     io120au9ra0nffdle04jx2g5gccn6gq8qd4fy03l4: "7000000000000000000000000000"
@@ -41,6 +46,7 @@ blockchain:
   yapHeight: 42819841
   yapBetaHeight: 43361281
   zanzibarHeight: 46880641
+  zanzibarBetaHeight: 47141281
   autoDepositContractAddress: io1pvlpc02xft2va4f38ae2nvgqglcxtfytez75c4
   numCandidateDelegates: 36
   numDelegates: 24
