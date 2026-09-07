@@ -47,6 +47,7 @@ blockchain:
   yapBetaHeight: 43361281
   zanzibarHeight: 46880641
   zanzibarBetaHeight: 47141281
+  zanzibarGammaHeight: 47468161
   autoDepositContractAddress: io1pvlpc02xft2va4f38ae2nvgqglcxtfytez75c4
   numCandidateDelegates: 36
   numDelegates: 24
