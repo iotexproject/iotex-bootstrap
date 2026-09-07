@@ -14,11 +14,35 @@
 - [Upgrade Your Node（One Line Upgrader）](#upgrade)
 - [Q&A](#qa)
 
+
+> ### ⚠️ Zanzibar Beta hardfork — TestNet block 47141281 (2026-08-29 ~06:00 CST)
+>
+> Upgrading to `v2.5.0-rc1` **and** re-downloading `genesis_testnet.yaml` is
+> required before that block. A node left on the old binary or the old genesis
+> will fork off the network.
+>
+> **Upgrade the binary first, then the genesis.** A `v2.5.0-rc0` node cannot
+> read the new `genesis_testnet.yaml` at all — it rejects the two keys it does
+> not know (`zanzibarBetaHeight` and `account.testnetGrants`) and refuses to
+> start. Pull `v2.5.0-rc1`, restart, and
+> only then replace the genesis. `config_testnet.yaml` is unchanged and can be
+> kept.
+>
+> Zanzibar itself activated at block 46880641 on 2026-08-21 and is already
+> live. Zanzibar Beta carries three corrections to what Zanzibar turned on, so
+> it needs a height of its own — applying them at Zanzibar's height would
+> re-decide blocks this chain has already committed.
+>
+> Delegates who want IIP-59 on-chain voter reward distribution need to opt in
+> with `ioctl stake2 voterrewardoptin` and set their reward portions in the
+> DelegateProfile contract. See the
+> [v2.5.0 release note](changelog/v2.5.0-release-note.md).
+
 ## <a name="status"/>Release Status
 
 Here are the software versions we use:
 
-- TestNet: v2.4.4
+- TestNet: v2.5.0-rc1
 
 **Note**
 To start and run a mainnet node, please click [**Join Mainnet**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README.md)
@@ -31,7 +55,7 @@ This is the recommended way to start an IoTeX node
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v2.4.4
+docker pull iotex/iotex-core:v2.5.0-rc1
 ```
 
 2. Set the environment with the following commands:
@@ -46,8 +70,8 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.4.4/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.0-rc1/config_testnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.0-rc1/genesis_testnet.yaml > $IOTEX_HOME/etc/genesis.yaml
 ```
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
@@ -101,7 +125,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.4.4 \
+        iotex/iotex-core:v2.5.0-rc1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -121,7 +145,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.4.4 \
+        iotex/iotex-core:v2.5.0-rc1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -142,7 +166,7 @@ Same as [Join TestNet](#testnet) step 2
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v2.4.4
+git checkout v2.5.0-rc1
 
 // optional
 export GOPROXY=https://goproxy.io

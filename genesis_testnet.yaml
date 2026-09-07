@@ -1,4 +1,9 @@
 account:
+  testnetGrants:
+  - height: 47141281
+    recipients:
+    - address: io1ycl9fzdve2l5yqwxywrtpvz2wtwlzfc349r7fc
+      amount: "1000000000000000000000000000"
   initBalances:
     io10t7juxazfteqzjsd6qjk7tkgmngj2tm7n4fvrd: "1000000000000000000000000000"
     io120au9ra0nffdle04jx2g5gccn6gq8qd4fy03l4: "7000000000000000000000000000"
@@ -40,6 +45,10 @@ blockchain:
   xinguBetaHeight: 36826561
   yapHeight: 42819841
   yapBetaHeight: 43361281
+  zanzibarHeight: 46880641
+  zanzibarBetaHeight: 47141281
+  zanzibarGammaHeight: 47468161
+  autoDepositContractAddress: io1pvlpc02xft2va4f38ae2nvgqglcxtfytez75c4
   numCandidateDelegates: 36
   numDelegates: 24
   numSubEpochs: 15
@@ -66,6 +75,7 @@ poll:
   systemStakingContractV2Height: 26978830
   systemStakingContractV3Address: io1phddfwuj6ht64lkvjyywqjc2e8t5ycez6c69d7
   systemStakingContractV3Height: 31939788
+  delegateProfileContractAddress: io19l8qpk08rw0jr4vwguyufva9w4t6aq75q2kt90
 staking:
   withdrawWaitingPeriod: "336h"
 rewarding:
