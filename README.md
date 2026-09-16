@@ -16,7 +16,7 @@
 - [Agent Guide](AGENT.md)
 - [Q&A](#qa)
 
-> ### ⚠️ Zanzibar hardfork — MainNet block 53155801 (estimated 2026-10-08 02:00 UTC / 10:00 CST)
+> ### ⚠️ Zanzibar hardfork — MainNet block 53155801 (estimated 2026-10-08 02:00 UTC)
 >
 > Upgrade to `v2.5.0` before that block. A node left on `v2.4.4` will fork off
 > the network.
