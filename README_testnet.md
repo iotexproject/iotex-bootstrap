@@ -15,7 +15,7 @@
 - [Q&A](#qa)
 
 
-> ### ⚠️ Zanzibar Gamma hardfork — TestNet block 47468161 (activated 2026-09-07 10:00 UTC / 18:00 CST)
+> ### ⚠️ Zanzibar Gamma hardfork — TestNet block 47468161 (activated 2026-09-07 10:00 UTC)
 >
 > TestNet operators must run `v2.5.0-rc2` with the current
 > `genesis_testnet.yaml`. A node left on an older binary or genesis will follow

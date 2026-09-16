@@ -3,7 +3,7 @@
 *最新版本请参考 https://github.com/iotexproject/iotex-bootstrap/blob/master/README.md*
 
 
-> ### ⚠️ Zanzibar Gamma 硬分叉 — 测试网 47468161 块（已于 2026-09-07 10:00 UTC / 18:00 CST 激活）
+> ### ⚠️ Zanzibar Gamma 硬分叉 — 测试网 47468161 块（已于 2026-09-07 10:00 UTC 激活）
 >
 > 测试网节点必须运行 `v2.5.0-rc2` 并使用当前的 `genesis_testnet.yaml`。
 > 停留在旧二进制或旧 genesis 的节点会继续执行 Gamma 之前的规则。
