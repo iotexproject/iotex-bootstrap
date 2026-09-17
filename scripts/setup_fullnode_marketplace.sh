@@ -35,11 +35,22 @@ function checkDockerPermissions() {
     fi
 }
 
+# Set by checkDockerCompose() to whichever Compose is available. Used unquoted
+# at call sites so that "docker compose" word-splits into command + subcommand.
+COMPOSE_CMD=""
+
 function checkDockerCompose() {
-    docker-compose --version > /dev/null 2>&1
-    if [ $? -eq 127 ];then
-        echo -e "$RED docker-compose command not found $NC"
-        echo -e "Please install it first"
+    # Compose v2 ships as a Docker CLI plugin invoked as `docker compose`. The
+    # standalone `docker-compose` v1 binary is end-of-life and is absent from
+    # current Docker installs, so requiring it fails outright on a recent host.
+    # Prefer the plugin, fall back to the legacy binary.
+    if docker compose version > /dev/null 2>&1;then
+        COMPOSE_CMD="docker compose"
+    elif docker-compose --version > /dev/null 2>&1;then
+        COMPOSE_CMD="docker-compose"
+    else
+        echo -e "$RED Neither 'docker compose' nor 'docker-compose' is available $NC"
+        echo -e "Install the Compose plugin, e.g. 'apt-get install docker-compose-plugin'"
         exit 1
     fi
 }
@@ -134,7 +145,7 @@ function donwloadBlockDataFile() {
 function startup() {
     echo -e "Start iotex-server."
     pushd $IOTEX_MONITOR_HOME
-    docker-compose up -d iotex
+    $COMPOSE_CMD up -d iotex
     popd
 }
 
@@ -143,14 +154,14 @@ function startupNode() {
     #check node running
     sleep 5
     pushd $IOTEX_MONITOR_HOME
-    docker-compose ps iotex
+    $COMPOSE_CMD ps iotex
     popd
 }
 
 function main() {
     # Check and clean
     checkDockerPermissions     # Determine the current user can run docker
-    checkDockerCompose         # Determin the docker-compose is installed
+    checkDockerCompose         # Determine which Compose implementation is available
     setVar                     # Set global variable
 
     determinIotexHome          # Determine the $IOTEX_HOME

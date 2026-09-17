@@ -25,11 +25,22 @@ function checkDockerPermissions() {
     fi
 }
 
+# Set by checkDockerCompose() to whichever Compose is available. Used unquoted
+# at call sites so that "docker compose" word-splits into command + subcommand.
+COMPOSE_CMD=""
+
 function checkDockerCompose() {
-    docker-compose --version > /dev/null 2>&1
-    if [ $? -eq 127 ];then
-        echo -e "$RED docker-compose command not found $NC"
-        echo -e "Please install it first"
+    # Compose v2 ships as a Docker CLI plugin invoked as `docker compose`. The
+    # standalone `docker-compose` v1 binary is end-of-life and is absent from
+    # current Docker installs, so requiring it fails outright on a recent host.
+    # Prefer the plugin, fall back to the legacy binary.
+    if docker compose version > /dev/null 2>&1;then
+        COMPOSE_CMD="docker compose"
+    elif docker-compose --version > /dev/null 2>&1;then
+        COMPOSE_CMD="docker-compose"
+    else
+        echo -e "$RED Neither 'docker compose' nor 'docker-compose' is available $NC"
+        echo -e "Install the Compose plugin, e.g. 'apt-get install docker-compose-plugin'"
         exit 1
     fi
 }
@@ -58,7 +69,7 @@ function confirmEnvironmentVariable() {
 function stopNode() {
     echo -e "${YELLOW}Stopping iotex-server.${NC}"
     pushd $IOTEX_HOME/monitor
-    docker-compose stop
+    $COMPOSE_CMD stop
 
     # stop auto-updatem, if it is running.
     ps -ef | grep "$IOTEX_HOME/bin/auto-update" > /dev/null

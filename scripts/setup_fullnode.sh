@@ -46,11 +46,22 @@ function checkDockerPermissions() {
     fi
 }
 
+# Set by checkDockerCompose() to whichever Compose is available. Used unquoted
+# at call sites so that "docker compose" word-splits into command + subcommand.
+COMPOSE_CMD=""
+
 function checkDockerCompose() {
-    docker-compose --version > /dev/null 2>&1
-    if [ $? -eq 127 ];then
-        echo -e "$RED docker-compose command not found $NC"
-        echo -e "Please install it first"
+    # Compose v2 ships as a Docker CLI plugin invoked as `docker compose`. The
+    # standalone `docker-compose` v1 binary is end-of-life and is absent from
+    # current Docker installs, so requiring it fails outright on a recent host.
+    # Prefer the plugin, fall back to the legacy binary.
+    if docker compose version > /dev/null 2>&1;then
+        COMPOSE_CMD="docker compose"
+    elif docker-compose --version > /dev/null 2>&1;then
+        COMPOSE_CMD="docker-compose"
+    else
+        echo -e "$RED Neither 'docker compose' nor 'docker-compose' is available $NC"
+        echo -e "Install the Compose plugin, e.g. 'apt-get install docker-compose-plugin'"
         exit 1
     fi
 }
@@ -238,7 +249,7 @@ function procssNotUpdate() {
         else
             enableMonitor
             pushd $IOTEX_MONITOR_HOME
-            docker-compose up -d --no-deps monitor
+            $COMPOSE_CMD up -d --no-deps monitor
             if [ $? -eq 0 ];then
                 echo -e "${YELLOW} You can access 'localhost:3000' to view node monitoring ${NC}"
                 echo -e "${YELLOW} Default User/Pass: admin/admin. ${NC}"
@@ -532,7 +543,7 @@ function donwloadBlockDataFile() {
 function startupWithMonitor() {
     echo -e "Start iotex-server and monitor."
     pushd $IOTEX_MONITOR_HOME
-    docker-compose up -d --no-recreate
+    $COMPOSE_CMD up -d --no-recreate
     if [ $? -eq 0 ];then
         echo -e "${YELLOW} If you first create monitor, you can access 'localhost:3000' to view node monitoring ${NC}"
         echo -e "${YELLOW} Default User/Pass: admin/admin. ${NC}" 
@@ -543,7 +554,7 @@ function startupWithMonitor() {
 function startup() {
     echo -e "Start iotex-server."
     pushd $IOTEX_MONITOR_HOME
-    docker-compose up -d iotex
+    $COMPOSE_CMD up -d iotex
     docker ps | grep iotex-monitor|grep -v grep > /dev/null 2>&1
     if [ $? -eq 0 ];then
         docker stop iotex-monitor
@@ -559,14 +570,14 @@ function startupNode() {
         #check node running
         sleep 5
         pushd $IOTEX_MONITOR_HOME
-        docker-compose ps
+        $COMPOSE_CMD ps
         popd
     else
         startup
         #check node running
         sleep 5
         pushd $IOTEX_MONITOR_HOME
-        docker-compose ps iotex
+        $COMPOSE_CMD ps iotex
         popd
     fi
 
@@ -602,7 +613,7 @@ function startAutoUpdate() {
 function main() {
     # Check and clean
     checkDockerPermissions     # Determine the current user can run docker
-    checkDockerCompose         # Determin the docker-compose is installed
+    checkDockerCompose         # Determine which Compose implementation is available
     setVar $@                  # Set global variable
     determinIotexHome          # Determine the $IOTEX_HOME
     checkPrivateKey            # Determine the producerPrivKey in the config file is exist.
