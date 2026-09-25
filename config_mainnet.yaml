@@ -1,6 +1,7 @@
 network:
   # externalHost: SET YOUR EXTERNAL IP HERE (e.g., 12.34.56.78)
   externalPort: 4689
+  maxPeers: 100 # the number of peers the node keeps connected to
   bootstrapNodes:
     - /dns4/bootnode-0.mainnet.iotex.one/tcp/4689/p2p/12D3KooWPfQDF8ASjd4r7jS9e7F1wn6zod7Mf4ERr8etoY6ctQp5
     - /dns4/bootnode-1.mainnet.iotex.one/tcp/4689/p2p/12D3KooWN4TQ1CWRA7yvJdQCdti1qARLXXu2UEHJfycn3XbnAnRh
