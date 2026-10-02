@@ -16,7 +16,7 @@
 
 > ### ⚠️ Zanzibar 硬分叉 — 主网 53533081 块（预计 2026-10-19 02:00 UTC）
 >
-> 必须在该高度之前升级到 `v2.5.0`。停留在 `v2.4.4` 的节点会从网络分叉出去。
+> 必须在该高度之前升级到 `v2.5.1`（至少 `v2.5.0`）。停留在 `v2.4.4` 的节点会从网络分叉出去。
 >
 > **`genesis_mainnet.yaml` 不变。** 主网的分叉高度写在二进制里、不在 genesis 文件中，
 > 所以没有需要重新下载的东西——这与测试网那次不同（测试网必须替换 genesis）。
@@ -36,7 +36,7 @@
 
 以下是当前我们使用的软件版本：
 
-- 主网：v2.5.0
+- 主网：v2.5.1
 
 ## <a name="testnet"/>加入测试网
 如果你要启动节点加入测试网，请点击[**加入测试网**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_CN_testnet.md)
@@ -50,7 +50,7 @@
 1. 提取(pull) docker镜像
 
 ```
-docker pull iotex/iotex-core:v2.5.0
+docker pull iotex/iotex-core:v2.5.1
 ```
 
 2. 使用以下命令设置运行环境
@@ -65,9 +65,9 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.0/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.0/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.0/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.1/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.1/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.1/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 ```
 
 3. 编辑 `$IOTEX_HOME/etc/config.yaml`, 查找 `externalHost` 和 `producerPrivKey`, 取消注释行并填写您的外部 IP 和私钥。如果`producerPrivKey`放空，你的节点将被分配一个随机密钥。
@@ -121,7 +121,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.5.0 \
+        iotex/iotex-core:v2.5.1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -139,7 +139,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.5.0 \
+        iotex/iotex-core:v2.5.1 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -159,7 +159,7 @@ docker run -d --restart on-failure --name iotex \
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v2.5.0
+git checkout v2.5.1
 
 // optional
 export GOPROXY=https://goproxy.io
@@ -304,7 +304,7 @@ bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/ma
 1. 将补丁文件下载到节点的 data 目录，并校验其 checksum：
 
 ```
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.0/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.1/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
 echo "dee9406afc991d5439ab4c27bc85fa658e1fb241ddabe1cc5fef18f27d728986  $IOTEX_HOME/data/txlog.db.patch" | sha256sum -c
 ```
 
