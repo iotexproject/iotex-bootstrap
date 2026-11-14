@@ -114,7 +114,8 @@ chain:
 ## Snapshot URLs
 - MainNet core: `https://t.iotex.me/mainnet-data-snapshot-core-latest`
 - MainNet gateway: `https://t.iotex.me/mainnet-data-snapshot-gateway-latest`
-- TestNet: `https://t.iotex.me/testnet-data-latest`
+- TestNet core: `https://t.iotex.me/testnet-data-snapshot-core-latest`
+- TestNet gateway: `https://t.iotex.me/testnet-data-snapshot-gateway-latest`
 
 ## Related Repositories
 - [iotex-core](https://github.com/iotexproject/iotex-core): Main node implementation
