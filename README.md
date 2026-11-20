@@ -16,34 +16,20 @@
 - [Agent Guide](AGENT.md)
 - [Q&A](#qa)
 
-> ### ⚠️ Zanzibar hardfork — MainNet block 53533081 (estimated 2026-10-19 02:00 UTC)
+> ### Zanzibar hardfork — activated at MainNet block 53533081 (2026-10-19)
 >
-> Upgrade to `v2.5.1` (or at least `v2.5.0`) before that block. A node left on `v2.4.4` will fork off
-> the network.
+> Nodes must run `v2.5.0` or later; `v2.5.2` is recommended. A node still on `v2.4.x` cannot
+> follow the network past that block.
 >
-> **`genesis_mainnet.yaml` does not change.** MainNet carries its fork heights
-> in the binary, not in the genesis file, so there is nothing to re-download —
-> unlike the TestNet rollout, where the genesis had to be replaced. Pull the
-> image, restart, done. `config_mainnet.yaml` is unchanged as well.
->
-> Zanzibar activates IIP-59 on-chain voter reward distribution. Beta and Gamma
-> ride the same block: MainNet has activated none of them, so it takes all
-> three corrections from the first block IIP-59 is live rather than scheduling
-> a window that knowingly runs behaviour already found to be wrong.
->
-> **Delegates distributing through Hermes:** at that block the protocol
-> auto-migrates every candidate whose reward address is a Hermes vault, but
-> only if its DelegateProfile carries both reward-portion fields. A candidate
-> missing either one is left on the Hermes path — nothing breaks, but it does
-> not get on-chain distribution, and the migration runs in that one block and
-> never again. Check yours before the fork. See the
-> [v2.5.0 release note](changelog/v2.5.0-release-note.md).
+> MainNet carries its fork heights in the binary, not in the genesis file, so
+> `genesis_mainnet.yaml` and `config_mainnet.yaml` did not change for Zanzibar.
+> See the [v2.5.0 release note](changelog/v2.5.0-release-note.md) for what Zanzibar changed.
 
 ## <a name="status"/>Release Status
 
 Here are the software versions we use:
 
-- MainNet: v2.5.1
+- MainNet: v2.5.2
 
 ## <a name="testnet"/>Join TestNet
 To start and run a testnet node, please click [**Join Testnet**](https://github.com/iotexproject/iotex-bootstrap/blob/master/README_testnet.md)
@@ -56,7 +42,7 @@ This is the recommended way to start an IoTeX node
 1. Pull the docker image:
 
 ```
-docker pull iotex/iotex-core:v2.5.1
+docker pull iotex/iotex-core:v2.5.2
 ```
 
 2. Set the environment with the following commands:
@@ -71,9 +57,9 @@ mkdir -p $IOTEX_HOME/data
 mkdir -p $IOTEX_HOME/log
 mkdir -p $IOTEX_HOME/etc
 
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.1/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.1/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.1/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.2/config_mainnet.yaml > $IOTEX_HOME/etc/config.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.2/genesis_mainnet.yaml > $IOTEX_HOME/etc/genesis.yaml
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.2/trie.db.patch > $IOTEX_HOME/data/trie.db.patch
 ```
 
 3. Edit `$IOTEX_HOME/etc/config.yaml`, look for `externalHost` and `producerPrivKey`, uncomment the lines and fill in your external IP and private key. If you leave `producerPrivKey` empty, your node will be assgined with a random key.
@@ -128,7 +114,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.5.1 \
+        iotex/iotex-core:v2.5.2 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml
@@ -149,7 +135,7 @@ docker run -d --restart on-failure --name iotex \
         -v=$IOTEX_HOME/log:/var/log:rw \
         -v=$IOTEX_HOME/etc/config.yaml:/etc/iotex/config_override.yaml:ro \
         -v=$IOTEX_HOME/etc/genesis.yaml:/etc/iotex/genesis.yaml:ro \
-        iotex/iotex-core:v2.5.1 \
+        iotex/iotex-core:v2.5.2 \
         iotex-server \
         -config-path=/etc/iotex/config_override.yaml \
         -genesis-path=/etc/iotex/genesis.yaml \
@@ -173,7 +159,7 @@ Same as [Join MainNet](#mainnet) step 2
 ```
 git clone https://github.com/iotexproject/iotex-core.git
 cd iotex-core
-git checkout v2.5.1
+git checkout v2.5.2
 
 // optional
 export GOPROXY=https://goproxy.io
@@ -335,7 +321,7 @@ The upgrade script supports a non-interactive mode for use with AI agents, CI/CD
 |---|---|
 | `--auto` | Non-interactive mode, skip all prompts |
 | `--home=/path` | Set `$IOTEX_HOME` directory |
-| `--version=v2.5.1` | Target version (default: latest release) |
+| `--version=v2.5.2` | Target version (default: latest release) |
 | `--force` | Reinstall even if already running the same version |
 | `--snapshot` | Download blockchain snapshot (recommended for fresh install) |
 | `--monitor` | Enable monitoring |
@@ -349,7 +335,7 @@ bash setup_fullnode.sh --auto --home=/path/to/iotex-var --snapshot
 bash setup_fullnode.sh --auto --home=/path/to/iotex-var
 
 # Upgrade to a specific version
-bash setup_fullnode.sh --auto --home=/path/to/iotex-var --version=v2.5.1
+bash setup_fullnode.sh --auto --home=/path/to/iotex-var --version=v2.5.2
 ```
 
 **Notes:**
@@ -367,7 +353,7 @@ Nodes that **serve transaction-log queries** (`GetTransactionLogByActionHash`, `
 1. Download the patch file into the node's data directory and verify its checksum:
 
 ```
-curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.1/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
+curl https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/v2.5.2/txlog.db.patch > $IOTEX_HOME/data/txlog.db.patch
 echo "dee9406afc991d5439ab4c27bc85fa658e1fb241ddabe1cc5fef18f27d728986  $IOTEX_HOME/data/txlog.db.patch" | sha256sum -c
 ```
 
