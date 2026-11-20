@@ -13,7 +13,7 @@ This is the **IoTeX Delegate Manual** repository - configuration and operational
 
 ## Version Alignment
 
-This repository is versioned in sync with [iotex-core](https://github.com/iotexproject/iotex-core). The current release is **v2.5.2-rc0 on TestNet** and **v2.5.2 on MainNet** — Zanzibar is active on both: TestNet activated it at 46880641, Beta at 47141281, and Gamma at 47468161; MainNet activated all three together at 53533081. MainNet carries its fork heights in the binary rather than in `genesis_mainnet.yaml`, so a MainNet upgrade is a binary roll with no genesis change. When iotex-core releases a new version:
+This repository is versioned in sync with [iotex-core](https://github.com/iotexproject/iotex-core). The current release is **v2.5.2 on TestNet** and **v2.5.2 on MainNet** — Zanzibar is active on both: TestNet activated it at 46880641, Beta at 47141281, and Gamma at 47468161; MainNet activated all three together at 53533081. MainNet carries its fork heights in the binary rather than in `genesis_mainnet.yaml`, so a MainNet upgrade is a binary roll with no genesis change. When iotex-core releases a new version:
 1. Update version references in README.md, config files, and scripts
 2. Add a release note in `changelog/`
 3. Create a PR but do NOT merge until the final release is tagged in iotex-core
@@ -56,7 +56,7 @@ bash <(curl -s https://raw.githubusercontent.com/iotexproject/iotex-bootstrap/ma
 ### Non-interactive upgrade (AI agent / CI)
 ```bash
 bash setup_fullnode.sh --auto --home=/path/to/iotex-var
-bash setup_fullnode.sh --auto --home=/path/to/iotex-var --version=v2.5.0-rc2
+bash setup_fullnode.sh --auto --home=/path/to/iotex-var --version=v2.5.2
 bash setup_fullnode.sh --auto --home=/path/to/iotex-var --force  # reinstall same version
 ```
 Flags: `--auto` (skip prompts), `--home=` (IOTEX_HOME), `--version=` (target version), `--force` (bypass same-version check), `--monitor` (enable monitoring), `plugin=gateway` (enable gateway).
