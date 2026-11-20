@@ -14,23 +14,13 @@
 - [网关插件](#gateway)
 - [常见问题](#qa)
 
-> ### ⚠️ Zanzibar 硬分叉 — 主网 53533081 块（预计 2026-10-19 02:00 UTC）
+> ### Zanzibar 硬分叉 — 已于 2026-10-19 在主网 53533081 块激活
 >
-> 必须在该高度之前升级到 `v2.5.2`（至少 `v2.5.0`）。停留在 `v2.4.4` 的节点会从网络分叉出去。
+> 节点必须运行 `v2.5.0` 或更高版本，推荐 `v2.5.2`。仍停留在 `v2.4.x` 的节点无法跟上该高度之后的网络。
 >
-> **`genesis_mainnet.yaml` 不变。** 主网的分叉高度写在二进制里、不在 genesis 文件中，
-> 所以没有需要重新下载的东西——这与测试网那次不同（测试网必须替换 genesis）。
-> 拉镜像、重启，就完成了。`config_mainnet.yaml` 同样不变。
->
-> Zanzibar 启用 IIP-59 链上投票人奖励发放。Beta 和 Gamma 与它同一个高度：主网三者
-> 都未激活过，所以从 IIP-59 生效的第一个块起就带上全部修正，而不是安排一段明知
-> 行为有误的窗口。
->
-> **通过 Hermes 分发的 delegate 请注意：** 该高度上协议会自动迁移所有 reward
-> address 指向 Hermes vault 的候选人，但**前提是其 DelegateProfile 已配置两个
-> 分成字段**。缺任一字段的候选人会被留在 Hermes 老路径——不会出错，但拿不到链上
-> 分发，而且这个迁移只在那一个块执行、之后不再重来。请在分叉前检查。
-> 详见 [v2.5.0 release note](changelog/v2.5.0-release-note.md)。
+> 主网的分叉高度写在二进制里、不在 genesis 文件中，所以 Zanzibar 没有改动
+> `genesis_mainnet.yaml` 和 `config_mainnet.yaml`。Zanzibar 的具体变化见
+> [v2.5.0 release note](changelog/v2.5.0-release-note.md)。
 
 ## <a name="status"/>发布状态
 

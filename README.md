@@ -16,28 +16,14 @@
 - [Agent Guide](AGENT.md)
 - [Q&A](#qa)
 
-> ### ⚠️ Zanzibar hardfork — MainNet block 53533081 (estimated 2026-10-19 02:00 UTC)
+> ### Zanzibar hardfork — activated at MainNet block 53533081 (2026-10-19)
 >
-> Upgrade to `v2.5.2` (or at least `v2.5.0`) before that block. A node left on `v2.4.4` will fork off
-> the network.
+> Nodes must run `v2.5.0` or later; `v2.5.2` is recommended. A node still on `v2.4.x` cannot
+> follow the network past that block.
 >
-> **`genesis_mainnet.yaml` does not change.** MainNet carries its fork heights
-> in the binary, not in the genesis file, so there is nothing to re-download —
-> unlike the TestNet rollout, where the genesis had to be replaced. Pull the
-> image, restart, done. `config_mainnet.yaml` is unchanged as well.
->
-> Zanzibar activates IIP-59 on-chain voter reward distribution. Beta and Gamma
-> ride the same block: MainNet has activated none of them, so it takes all
-> three corrections from the first block IIP-59 is live rather than scheduling
-> a window that knowingly runs behaviour already found to be wrong.
->
-> **Delegates distributing through Hermes:** at that block the protocol
-> auto-migrates every candidate whose reward address is a Hermes vault, but
-> only if its DelegateProfile carries both reward-portion fields. A candidate
-> missing either one is left on the Hermes path — nothing breaks, but it does
-> not get on-chain distribution, and the migration runs in that one block and
-> never again. Check yours before the fork. See the
-> [v2.5.0 release note](changelog/v2.5.0-release-note.md).
+> MainNet carries its fork heights in the binary, not in the genesis file, so
+> `genesis_mainnet.yaml` and `config_mainnet.yaml` did not change for Zanzibar.
+> See the [v2.5.0 release note](changelog/v2.5.0-release-note.md) for what Zanzibar changed.
 
 ## <a name="status"/>Release Status
 
