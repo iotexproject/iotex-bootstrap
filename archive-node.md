@@ -73,10 +73,12 @@ aria2c -x16 -s16 -c --file-allocation=none -d $IOTEX_HOME -o core.tar.gz        
 aria2c -x16 -s16 -c --file-allocation=none -d $IOTEX_HOME -o gateway.tar.gz      https://t.iotex.me/mainnet-data-snapshot-gateway-latest
 aria2c -x16 -s16 -c --file-allocation=none -d $IOTEX_HOME -o trie-history.tar.gz https://t.iotex.me/mainnet-data-snapshot-trie-history-latest
 
-# Uncompress
-tar -xzf core.tar.gz
-tar -xzf gateway.tar.gz
-tar -xzf trie-history.tar.gz
+# Uncompress into $IOTEX_HOME/data — the tarballs are flat (no leading data/
+# directory), so the extraction target must be given explicitly
+mkdir -p $IOTEX_HOME/data
+tar -xzf $IOTEX_HOME/core.tar.gz         -C $IOTEX_HOME/data
+tar -xzf $IOTEX_HOME/gateway.tar.gz      -C $IOTEX_HOME/data
+tar -xzf $IOTEX_HOME/trie-history.tar.gz -C $IOTEX_HOME/data
 ```
 >Note: the snapshot has a size of 450GB at this moment.
 `aria2c -c` resumes an interrupted download automatically — just re-run the same command. If you fall back to `curl`, wrap it with `nohup` to survive session drops.
